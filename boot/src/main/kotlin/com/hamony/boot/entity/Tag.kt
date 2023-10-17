@@ -21,9 +21,9 @@ data class Tag(
 
 ){
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
-    var diaryList: MutableList<DiaryTag> = mutableListOf<DiaryTag>()
+    var diaryList: MutableList<DiaryTag> = mutableListOf();
 
     override fun toString(): String {
-        return "Tag(id=$id, tag='$tag', diaryList=$diaryList)"
+        return "Tag(id=$id, tag='$tag', diaryList=${diaryList.forEach(::println)})"
     }
 }

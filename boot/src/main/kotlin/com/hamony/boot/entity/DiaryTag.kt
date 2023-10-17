@@ -20,7 +20,7 @@ data class DiaryTag(
     @JoinColumn(name = "REF_DIARY_ID")
     var diary: Diary?,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], targetEntity = Tag::class)
     @JoinColumn(name = "REF_TAG_ID")
     var tag: Tag? = null
 
