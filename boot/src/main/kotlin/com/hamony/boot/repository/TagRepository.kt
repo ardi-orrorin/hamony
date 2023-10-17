@@ -1,4 +1,7 @@
 package com.hamony.boot.repository
 
-interface TagRepository {
+import com.hamony.boot.entity.Tag
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface TagRepository: JpaRepository<Tag, Long> {
 }

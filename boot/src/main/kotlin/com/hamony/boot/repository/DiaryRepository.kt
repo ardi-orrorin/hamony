@@ -1,4 +1,10 @@
 package com.hamony.boot.repository
 
-interface DiaryRepository {
+import com.hamony.boot.entity.Diary
+import com.hamony.boot.entity.Member
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface DiaryRepository: JpaRepository<Diary, Long> {
+
+    fun findAllByMember(member: Member): MutableList<Diary>
 }
