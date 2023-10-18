@@ -1,0 +1,18 @@
+{
+  "signinTitle"          : "회원가입",
+  "searchId"             : "아이디 찾기",
+  "enterUserId"          : "아이디를 입력하세요",
+  "enterEmail"           : "이메일을 입력하세요.",
+  "enterPwd1"            : "비밀번호를 입력하세요.",
+  "enterPwd2"            : "다시 비밀번호를 입력하세요.",
+  "enterNickname"        : "닉네임을 입력하세요.",
+  "min4Id"               : "최소 4자리 이상만 가능합니다",
+  "alreadyId"            : "아이디가 이미 존재합니다.",
+  "availableId"          : "사용가능한 아이디 입니다.",
+  "valiablePwd"          : "사용가능한 비밀번호 입니다.",
+  "min8Pwd"              : "비밀번호는 최소 8자리 이상만 가능합니다",
+  "notMatchPwd"          : "비밀번호가 일치하지 않습니다.",
+  "notMatchEmail"        : "이메일 형식이 아닙니다.",
+  "matchPwd"             : "비밀번호가 일치합니다.",
+  "matchEmail"           : "등록가능한 이메일입니다."
+}

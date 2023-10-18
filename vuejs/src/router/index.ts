@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NotFound from "@/views/error/NotFound.vue";
 import Login from "@/views/auth/Login.vue";
+import SignIn from "@/views/auth/SignIn.vue";
+import SearchId from "@/views/auth/SearchId.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -9,6 +12,17 @@ const router = createRouter({
       name: 'login',
       component: Login
     },
+    {
+      path: '/signin',
+      name: 'signIn',
+      component: SignIn
+    },
+    {
+      path: '/searchid',
+      name: 'searchid',
+      component: SearchId
+    },
+
     // {
     //   path: '/about',
     //   name: 'about',
