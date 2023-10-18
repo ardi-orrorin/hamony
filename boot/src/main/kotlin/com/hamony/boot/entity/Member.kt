@@ -2,6 +2,7 @@ package com.hamony.boot.entity
 
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
+import lombok.Getter
 import lombok.NoArgsConstructor
 import java.time.LocalDateTime
 
@@ -14,22 +15,22 @@ data class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private var id: Long?,
+    var id: Long?,
 
     @Column(name = "USER_ID")
-    private var userId: String = "",
+    var userId: String = "",
 
     @Column(name = "USER_PWD")
-    private var userPwd: String = "",
+    var userPwd: String = "",
 
     @Column(name = "EMAIL")
-    private var email: String = "",
+    var email: String = "",
 
     @Column(name = "CREATEAT")
-    private var createAt: LocalDateTime = LocalDateTime.now(),
+    var createAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "DELETEAT")
-    private var deleteAt: LocalDateTime? = null,
+    var deleteAt: LocalDateTime? = null,
 
 ){
 

@@ -23,7 +23,7 @@ data class Url(
     var createAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "DELETEAT")
-    var deleteAt: LocalDateTime = LocalDateTime.now(),
+    var deleteAt: LocalDateTime?,
 
     @Column(name = "AVAIL")
     var avail: Boolean = true,
