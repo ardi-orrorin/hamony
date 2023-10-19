@@ -4,6 +4,9 @@ import IconBtn from "@/components/IconBtn.vue";
 import {reactive, ref} from "vue";
 import LoginInput from "@/components/LoginInput.vue";
 import koJson from '@/assets/lang/ko-kr.json';
+import router from "@/router";
+import {login} from "@/api/memberApi";
+import * as wasi from "wasi";
 
 const text = koJson;
 
@@ -37,9 +40,18 @@ function pwdFocusHandler() {
   }
 }
 
-function submitHandler() {
+async function submitHandler() {
   if(user.pwd.length > 7) {
-    errorMsg.value = ''
+
+    const result = await login({userId: user.id, userPwd: user.pwd})
+        .then(res => res)
+
+    if(result.status !== 200) {
+      errorMsg.value = result.data
+      id.value['inputRef'].focus();
+    } else {
+      errorMsg.value = ''
+    }
   } else{
     errorMsg.value = text.min8Pwd
   }
@@ -60,6 +72,9 @@ function moveIdInputHandler() {
 
 <template>
   <div class="container">
+    <div>
+      <h1>{{text.loginTitle}}</h1>
+    </div>
     <div>
       <LoginInput
           ref="id"
@@ -83,10 +98,16 @@ function moveIdInputHandler() {
       </div>
     </Transition>
 
-    <div>
+    <transition>
+      <div v-if="errorMsg.length > 0" class="error">
+        <span>{{ errorMsg }}</span>
+      </div>
+    </transition>
+
+    <div class="menu">
       <TransitionGroup>
-        <IconBtn text="person_add"/>
-        <IconBtn text="person_search"/>
+        <IconBtn text="person_add" @click="router.push('/signin')"/>
+        <IconBtn text="person_search" @click="router.push('/searchid')"/>
         <IconBtn
             v-if="user.pwd.length > 0 || user.id.length > 0"
             text="ink_eraser"
@@ -99,12 +120,6 @@ function moveIdInputHandler() {
         />
       </TransitionGroup>
     </div>
-
-    <transition>
-      <div v-if="errorMsg.length > 0" class="error">
-          <span>{{ errorMsg }}</span>
-      </div>
-    </transition>
   </div>
 </template>
 
@@ -116,6 +131,10 @@ function moveIdInputHandler() {
     justify-content: center;
     border-collapse: separate;
 
+    h1 {
+      margin-bottom: 5vh;
+    }
+
     div {
       text-align: center;
     }
@@ -125,6 +144,10 @@ function moveIdInputHandler() {
     padding: 0.5rem;
     font-size: 0.7rem;
     color: red;
+  }
+
+  .menu{
+    margin-top: 1vh;
   }
 
   .v-enter-active,

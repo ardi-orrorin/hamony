@@ -4,17 +4,17 @@ import java.time.LocalDateTime
 
 data class MemberDTO(
 
-    private var id: Long?,
+    var id: Long?,
 
-    private var userId: String = "",
+    var userId: String = "",
 
-    private var userPwd: String = "",
+    var userPwd: String = "",
 
-    private var email: String = "",
+    var email: String = "",
 
-    private var createAt: LocalDateTime = LocalDateTime.now(),
+    var createAt: LocalDateTime = LocalDateTime.now(),
 
-    private var deleteAt: LocalDateTime?,
+    var deleteAt: LocalDateTime?,
 
 ){
 

@@ -1,25 +1,21 @@
 <script lang="ts" setup>
-  import Input from "@/components/Input.vue";
-  import {reactive, ref} from "vue";
-  import koJson from "@/assets/lang/ko-kr.json";
-  import IconBtn from "@/components/IconBtn.vue";
-  import type {Lang} from "@/assets/lang/langType";
-  const text: Lang = koJson;
+import Input from "@/components/Input.vue";
+import {ref} from "vue";
+import koJson from "@/assets/lang/ko-kr.json";
+import IconBtn from "@/components/IconBtn.vue";
+import type {Lang} from "@/assets/lang/langType";
+import {useSignIn} from "@/store/member";
+import router from "@/router";
+import {signIn} from "@/api/memberApi";
 
-  interface User {
-    id: string;
-    pwd1: string;
-    pwd2: string;
-    nickName: string;
-    email: string;
-  }
-  const user = reactive<User>({
-    id: '',
-    pwd1: '',
-    pwd2: '',
-    nickName: '',
-    email: '',
-  })
+const text: Lang = koJson;
+
+
+  const user = useSignIn();
+  const idRef = ref(null);
+  const pwd1Ref = ref(null);
+  const pwd2Ref = ref(null);
+  const nickNameRef = ref(null);
   const emailAutoList = ref(false);
   const emailRef = ref(null);
   const emailListREf = ref([])
@@ -29,8 +25,8 @@
       '@yahoo.com', '@live.com', '@kakao.com'
   ]
   function validateId(): number | undefined {
-    if(user.id.length > 0){
-      if(user.id.length < 5) return 1
+    if(user.userId.length > 0){
+      if(user.userId.length < 5) return 1
       //   중복 여부에 따라 2, 3
     }
   }
@@ -46,8 +42,8 @@
   }
 
   function pwdMinLengthValidate(): boolean | undefined{
-    if(user.pwd1.length > 0) {
-      if(user.pwd1.length > 7) {
+    if(user.userPwd.length > 0) {
+      if(user.userPwd.length > 7) {
         return true
       } else {
         return false
@@ -55,9 +51,9 @@
     }
   }
   function validatePwd(): boolean | undefined {
-    if(user.pwd1.length > 0 && user.pwd2.length > 0){
-      if((user.pwd1.length === user.pwd2.length)
-          && (user.pwd1 === user.pwd2)) {
+    if(user.userPwd.length > 0 && user.userPwd.length > 0){
+      if((user.userPwd.length === user.userPwd.length)
+          && (user.userPwd === user.userPwd)) {
         return true
       } else {
         return false
@@ -74,8 +70,20 @@ function emailAutoCompleteHandler(toggle: boolean): void {
 }
 
 function emailClickHandler(it: string) {
-  user.email = user.email.split('@')[0]+it
-  emailAutoCompleteHandler(false)
+  user.email = user.email.split('@')[0]+it;
+  emailAutoCompleteHandler(false);
+  // nickNameRef.value['inputRef'].focus();
+}
+
+function formInitHandler() {
+    user.$reset()
+    router.back()
+}
+
+async function onSubmitHandler(){
+    signIn(user)
+        .then(res => router.push("/"))
+        .catch(err => alert("알수 없는 오류 발생"))
 
 }
 
@@ -88,12 +96,14 @@ function emailClickHandler(it: string) {
       <h1>{{ text.signinTitle }}</h1>
       <div>
         <Input
+            ref="idRef"
             :placeholder="text.enterUserId"
-            v-model:value="user.id"
+            v-model:value="user.userId"
+            @keyup.enter="pwd1Ref['inputRef'].focus()"
         />
         <transition>
           <span
-              v-if="user.id.length > 0"
+              v-if="user.userId.length > 0"
               :style="{'color' : validateId() === 3
                                  ? 'blue' : 'red'}"
           >
@@ -108,13 +118,15 @@ function emailClickHandler(it: string) {
       </div>
       <div>
         <Input
+            ref="pwd1Ref"
             :placeholder="text.enterPwd1"
             type="password"
-            v-model:value="user.pwd1"
+            v-model:value="user.userPwd"
+            @keyup.enter="pwd2Ref['inputRef'].focus()"
         />
         <Transition>
           <span
-              v-if="user.pwd1.length > 0 "
+              v-if="user.userPwd.length > 0 "
               :style="{'color' : pwdMinLengthValidate()
                                  ? 'blue' : 'red'}"
           >
@@ -128,13 +140,15 @@ function emailClickHandler(it: string) {
       </div>
       <div>
         <Input
+            ref="pwd2Ref"
             :placeholder="text.enterPwd2"
             type="password"
-            v-model:value="user.pwd2"
+            v-model:value="user.userPwd2"
+            @keyup.enter="emailRef['inputRef'].focus()"
         />
         <transition>
           <span
-              v-if="user.pwd2.length > 0"
+              v-if="user.userPwd2.length > 0"
               :style="{'color' : validatePwd()
                                  ? 'blue' : 'red'
               }"
@@ -150,9 +164,9 @@ function emailClickHandler(it: string) {
 
       <div class="email">
         <Input
+            ref="emailRef"
             :placeholder="text.enterEmail"
             v-model:value="user.email"
-            ref="emailRef"
             v-on:focus="() => emailAutoCompleteHandler(true)"
             @keyup="emailAutoCompleteHandler"
             @keydown.down="emailListREf[0].focus()"
@@ -170,7 +184,6 @@ function emailClickHandler(it: string) {
                 <span>{{user.email.split('@')[0]}}</span>{{it}}
               </button>
             </template>
-
           </div>
         </Transition>
         <Transition>
@@ -189,19 +202,23 @@ function emailClickHandler(it: string) {
         </Transition>
       </div>
 
+<!--      <div>-->
+<!--        <Input-->
+<!--            ref="nickNameRef"-->
+<!--            :placeholder="text.enterNickname"-->
+<!--            v-model:value="user.nickName"-->
+<!--            required-->
+<!--        />-->
+<!--        <span>{{}}</span>-->
+<!--      </div>-->
       <div>
-        <Input
-            :placeholder="text.enterNickname"
-            v-model:value="user.nickName"
-            required
-        />
-        <span>{{}}</span>
-      </div>
-
-      <div>
-        <IconBtn text="undo"/>
+        <IconBtn text="undo" @click="formInitHandler" />
         <transition>
-          <IconBtn v-if="user.id.length > 4" text="login" />
+          <IconBtn
+              v-if="user.userId.length > 4"
+              text="login"
+              @click="onSubmitHandler"
+          />
         </transition>
       </div>
     </div>
@@ -218,6 +235,7 @@ function emailClickHandler(it: string) {
   }
 
   .subContainer {
+    transition: 0.5s;
     margin-top: 5vh;
     width: 50%;
     justify-content: center;
@@ -230,6 +248,16 @@ function emailClickHandler(it: string) {
         font-size: 0.8rem;
         color: red;
       }
+    }
+
+    @media (max-width: 900px) {
+      transition: 0.5s;
+      width: 70%;
+    }
+
+    @media (max-width: 600px) {
+      transition: 0.5s;
+      width: 80%;
     }
   }
 

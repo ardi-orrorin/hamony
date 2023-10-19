@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import {computed} from "vue";
+import {computed, ref} from "vue";
 
   const props = defineProps(['value'])
   const emits = defineEmits(['update:value'])
@@ -12,11 +12,15 @@
       emits('update:value', value)
     }
   })
+  const inputRef = ref(null)
+  defineExpose({
+    inputRef
+  });
 
 </script>
 
 <template>
-    <input v-model="value" />
+    <input v-model="value" ref="inputRef" />
 </template>
 
 <style lang="scss" scoped>
@@ -30,6 +34,10 @@ input {
   text-align: center;
   align-self: center;
   border-radius: 0.7vw;
+
+  &:focus{
+    background-color: rgba(245, 245, 245, 1);
+  }
 }
 
 </style>

@@ -15,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtFilter(
     private var tokenProvider: TokenProvider,
+
 ): OncePerRequestFilter() {
 
     private val AUTHORIZATION_HEADER: String = "Authorization"
@@ -36,11 +37,13 @@ class JwtFilter(
         filterChain.doFilter(request, response)
     }
 
-    private fun resolveToken(request: HttpServletRequest): String?{
-        val bearerToken: String = request.getHeader(AUTHORIZATION_HEADER)
+    private fun resolveToken(request: HttpServletRequest?): String?{
+        val bearerToken: String? = request?.getHeader(AUTHORIZATION_HEADER)
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(bearerToken)){
-           return bearerToken.substring(7)
+        if (bearerToken != null) {
+            if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(bearerToken)){
+                return bearerToken.substring(7)
+            }
         }
         return null
     }

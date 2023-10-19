@@ -41,6 +41,9 @@ import {computed, ref} from "vue";
     border: gray solid 1px;
     text-align: center;
     align-self: center;
+    &:focus{
+      background-color: rgba(245, 245, 245, 1);
+    }
   }
   .up {
     border-radius: 0.7vw 0.7vw 0 0;
