@@ -41,8 +41,12 @@ import {computed, ref} from "vue";
     border: gray solid 1px;
     text-align: center;
     align-self: center;
+    transition: 0.35s;
+
     &:focus{
       background-color: rgba(245, 245, 245, 1);
+      transition: 0.35s;
+      color: black;
     }
   }
   .up {

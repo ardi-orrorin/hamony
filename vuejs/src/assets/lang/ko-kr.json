@@ -16,5 +16,6 @@
   "notMatchPwd"          : "비밀번호가 일치하지 않습니다.",
   "notMatchEmail"        : "이메일 형식이 아닙니다.",
   "matchPwd"             : "비밀번호가 일치합니다.",
-  "matchEmail"           : "등록가능한 이메일입니다."
+  "matchEmail"           : "등록가능한 이메일입니다.",
+  "signSubmitError"      : "오류가 발생했습니다. 다시 시도 해주시기 바랍니다ㅏ."
 }

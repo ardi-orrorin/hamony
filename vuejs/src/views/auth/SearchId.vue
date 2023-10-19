@@ -114,8 +114,6 @@ function initSearchIdHandler() {
     h1{
       margin-bottom: 5vh;
     }
-
-
   }
 
   .menu {

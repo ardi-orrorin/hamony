@@ -34,9 +34,12 @@ input {
   text-align: center;
   align-self: center;
   border-radius: 0.7vw;
-
+  transition: 0.5s;
   &:focus{
     background-color: rgba(245, 245, 245, 1);
+    transition: 0.35s;
+    color: black;
+
   }
 }
 

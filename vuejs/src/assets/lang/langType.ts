@@ -17,4 +17,5 @@ export interface Lang {
     "notMatchEmail": string
     "matchPwd": string
     "matchEmail": string
+    signSubmitError: string
 }

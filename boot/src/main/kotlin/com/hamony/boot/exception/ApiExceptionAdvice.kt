@@ -17,4 +17,8 @@ class ApiExceptionAdvice {
     fun exceptionHandler(e: VerifyPasswordException): ResponseEntity<String>{
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message);
     }
+    @ExceptionHandler(ExistUserException::class)
+    fun exceptionHandler(e: ExistUserException): ResponseEntity<String>{
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message);
+    }
 }

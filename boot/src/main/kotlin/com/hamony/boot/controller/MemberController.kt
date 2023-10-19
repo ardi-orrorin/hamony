@@ -19,6 +19,13 @@ class MemberController(
     val memberService: MemberService,
 ) {
 
+    @PostMapping("idchk")
+    fun idDuplicateChk(@RequestBody userId: String): ResponseEntity<ResponseDTO<Int>> {
+        return ResponseEntity.ok(
+            ResponseDTO(HttpStatus.OK.value(), memberService.idDuplicateChk(userId))
+        )
+    }
+
     @PostMapping("signin")
     fun signIn(@RequestBody memberDTO: MemberDTO): ResponseEntity<ResponseDTO<Boolean>> {
         memberService.signIn(memberDTO)

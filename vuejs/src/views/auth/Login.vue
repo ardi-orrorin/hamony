@@ -1,12 +1,11 @@
 <script setup lang="ts">
 
 import IconBtn from "@/components/IconBtn.vue";
-import {reactive, ref} from "vue";
+import {reactive, ref, watch, watchEffect} from "vue";
 import LoginInput from "@/components/LoginInput.vue";
 import koJson from '@/assets/lang/ko-kr.json';
 import router from "@/router";
 import {login} from "@/api/memberApi";
-import * as wasi from "wasi";
 
 const text = koJson;
 
@@ -24,6 +23,11 @@ const user = reactive<User>({
 const pwd = ref(null);
 const id = ref(null);
 const errorMsg = ref('');
+
+
+watchEffect(()=>{
+  if(id.value) id.value['inputRef'].focus()
+})
 
 function userInit() {
   user.pwd = ''
@@ -48,7 +52,7 @@ async function submitHandler() {
 
     if(result.status !== 200) {
       errorMsg.value = result.data
-      id.value['inputRef'].focus();
+      if(id.value) id.value['inputRef'].focus();
     } else {
       errorMsg.value = ''
     }
@@ -59,9 +63,7 @@ async function submitHandler() {
 
 function moveIdInputHandler() {
   if(user.pwd.length === 0){
-    if(id.value){
-      id.value['inputRef'].focus()
-    }
+    if(id.value) id.value['inputRef'].focus()
   }else {
     console.log('')
   }
@@ -75,6 +77,7 @@ function moveIdInputHandler() {
     <div>
       <h1>{{text.loginTitle}}</h1>
     </div>
+
     <div>
       <LoginInput
           ref="id"
@@ -94,6 +97,7 @@ function moveIdInputHandler() {
               @keyup.enter="submitHandler"
               @keyup.delete="moveIdInputHandler"
               @keydown.delete="moveIdInputHandler"
+              type="password"
           />
       </div>
     </Transition>
@@ -159,9 +163,5 @@ function moveIdInputHandler() {
   .v-leave-to {
     opacity: 0;
   }
-
-
-
-
 
 </style>

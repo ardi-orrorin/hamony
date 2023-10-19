@@ -1,17 +1,18 @@
 <script lang="ts" setup>
 import Input from "@/components/Input.vue";
-import {ref} from "vue";
+import {ref, watchEffect} from "vue";
 import koJson from "@/assets/lang/ko-kr.json";
 import IconBtn from "@/components/IconBtn.vue";
 import type {Lang} from "@/assets/lang/langType";
 import {useSignIn} from "@/store/member";
 import router from "@/router";
-import {signIn} from "@/api/memberApi";
+import {idDuplicateChk, signIn} from "@/api/memberApi";
 
 const text: Lang = koJson;
 
 
   const user = useSignIn();
+  const idCheck = ref(0);
   const idRef = ref(null);
   const pwd1Ref = ref(null);
   const pwd2Ref = ref(null);
@@ -24,9 +25,20 @@ const text: Lang = koJson;
       '@gmail.com', '@daum.com', '@naver.com',
       '@yahoo.com', '@live.com', '@kakao.com'
   ]
-  function validateId(): number | undefined {
+
+watchEffect(()=>{
+  if(idRef.value) idRef.value['inputRef'].focus()
+})
+function validateId(){
+    console.log(user.userId)
     if(user.userId.length > 0){
-      if(user.userId.length < 5) return 1
+      if(user.userId.length < 5) {
+        idCheck.value = 1
+        return ;
+      }
+        idDuplicateChk(user.userId)
+            .then(res => idCheck.value = parseInt(res.data))
+
       //   중복 여부에 따라 2, 3
     }
   }
@@ -76,15 +88,20 @@ function emailClickHandler(it: string) {
 }
 
 function formInitHandler() {
-    user.$reset()
-    router.back()
+  user.$reset()
+  router.back()
 }
 
-async function onSubmitHandler(){
-    signIn(user)
-        .then(res => router.push("/"))
-        .catch(err => alert("알수 없는 오류 발생"))
-
+function onSubmitHandler(){
+  signIn(user).then(res => {
+    if(res.status === 201) {
+      console.log('1')
+      router.push("/")
+      user.$reset()
+    } else {
+      alert(text.signSubmitError)
+    }
+  })
 }
 
 </script>
@@ -100,17 +117,18 @@ async function onSubmitHandler(){
             :placeholder="text.enterUserId"
             v-model:value="user.userId"
             @keyup.enter="pwd1Ref['inputRef'].focus()"
+            @keyup="validateId"
         />
         <transition>
           <span
               v-if="user.userId.length > 0"
-              :style="{'color' : validateId() === 3
+              :style="{'color' : idCheck === 3
                                  ? 'blue' : 'red'}"
           >
             {{
-              validateId() === 1 ? text.min4Id
-              : validateId() === 2 ? text.alreadyId
-              : validateId() === 3 ? text.availableId
+              idCheck  === 1 ? text.min4Id
+              : idCheck === 2 ? text.alreadyId
+              : idCheck === 3 ? text.availableId
               : ''
             }}
           </span>
@@ -215,7 +233,7 @@ async function onSubmitHandler(){
         <IconBtn text="undo" @click="formInitHandler" />
         <transition>
           <IconBtn
-              v-if="user.userId.length > 4"
+              v-if="user.userId.length > 4 && idCheck === 3"
               text="login"
               @click="onSubmitHandler"
           />
