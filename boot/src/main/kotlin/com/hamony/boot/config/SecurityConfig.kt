@@ -48,6 +48,7 @@ class SecurityConfig(
 
         http.authorizeHttpRequests()
             .requestMatchers("/user/**").permitAll()
+            .requestMatchers("/diary/**").permitAll()
             .anyRequest().authenticated()
 
 

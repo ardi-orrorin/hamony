@@ -5,10 +5,9 @@ data class DiaryTagDTO(
 
     var id: Long?,
 
-
     var diary: DiaryDTO?,
 
-    var tag: TagDTO?
+    var tag: MutableList<TagDTO>?
 
 ){
     override fun toString(): String {

@@ -24,7 +24,6 @@ class MemberService(
     val modelMapper: ModelMapper,
 ) {
 
-
     fun idDuplicateChk(userId: String): Int {
         if (memberRepository.findByUserId(userId).isPresent)
             return 2

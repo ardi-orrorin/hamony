@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration
 class BeanConfig {
 
     @Bean
-    fun modelMapper() = ModelMapper();
+    fun modelMapper() = ModelMapper().apply {
+        configuration.isFieldMatchingEnabled = true
+        configuration.fieldAccessLevel = org.modelmapper.config.Configuration.AccessLevel.PRIVATE
+    };
 
 }

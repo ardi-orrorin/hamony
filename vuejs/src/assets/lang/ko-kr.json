@@ -17,5 +17,11 @@
   "notMatchEmail"        : "이메일 형식이 아닙니다.",
   "matchPwd"             : "비밀번호가 일치합니다.",
   "matchEmail"           : "등록가능한 이메일입니다.",
-  "signSubmitError"      : "오류가 발생했습니다. 다시 시도 해주시기 바랍니다ㅏ."
+  "signSubmitError"      : "오류가 발생했습니다. 다시 시도 해주시기 바랍니다ㅏ.",
+  "enterBody"            : "내용을 입력하세요.",
+  "enterSubject"         : "제목을 입력하세요",
+  "tagIntro"             : "태그는 2글자부터 가능합니다.",
+  "enterUrl"             : "URL주소를 입력하세요",
+  "alertUrl4Max"         : "url 주소는 최대 4개 까지 등록 가능합니다.",
+  "minTextUrl"           : "입력을 마무리 해주시기 바랍니다."
 }

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
 
-  const props = defineProps(['value'])
+const props = defineProps(['value'])
   const emits = defineEmits(['update:value'])
 
   const value = computed({
@@ -16,6 +16,7 @@ import {computed, ref} from "vue";
   defineExpose({
     inputRef
   });
+
 
 </script>
 

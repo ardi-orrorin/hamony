@@ -1,5 +1,6 @@
 package com.hamony.boot
 
+import com.hamony.boot.dto.MemberDTO
 import com.hamony.boot.entity.Diary
 import com.hamony.boot.entity.DiaryTag
 import com.hamony.boot.entity.Member
@@ -8,9 +9,11 @@ import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.DiaryTagRepository
 import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.repository.TagRepository
+import com.hamony.boot.service.MemberService
 import jakarta.transaction.Transactional
 import org.hibernate.annotations.NaturalId
 import org.junit.jupiter.api.Test
+import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDateTime
@@ -29,6 +32,12 @@ class BootApplicationTests {
 
     @Autowired
     open lateinit var diaryTagRepository: DiaryTagRepository
+
+    @Autowired
+    lateinit var memberService: MemberService
+
+    @Autowired
+    lateinit var modelMapper: ModelMapper
 
     @Test
     @Transactional
@@ -66,4 +75,11 @@ class BootApplicationTests {
         tagRepository.findAll().forEach(::println)
     }
 
+
+    @Test
+    fun modelmapper(){
+        val member: Member = memberRepository.findByUserId("test123").get()
+        println(modelMapper.map(member, MemberDTO::class.java))
+
+    }
 }

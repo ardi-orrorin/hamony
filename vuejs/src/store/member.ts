@@ -7,7 +7,8 @@ export interface User {
 }
 
 export interface UserToken {
-    id: string
+    userId: string
+    tokenType?: string
     token: string
     expireIn: number
 }
@@ -25,14 +26,14 @@ export const useSignIn = defineStore('signIn', {
 export const useToken = defineStore('token', {
     state: (): UserToken => {
         return {
-            id: '',
+            userId: '',
             token: '',
             expireIn: 0,
         }
     },
     actions: {
         login(value: UserToken) {
-            this.id = value.id
+            this.userId = value.userId
             this.token = value.token
             this.expireIn = value.expireIn
         }

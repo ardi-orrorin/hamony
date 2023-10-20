@@ -20,10 +20,11 @@ data class Tag(
     var tag: String = "",
 
 ){
-    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
-    var diaryList: MutableList<DiaryTag> = mutableListOf();
+    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
+    lateinit var diaryList: DiaryTag
 
     override fun toString(): String {
-        return "Tag(id=$id, tag='$tag', diaryList=${diaryList.forEach(::println)})"
+        return "Tag(id=$id, tag='$tag', diaryList=$diaryList)"
     }
+
 }

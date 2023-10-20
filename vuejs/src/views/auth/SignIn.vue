@@ -317,8 +317,6 @@ function onSubmitHandler(){
 
   }
 
-
-
   .v-enter-active,
   .v-leave-active {
     transition: opacity 0.35s ease;

@@ -17,5 +17,11 @@ export interface Lang {
     "notMatchEmail": string
     "matchPwd": string
     "matchEmail": string
-    signSubmitError: string
+    "signSubmitError": string
+    "enterBody": string
+    "enterSubject": string
+    "tagIntro": string
+    "enterUrl": string
+    "alertUrl4Max": string
+    "minTextUrl": string
 }

@@ -1,7 +1,6 @@
 import axios from "axios";
 import {type User, useToken} from "@/store/member";
 import router from "@/router";
-import type {Store} from "pinia";
 
 export interface Login {
     userId: string,
@@ -15,8 +14,8 @@ export async function login(data: Login) {
         .catch(err => err.response);
 
     if(result.status === 200)
-        useToken().login(result);
-
+        useToken().login(result.data)
+        localStorage.setItem('token',result.data.token)
     return result;
 }
 

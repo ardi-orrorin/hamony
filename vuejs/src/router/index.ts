@@ -3,6 +3,7 @@ import NotFound from "@/views/error/NotFound.vue";
 import Login from "@/views/auth/Login.vue";
 import SignIn from "@/views/auth/SignIn.vue";
 import SearchId from "@/views/auth/SearchId.vue";
+import Write from "@/views/diary/Write.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,7 +23,11 @@ const router = createRouter({
       name: 'searchid',
       component: SearchId
     },
-
+    {
+      path: '/write',
+      name: 'write',
+      component: Write
+    },
     // {
     //   path: '/about',
     //   name: 'about',

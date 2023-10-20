@@ -22,6 +22,7 @@ import java.security.Key
 import java.security.PrivateKey
 import java.util.*
 import javax.crypto.SecretKey
+import kotlin.math.log
 
 @Component
 class TokenProvider(
@@ -58,8 +59,9 @@ class TokenProvider(
         .payload.subject
 
     fun validateToken(token: String): Boolean {
+        println(token)
         try {
-            Jwts.parser().verifyWith(key).build().parseClaimsJws(token)
+            Jwts.parser().verifyWith(key).build().parse(token)
             return true
         } catch (e: Exception){
             when (e) {

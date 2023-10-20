@@ -4,33 +4,32 @@ import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Getter
 import lombok.NoArgsConstructor
+import lombok.Setter
 import java.time.LocalDateTime
 
 @Entity
 @Table(name = "TBL_MEMBER")
-@AllArgsConstructor
-@NoArgsConstructor
 data class Member(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    var id: Long?,
+    val id: Long?,
 
     @Column(name = "USER_ID")
-    var userId: String = "",
+    val userId: String = "",
 
     @Column(name = "USER_PWD")
-    var userPwd: String = "",
+    val userPwd: String = "",
 
     @Column(name = "EMAIL")
-    var email: String = "",
+    val email: String = "",
 
     @Column(name = "CREATEAT")
-    var createAt: LocalDateTime = LocalDateTime.now(),
+    val createAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "DELETEAT")
-    var deleteAt: LocalDateTime? = null,
+    val deleteAt: LocalDateTime? = null,
 
 ){
 
