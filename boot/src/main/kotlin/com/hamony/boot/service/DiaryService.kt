@@ -9,8 +9,11 @@ import com.hamony.boot.entity.Member
 import com.hamony.boot.exception.NotFoundException
 import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.MemberRepository
+import com.hamony.boot.request.DiarySearchDTO
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.util.DigestUtils
 import java.time.LocalDateTime
 
 @Service
@@ -38,4 +41,23 @@ class DiaryService(
         // tag 처리
         diaryRepository.save(diary)
     }
+
+    fun recent(memberDTO: MemberDTO): List<DiaryDTO?> {
+
+        // TODO: 최근 그 표시 알고리즘 구현
+
+        return mutableListOf(null)
+    }
+
+    fun search(diarySearchDTO: DiarySearchDTO, pageable: Pageable): List<DiaryDTO> {
+
+        // TODO: 검색 알고리즘 추가
+
+        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContains(diarySearchDTO.subject, diarySearchDTO.content, pageable)
+
+        return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
+
+    }
+
+
 }

@@ -42,4 +42,5 @@ class MemberController(
                 ResponseDTO(HttpStatus.OK.value(), memberService.login(loginDTO))
             )
     }
+
 }

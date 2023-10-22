@@ -7,4 +7,5 @@ import java.util.Optional
 interface MemberRepository: JpaRepository<Member, Long> {
 
     fun findByUserId(userId: String): Optional<Member>
+
 }
