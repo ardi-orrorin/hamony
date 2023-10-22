@@ -24,4 +24,9 @@ export interface Lang {
     "enterUrl": string
     "alertUrl4Max": string
     "minTextUrl": string
+    "menuWrite": string
+    "menuRecent": string
+    "menuRecommend": string
+    "menuSearch": string
+    "menuProfile": string
 }

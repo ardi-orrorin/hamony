@@ -33,6 +33,7 @@ const value = computed({
     border: none;
     outline: none;
     transition: 0.35s;
+    color: gray;
 
     &:focus {
       transition: 0.35s;

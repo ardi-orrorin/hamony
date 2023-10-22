@@ -16,7 +16,7 @@ class TagService(
     @Transactional
     fun save(tagDTO: TagDTO): Unit {
 
-        if(tagRepository.findByTagExists(tagDTO.tag)) {
+        if(tagRepository.existsByTagEqualsIgnoreCase(tagDTO.tag)) {
             tagRepository.save(
                 modelMapper.map(tagDTO, Tag::class.java)
             )
@@ -25,7 +25,7 @@ class TagService(
 
     @Transactional
     fun saveAll(tagDTOs: List<TagDTO>): Unit {
-        val tags: List<Tag> = tagDTOs.filter { !tagRepository.findByTagExists(it.tag) }
+        val tags: List<Tag> = tagDTOs.filter { !tagRepository.existsByTagEqualsIgnoreCase(it.tag) }
             .map { modelMapper.map(it, Tag::class.java) }
 
         tagRepository.saveAll(tags)

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TagRepository: JpaRepository<Tag, Long> {
 
-    fun findByTagExists(tag: String): Boolean
+    fun existsByTagEqualsIgnoreCase(tag: String): Boolean
 }

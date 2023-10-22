@@ -30,7 +30,10 @@ function findTag() {
       .split(' ')
       .filter(it => (
           (/^#[a-zA-Zㄱ-ㅎ가-핳]{2}/).test(it)
-      )).forEach(it => value.tag.add(it))
+      )).forEach(it => {
+        if(it.length > 10) return
+        value.tag.add(it)
+      })
 }
 
 function removeTagHandler(tag: string){
@@ -128,13 +131,10 @@ function onSubmit(){
 
 <style lang="scss" scoped>
   .container {
+
     display: flex;
-    height: 100vh;
     justify-content: center;
     align-items: center;
-    align-content: center;
-    align-self: center;
-
   }
 
   .subContianer {
@@ -182,7 +182,7 @@ function onSubmit(){
   .tagIntro {
     color: gray;
     font-size: 0.8rem;
-    margin: 10px 20px;
+    padding: 10px 20px;
   }
 
   .urlSticky {

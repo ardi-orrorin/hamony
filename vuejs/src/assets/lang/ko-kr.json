@@ -20,8 +20,13 @@
   "signSubmitError"      : "오류가 발생했습니다. 다시 시도 해주시기 바랍니다ㅏ.",
   "enterBody"            : "내용을 입력하세요.",
   "enterSubject"         : "제목을 입력하세요",
-  "tagIntro"             : "태그는 2글자부터 가능합니다.",
+  "tagIntro"             : "태그는 2글자부터 10글자까지 가능합니다.",
   "enterUrl"             : "URL주소를 입력하세요",
   "alertUrl4Max"         : "url 주소는 최대 4개 까지 등록 가능합니다.",
-  "minTextUrl"           : "입력을 마무리 해주시기 바랍니다."
+  "minTextUrl"           : "입력을 마무리 해주시기 바랍니다.",
+  "menuWrite"            : "글쓰기",
+  "menuRecent"           : "모아보기",
+  "menuRecommend"        : "추천",
+  "menuSearch"           : "검색",
+  "menuProfile"          : "프로필"
 }
