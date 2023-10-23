@@ -7,6 +7,10 @@ import Write from "@/views/diary/Write.vue";
 import Root from "@/views/root/Root.vue";
 import Recent from "@/views/diary/Recent.vue";
 import {useToken} from "@/store/member";
+import Profile from "@/views/profile/Profile.vue";
+import ProfileList from "@/views/profile/ProfileList.vue";
+import PrifileFavorite from "@/views/profile/PrifileFavorite.vue";
+import ProfileOrder from "@/views/profile/ProfileOrder.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,19 +27,41 @@ const router = createRouter({
           component: Recent,
         },
         {
-          path: '/recent',
+          path: 'recent',
           name: 'recent',
           component: Recent,
         },
         {
-          path: '/searchid',
+          path: 'searchid',
           name: 'searchId',
           component: SearchId,
         },
         {
-          path: '/write',
+          path: 'write',
           name: 'write',
           component: Write,
+        },
+        {
+          path: 'profile',
+          name: 'profile',
+          component: Profile,
+          children: [
+            {
+              path: 'list',
+              name: 'profileList',
+              component: ProfileList,
+            },
+            {
+              path: 'favorite',
+              name: 'profileFavorite',
+              component: PrifileFavorite,
+            },
+            {
+              path: 'order',
+              name: 'profileOrder',
+              component: ProfileOrder,
+            },
+          ]
         },
       ]
     },

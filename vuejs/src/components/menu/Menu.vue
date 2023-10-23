@@ -13,10 +13,10 @@ const text = koText;
 
 const menuList: Menu[] = [
   {text: text.menuWrite, path: '/write'},
-  {text: text.menuRecent},
+  {text: text.menuRecent, path: '/recent'},
   {text: text.menuRecommend},
   {text: text.menuSearch},
-  {text: text.menuProfile},
+  {text: text.menuProfile, path: '/profile'},
 ]
 
 </script>

@@ -11,6 +11,7 @@ import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.request.DiarySearchDTO
 import org.modelmapper.ModelMapper
+import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.util.DigestUtils
@@ -42,11 +43,14 @@ class DiaryService(
         diaryRepository.save(diary)
     }
 
-    fun recent(memberDTO: MemberDTO): List<DiaryDTO?> {
+    fun recent(memberDTO: MemberDTO, pageable: Pageable): List<DiaryDTO> {
 
         // TODO: 최근 그 표시 알고리즘 구현
 
-        return mutableListOf(null)
+        // 임시
+        val diaryList: Page<Diary> = diaryRepository.findAll(pageable)
+
+        return diaryList.map { DiaryDTO(it.id, it.subject, it.content, it.createAt, it.updateAt, it.deleteAt, null, mutableListOf()) }.toList()
     }
 
     fun search(diarySearchDTO: DiarySearchDTO, pageable: Pageable): List<DiaryDTO> {

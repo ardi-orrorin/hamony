@@ -1,25 +1,25 @@
 <script setup lang="ts">
 import RecentItem from "@/components/recent/RecentItem.vue";
+import {onMounted, reactive} from "vue";
+import {recentDiary} from "@/api/diaryApi";
 
 interface RecentItems {
   subject: string;
   content: string;
   like: boolean;
 }
-const list: RecentItems[] = [
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-  {subject: 'test', content: '23123', like: true},
-]
+
+onMounted(()=> {
+  recentDiary().then(res => {
+    res.data.forEach(it => {
+      list.push({subject: it.subject,  content: it.content, like: false})
+    })
+  })
+})
+
+const list: RecentItems[] = reactive<RecentItems[]>([
+])
+
 </script>
 
 <template>
@@ -42,7 +42,7 @@ const list: RecentItems[] = [
   .subContainer {
     min-width: 70%;
     max-width: 70%;
-    padding: 20px;
+    //padding: 20px;
     display: flex;
     flex-wrap: wrap;
     word-break: break-all;

@@ -7,38 +7,44 @@ const props = defineProps(['subject', 'content', 'like'])
 
 <template>
   <div class="container">
-    <div class="subject">
-      {{props.subject}}
-    </div>
-    <div class="content">
-      {{props.content}}
-    </div>
-    <div class="sticky">
-      <!--  todo 좋아요 아이콘 -->
-      <IconBtn :text="props.like? 'favorite' : ''" />
+    <div class="subContainer">
+      <div class="subject">
+        {{props.subject}}
+      </div>
+      <div class="content">
+        {{props.content}}
+      </div>
+      <div class="sticky">
+        <!--  todo 좋아요 아이콘 -->
+        <IconBtn :text="props.like? 'favorite' : 'favorite'" style="border: none"/>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
   .container {
-
     border-radius: 10px;
-    padding: 10px;
     width: 200px;
     height: 150px;
+    padding: 10px;
     flex-direction: column;
     color: gray;
     text-overflow: ellipsis;
     box-shadow: 0 0 5px 5px rgba(240, 240, 240, 0.5);
     position: relative;
+  }
 
+  .subContainer {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 10px;
     transition: 0.35s;
     &:hover {
       color: black;
       background-color: rgba(245, 245, 245, 1);
     };
-
   }
 
   .subject {

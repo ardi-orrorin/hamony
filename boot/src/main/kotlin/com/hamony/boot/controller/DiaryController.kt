@@ -37,10 +37,16 @@ class DiaryController(
     }
 
     @GetMapping("recent")
-    fun recent(@AuthenticationPrincipal memberDTO: MemberDTO): ResponseEntity<ResponseDTO<List<DiaryDTO?>>> {
+    fun recent(@AuthenticationPrincipal memberDTO: MemberDTO,
+               pageable: Pageable): ResponseEntity<ResponseDTO<List<DiaryDTO?>>> {
+
+        var pageNumber: Int = pageable.pageNumber
+        if (pageable.pageNumber <= 0 ) pageNumber = 0
+
+        val pageInfo = PageRequest.of(pageNumber, pageable.pageSize, pageable.sort)
 
         return ResponseEntity.ok(
-            ResponseDTO(HttpStatus.OK.value(), diaryService.recent(memberDTO))
+            ResponseDTO(HttpStatus.OK.value(), diaryService.recent(memberDTO, pageInfo))
         )
     }
 
