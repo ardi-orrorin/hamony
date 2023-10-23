@@ -11,6 +11,8 @@ import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.request.DiarySearchDTO
 import org.modelmapper.ModelMapper
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -25,10 +27,25 @@ class DiaryService(
 
 ) {
 
+    val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
     fun findById(diaryId: Long): DiaryDTO{
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryId", diaryId
+        )
+
         val diary: Diary = diaryRepository.findById(diaryId).orElseThrow{
             NotFoundException("데이터를 찾을 수 업습니다.")
         }
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diary", diary
+        )
 
         return modelMapper.map(diary, DiaryDTO::class.java)
     }
@@ -36,14 +53,46 @@ class DiaryService(
     fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO): Unit {
 
         val member: Member = memberRepository.findByUserId(memberDTO.userId).get()
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "member", member
+        )
+
         val diary: Diary = modelMapper.map(diaryTagDTO.diary, Diary::class.java)
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diary", diary
+        )
+
         diary.member = member
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryMember", diary
+        )
 
         // tag 처리
         diaryRepository.save(diary)
     }
 
     fun recent(memberDTO: MemberDTO, pageable: Pageable): List<DiaryDTO> {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "pageable", pageable
+        )
 
         // TODO: 최근 그 표시 알고리즘 구현
 
@@ -55,9 +104,27 @@ class DiaryService(
 
     fun search(diarySearchDTO: DiarySearchDTO, pageable: Pageable): List<DiaryDTO> {
 
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diarySearchDTO", diarySearchDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "pageable", pageable
+        )
+
         // TODO: 검색 알고리즘 추가
 
         val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContains(diarySearchDTO.subject, diarySearchDTO.content, pageable)
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryList", diaryList
+        )
 
         return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
 

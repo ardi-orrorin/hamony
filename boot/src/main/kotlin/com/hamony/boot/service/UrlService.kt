@@ -11,6 +11,8 @@ import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.UrlRepository
 import jakarta.transaction.Transactional
 import org.modelmapper.ModelMapper
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,8 +22,23 @@ class UrlService(
     val modelMapper: ModelMapper,
 ) {
 
+    val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
     @Transactional
     fun save(diaryDTO: DiaryDTO, urlDTO: UrlDTO): Unit {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryDTO", diaryDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "urlDTO", urlDTO
+        )
+
 
         diaryRepository.findById(diaryDTO.id!!).orElseThrow {
             NotFoundException("게시글을 찾을 수 없습니다.")
@@ -31,6 +48,13 @@ class UrlService(
         val url: Url = modelMapper.map(urlDTO, Url::class.java)
 
         url.diary = diary
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "url", url
+        )
+
         urlRepository.save(url)
     }
 

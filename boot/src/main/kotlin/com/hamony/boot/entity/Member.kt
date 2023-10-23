@@ -1,5 +1,6 @@
 package com.hamony.boot.entity
 
+import com.hamony.boot.dto.MemberDTO
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Getter
@@ -14,24 +15,34 @@ data class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    val id: Long?,
+    var id: Long?,
 
     @Column(name = "USER_ID")
-    val userId: String = "",
+    var userId: String = "",
 
     @Column(name = "USER_PWD")
-    val userPwd: String = "",
+    var userPwd: String = "",
 
     @Column(name = "EMAIL")
-    val email: String = "",
+    var email: String = "",
 
     @Column(name = "CREATEAT")
-    val createAt: LocalDateTime = LocalDateTime.now(),
+    var createAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "DELETEAT")
-    val deleteAt: LocalDateTime? = null,
+    var deleteAt: LocalDateTime? = null,
 
 ){
+    fun update(memberDTO: MemberDTO) {
+        this.userId = memberDTO.userId
+        this.email = memberDTO.email
+        this.userPwd = memberDTO.userPwd
+    }
+
+    fun delete(){
+        this.deleteAt = LocalDateTime.now()
+    }
+
 
     override fun toString(): String {
         return "Member(id=$id, userId='$userId', userPwd='$userPwd', email='$email', createAt=$createAt, deleteAt=$deleteAt)"

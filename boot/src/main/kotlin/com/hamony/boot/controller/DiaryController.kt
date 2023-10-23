@@ -38,12 +38,26 @@ class DiaryController(
 
     @GetMapping("recent")
     fun recent(@AuthenticationPrincipal memberDTO: MemberDTO,
-               pageable: Pageable): ResponseEntity<ResponseDTO<List<DiaryDTO?>>> {
+               pageable: Pageable
+    ): ResponseEntity<ResponseDTO<List<DiaryDTO?>>> {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "pageable", pageable
+        )
 
         var pageNumber: Int = pageable.pageNumber
         if (pageable.pageNumber <= 0 ) pageNumber = 0
 
         val pageInfo = PageRequest.of(pageNumber, pageable.pageSize, pageable.sort)
+
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "pageInfo", pageInfo
+        )
 
         return ResponseEntity.ok(
             ResponseDTO(HttpStatus.OK.value(), diaryService.recent(memberDTO, pageInfo))
@@ -56,6 +70,13 @@ class DiaryController(
         @RequestParam diarySearchDTO: DiarySearchDTO,
         pageable: Pageable
     ): ResponseEntity<ResponseDTO<List<DiaryDTO>>> {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diarySearchDTO", diarySearchDTO
+        )
+
         var pageNumber: Int
 
         if(pageable.pageNumber <= 0) pageNumber = 0
@@ -63,11 +84,37 @@ class DiaryController(
 
         val pageableVar: Pageable = PageRequest.of(pageNumber, pageable.pageSize, pageable.sort)
 
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "pageableVar", pageableVar
+        )
+
         return ResponseEntity.ok(
             ResponseDTO(
                 HttpStatus.OK.value(),
                 diaryService.search(diarySearchDTO, pageableVar)
             )
+        )
+    }
+
+    @GetMapping("{id}")
+    fun findById(
+        @PathVariable id:Int,
+        @AuthenticationPrincipal memberDTO: MemberDTO
+    ): ResponseEntity<ResponseDTO<DiaryDTO>> {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+            )
+
+        return ResponseEntity.ok(
+            ResponseDTO(
+                HttpStatus.OK.value(),
+                diaryService.findById(id.toLong())
+                )
         )
     }
 }
