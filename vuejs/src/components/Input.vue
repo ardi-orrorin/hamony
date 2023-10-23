@@ -40,7 +40,6 @@ input {
     background-color: rgba(245, 245, 245, 1);
     transition: 0.35s;
     color: black;
-
   }
 }
 

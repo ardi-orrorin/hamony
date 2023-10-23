@@ -6,8 +6,6 @@ import Menu from "@/components/menu/Menu.vue";
 
 <template>
 <!-- 조건 추가 예정-->
-  <Menu />
-  <br />
   <RouterView />
 </template>
 

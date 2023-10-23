@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import IconBtn from "@/components/IconBtn.vue";
-import {reactive, ref, watch, watchEffect} from "vue";
+import {reactive, ref, watchEffect} from "vue";
 import LoginInput from "@/components/LoginInput.vue";
 import koJson from '@/assets/lang/ko-kr.json';
 import router from "@/router";
@@ -53,6 +53,8 @@ async function submitHandler() {
     if(result.status !== 200) {
       errorMsg.value = result.data
       if(id.value) id.value['inputRef'].focus();
+    } else if(result.status === 200) {
+      router.push('/')
     } else {
       errorMsg.value = ''
     }

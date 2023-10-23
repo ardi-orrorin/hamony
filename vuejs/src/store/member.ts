@@ -7,10 +7,10 @@ export interface User {
 }
 
 export interface UserToken {
-    userId: string
-    tokenType?: string
-    token: string
-    expireIn: number
+    userId?: string | undefined
+    tokenType?: string | undefined
+    token?: string | undefined
+    expireIn?: number | undefined
 }
 export const useSignIn = defineStore('signIn', {
     state: (): User => {
@@ -25,17 +25,27 @@ export const useSignIn = defineStore('signIn', {
 
 export const useToken = defineStore('token', {
     state: (): UserToken => {
-        return {
-            userId: '',
-            token: '',
-            expireIn: 0,
-        }
+        return {}
+    },
+    getters: {
+      getInfo: state => ({
+          userId: state.userId,
+          token: state.token,
+          expireIn: state.expireIn,
+      })
     },
     actions: {
         login(value: UserToken) {
             this.userId = value.userId
             this.token = value.token
             this.expireIn = value.expireIn
+        },
+        isLogin(): boolean {
+            return !!(this.userId
+                && this.token
+                && this.expireIn
+                && (new Date().valueOf() <= this.expireIn)
+            );
         }
     }
 

@@ -6,9 +6,9 @@ data class TokenDTO(
     var userId: String,
     var tokenType: String,
     var token: String,
-    var expiresIn: Long,
+    var expireIn: Long,
 ){
     override fun toString(): String {
-        return "TokenDTO(userId='$userId', expiresIn=$expiresIn)"
+        return "TokenDTO(userId='$userId', expireIn=$expireIn)"
     }
 }

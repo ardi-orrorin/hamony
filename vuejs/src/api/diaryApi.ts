@@ -10,7 +10,6 @@ export async function writeDiary(data: DiaryTag) {
         .then(res => res.data)
         .catch(err => err.response)
 
-    console.log(reuslt)
     return reuslt
 
 }
