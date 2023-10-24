@@ -59,27 +59,27 @@ class BootApplicationTests {
         diaryTagRepository.save(diaryTag)
         diaryTagRepository.save(diaryTag1)
 
-        println("----------------")
-        diaryRepository.findAll().forEach(::println)
-        println("----------------")
-        memberRepository.findAll().forEach(::println)
-
-        println("----------------")
-        diaryRepository.findAllByMember(member).forEach(::println)
-        println("----------------")
-        diaryTagRepository.findAll().forEach(::println)
-        println("----------------")
-        diaryTagRepository.findAllByDiary(diary).forEach(::println)
-        println("----------------")
-
-        tagRepository.findAll().forEach(::println)
+//        println("----------------")
+//        diaryRepository.findAll().forEach(::println)
+//        println("----------------")
+//        memberRepository.findAll().forEach(::println)
+//
+//        println("----------------")
+//        diaryRepository.findAllByMember(member).forEach(::println)
+//        println("----------------")
+//        diaryTagRepository.findAll().forEach(::println)
+//        println("----------------")
+//        diaryTagRepository.findAllByDiary(diary).forEach(::println)
+//        println("----------------")
+//
+//        tagRepository.findAll().forEach(::println)
     }
 
 
     @Test
     fun modelmapper(){
-        val member: Member = memberRepository.findByUserId("test123").get()
-        println(modelMapper.map(member, MemberDTO::class.java))
+//        val member: Member = memberRepository.findByUserId("test123").get()
+//        println(modelMapper.map(member, MemberDTO::class.java))
 
     }
 }
