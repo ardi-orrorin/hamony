@@ -43,21 +43,21 @@ class BootApplicationTests {
     @Transactional
     fun memberWrite() {
 
-        var member: Member = Member(null,"sdf","sdf","sdf", LocalDateTime.now(),null);
-        var member2: Member = Member(null,"sdf2","sdf2","sdf2", LocalDateTime.now(),null);
-        memberRepository.save(member)
-        memberRepository.save(member2)
-        memberRepository.findAll().forEach(::println);
-
-        var diary = Diary(null,"123","123", LocalDateTime.now(),null,null, member)
-        var diary1 = Diary(null,"1234","1234", LocalDateTime.now(),null,null, member)
-        var tag = Tag(null, "TEST")
-        var diaryTag = DiaryTag(null, diary, tag)
-        var diaryTag1 = DiaryTag(null, diary1, tag)
-        diaryRepository.save(diary)
-        tagRepository.save(tag)
-        diaryTagRepository.save(diaryTag)
-        diaryTagRepository.save(diaryTag1)
+//        var member: Member = Member(null,"sdf","sdf","sdf", LocalDateTime.now(),null);
+//        var member2: Member = Member(null,"sdf2","sdf2","sdf2", LocalDateTime.now(),null);
+//        memberRepository.save(member)
+//        memberRepository.save(member2)
+//        memberRepository.findAll().forEach(::println);
+//
+//        var diary = Diary(null,"123","123", LocalDateTime.now(),null,null, member)
+//        var diary1 = Diary(null,"1234","1234", LocalDateTime.now(),null,null, member)
+//        var tag = Tag(null, "TEST")
+//        var diaryTag = DiaryTag(null, diary, tag)
+//        var diaryTag1 = DiaryTag(null, diary1, tag)
+//        diaryRepository.save(diary)
+//        tagRepository.save(tag)
+//        diaryTagRepository.save(diaryTag)
+//        diaryTagRepository.save(diaryTag1)
 
 //        println("----------------")
 //        diaryRepository.findAll().forEach(::println)
@@ -76,10 +76,10 @@ class BootApplicationTests {
     }
 
 
-    @Test
-    fun modelmapper(){
+//    @Test
+//    fun modelmapper(){
 //        val member: Member = memberRepository.findByUserId("test123").get()
 //        println(modelMapper.map(member, MemberDTO::class.java))
 
-    }
+//    }
 }
