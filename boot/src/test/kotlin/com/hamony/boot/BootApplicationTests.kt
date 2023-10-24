@@ -39,9 +39,9 @@ class BootApplicationTests {
     @Autowired
     lateinit var modelMapper: ModelMapper
 
-    @Test
-    @Transactional
-    fun memberWrite() {
+//    @Test
+//    @Transactional
+//    fun memberWrite() {
 
 //        var member: Member = Member(null,"sdf","sdf","sdf", LocalDateTime.now(),null);
 //        var member2: Member = Member(null,"sdf2","sdf2","sdf2", LocalDateTime.now(),null);
@@ -73,7 +73,7 @@ class BootApplicationTests {
 //        println("----------------")
 //
 //        tagRepository.findAll().forEach(::println)
-    }
+//    }
 
 
 //    @Test
