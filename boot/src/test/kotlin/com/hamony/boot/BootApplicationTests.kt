@@ -80,6 +80,6 @@ class BootApplicationTests {
 //    fun modelmapper(){
 //        val member: Member = memberRepository.findByUserId("test123").get()
 //        println(modelMapper.map(member, MemberDTO::class.java))
-
+//
 //    }
 }
