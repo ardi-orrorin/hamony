@@ -12,14 +12,14 @@ const text: Lang = koJson;
 
 
   const user = useSignIn();
-  const idCheck = ref(0);
-  const idRef = ref(null);
-  const pwd1Ref = ref(null);
-  const pwd2Ref = ref(null);
-  const nickNameRef = ref(null);
-  const emailAutoList = ref(false);
-  const emailRef = ref(null);
-  const emailListREf = ref([])
+  const idCheck = ref<number>(0);
+  const idRef = ref<any>(null);
+  const pwd1Ref = ref<any>(null);
+  const pwd2Ref = ref<any>(null);
+  const nickNameRef = ref<any>(null);
+  const emailAutoList = ref<any>(false);
+  const emailRef = ref<any>(null);
+  const emailListREf = ref<any>([])
 
   const mailList = [
       '@gmail.com', '@daum.com', '@naver.com',

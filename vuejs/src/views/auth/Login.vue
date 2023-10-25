@@ -20,13 +20,15 @@ const user = reactive<User>({
   pwd: ''
 });
 
-const pwd = ref(null);
-const id = ref(null);
+const pwd = ref<any>(null);
+const id = ref<any>(null);
 const errorMsg = ref('');
 
 
 watchEffect(()=>{
-  if(id.value) id.value['inputRef'].focus()
+  if(id.value) {
+    id.value['inputRef'].focus()
+  }
 })
 
 function userInit() {

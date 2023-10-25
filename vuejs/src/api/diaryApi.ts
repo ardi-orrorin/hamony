@@ -22,7 +22,7 @@ export async function recentDiary() {
         .then(res => res.data)
         .catch(err => err.response)
 
-    console.log(result)
+
     return result
 }
 
