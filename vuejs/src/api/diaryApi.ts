@@ -26,3 +26,17 @@ export async function recentDiary() {
     return result
 }
 
+export async function profileList(option: string) {
+
+    console.log(option);
+
+    const result = await axios.get(import.meta.env.VITE_API_URL + '/profile/' + option, {headers: {
+            Authorization: useToken().tokenType + ' ' + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
+
+    return result;
+
+}
+

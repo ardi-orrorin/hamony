@@ -11,4 +11,5 @@ interface DiaryRepository: JpaRepository<Diary, Long> {
 
 
     fun findAllBySubjectContainsOrContentContains(subject: String?, content: String?, pageable: Pageable): MutableList<Diary>
+    fun findAllByMemberId(id: Long): MutableList<Diary>
 }

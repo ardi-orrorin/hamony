@@ -19,7 +19,6 @@ const props = defineProps(['text'])
     color: blue;
     transition: 0.35s;
     &:hover {
-      transition: 0.35s;
       background-color: rgba(245, 245, 245, 1);
     }
   }

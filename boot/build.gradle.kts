@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 plugins {
     id("org.springframework.boot") version "3.1.4"
@@ -9,7 +11,7 @@ plugins {
 }
 
 group = "com.hamony"
-version = "0.0.1-SNAPSHOT"
+version = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace(":","").replace(".","")
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

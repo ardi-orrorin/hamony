@@ -2,6 +2,7 @@
 
 import ProfileImg from "@/components/profile/ProfileImg.vue";
 import ProfileTab from "@/components/profile/ProfileTab.vue";
+
 interface Tab {
   text: string;
   path: string;
@@ -74,7 +75,9 @@ const tabs: Tab[] = [
 
   .body {
     margin-top: 2vh;
-    height: 30vh;
+    height: 40vh;
+    flex-wrap: wrap;
+    word-break: break-all;
   }
 
   .headerSub {

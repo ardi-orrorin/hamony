@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import NotFound from "@/views/error/NotFound.vue";
 import Login from "@/views/auth/Login.vue";
 import SignIn from "@/views/auth/SignIn.vue";
@@ -9,8 +9,6 @@ import Recent from "@/views/diary/Recent.vue";
 import {useToken} from "@/store/member";
 import Profile from "@/views/profile/Profile.vue";
 import ProfileList from "@/views/profile/ProfileList.vue";
-import PrifileFavorite from "@/views/profile/PrifileFavorite.vue";
-import ProfileOrder from "@/views/profile/ProfileOrder.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,16 +48,19 @@ const router = createRouter({
               path: 'list',
               name: 'profileList',
               component: ProfileList,
+              meta: {tab: 'list'}
             },
             {
               path: 'favorite',
               name: 'profileFavorite',
-              component: PrifileFavorite,
+              component: ProfileList,
+              meta: {tab: 'fav'}
             },
             {
               path: 'order',
               name: 'profileOrder',
-              component: ProfileOrder,
+              component: ProfileList,
+              meta: {tab: 'order'}
             },
           ]
         },

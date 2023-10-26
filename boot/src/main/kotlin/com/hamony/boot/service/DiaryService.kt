@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 class DiaryService(
     val modelMapper: ModelMapper,
     val diaryRepository: DiaryRepository,
-    val memberRepository: MemberRepository
+    val memberRepository: MemberRepository,
 
 ) {
 
@@ -128,6 +128,18 @@ class DiaryService(
 
         return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
 
+    }
+
+    fun findByMemberId(id: Long): List<DiaryDTO> {
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "id", id
+        )
+
+        val diaryList: MutableList<Diary> = diaryRepository.findAllByMemberId(id)
+
+        return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
     }
 
 

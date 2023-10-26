@@ -7,7 +7,7 @@ import koText from "@/assets/lang/ko-kr.json"
 import DiarySubject from "@/components/DiarySubject.vue";
 import DiaryItem from "@/components/DiaryItem.vue";
 import {writeDiary} from "@/api/diaryApi";
-import type {Diary, DiaryTag} from "@/store/diary";
+import type {DiaryTag} from "@/store/diary";
 
 interface Body {
   subject: string
