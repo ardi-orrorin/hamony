@@ -33,7 +33,7 @@ const tabs: Tab[] = [
           </template>
         </div>
         <div class="body">
-          <RouterView />
+          <RouterView :meta="$route.meta" />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import type {DiaryTag} from "@/store/diary";
 import {useToken} from "@/store/member";
+import {useDairy} from "@/store/diary";
 
 
 export async function writeDiary(data: DiaryTag) {
@@ -35,6 +36,11 @@ export async function profileList(option: string) {
         }})
         .then(res => res.data)
         .catch(err => err.response)
+
+    if(result.status === 200){
+        const data = useDairy()
+        data.add(result.data)
+    }
 
     return result;
 

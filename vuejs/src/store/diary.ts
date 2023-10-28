@@ -16,14 +16,12 @@ export interface DiaryTag {
 }
 
 export const useDairy = defineStore('diary', {
-    state(): Diary {
-        return {
-            id: null,
-            subject: '',
-            content: '',
-            createAt: new Date(),
-            updateAt: null,
-            deleteAt: null,
-        }
+    state(): Diary[] {
+        return []
     },
+    actions: {
+        add(data: Diary[]): void {
+            this.$state = [...this.$state, ...data]
+        }
+    }
 })

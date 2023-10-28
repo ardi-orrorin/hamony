@@ -8,7 +8,7 @@ import Menu from "@/components/menu/Menu.vue";
   <Menu />
   <br />
   <br />
-  <RouterView />
+  <RouterView :meta="$route.meta" />
 </template>
 
 <style scoped lang="scss">

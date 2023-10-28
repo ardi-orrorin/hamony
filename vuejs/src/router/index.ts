@@ -9,6 +9,7 @@ import Recent from "@/views/diary/Recent.vue";
 import {useToken} from "@/store/member";
 import Profile from "@/views/profile/Profile.vue";
 import ProfileList from "@/views/profile/ProfileList.vue";
+import {profileList} from "@/api/diaryApi";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,20 +48,23 @@ const router = createRouter({
             {
               path: 'list',
               name: 'profileList',
-              component: ProfileList,
-              meta: {tab: 'list'}
+              component: ()=> import("@/views/profile/ProfileList.vue"),
+              meta: {tab: 'list'},
+              beforeEnter: ()=>{profileList('list')}
             },
             {
               path: 'favorite',
               name: 'profileFavorite',
-              component: ProfileList,
-              meta: {tab: 'fav'}
+              component: ()=> import("@/views/profile/ProfileList.vue"),
+              meta: {tab: 'fav'},
+              beforeEnter: ()=>{profileList('fav')}
             },
             {
               path: 'order',
               name: 'profileOrder',
-              component: ProfileList,
-              meta: {tab: 'order'}
+              component: ()=> import("@/views/profile/ProfileList.vue"),
+              meta: {tab: 'order'},
+              beforeEnter: ()=>{profileList('order')}
             },
           ]
         },

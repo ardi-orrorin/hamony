@@ -3,23 +3,25 @@ const props = defineProps(['subject', 'content'])
 </script>
 
 <template>
-  <div class="container">
-    <div class="subject">
-      {{props.subject}}
-    </div>
-    <div class="body">
-      {{props.content}}
+  <div>
+    <div class="container">
+      <div class="subject">
+        {{props.subject}}
+      </div>
+      <div class="body">
+        {{props.content}}
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
   .container {
-    border-radius: 10px;
     display: flex;
+    border-radius: 10px;
     flex-direction: column;
     width: 100%;
-    overflow-y: hidden;
+    height: 100%;
     padding: 10px;
     font-size: 0.85rem;
     transition: 0.35s;

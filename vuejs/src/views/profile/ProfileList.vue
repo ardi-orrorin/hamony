@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import type {Diary} from "@/store/diary";
+import {useDairy} from "@/store/diary";
 import ProfileDairyItem from "@/components/profile/ProfileDairyItem.vue";
-import router from "@/router";
-import {onMounted, onUpdated} from "vue";
-import {profileList} from "@/api/diaryApi";
 
-const itemList: Diary[] = []
+const itemList = useDairy()
 
-onMounted(()=>{
-  profileList(router.currentRoute.value.meta.tab!!)
-});
-
-onUpdated(()=>{
-  profileList(router.currentRoute.value.meta.tab!!)
-});
 
 </script>
 
 <template>
   <div class="container">
-    <template v-for="item in itemList">
+    <template v-for="item in itemList.$state">
       <ProfileDairyItem :subject="item.subject" :content="item.content" />
     </template>
   </div>
