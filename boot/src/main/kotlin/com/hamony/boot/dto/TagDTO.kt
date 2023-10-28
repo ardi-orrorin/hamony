@@ -2,7 +2,7 @@ package com.hamony.boot.dto
 
 data class TagDTO(
 
-    var id: Long?,
+    var id: Long? = null,
 
     var tag: String = "",
 

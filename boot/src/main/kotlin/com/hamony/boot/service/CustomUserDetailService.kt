@@ -20,13 +20,7 @@ class CustomUserDetailService(
             NotFoundException("계정을 찾을 수 없습니다.")
         }
 
-        return MemberDTO( // modelMapper 기본생성자 에러 발생으로 임시 방편 코드
-            member.id,
-            member.userId,
-            "",
-            member.email,
-            member.createAt,
-            member.deleteAt
-        )
+
+        return modelMapper.map(member, MemberDTO::class.java)
     }
 }

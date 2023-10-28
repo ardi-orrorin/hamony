@@ -2,9 +2,9 @@ package com.hamony.boot.dto
 
 data class AlertDTO(
 
-    var id: Long?,
+    var id: Long? = null,
 
-    var member: MemberDTO?,
+    var member: MemberDTO? = null,
 
-    var alertTemplate: AlertTemplateDTO?,
+    var alertTemplate: AlertTemplateDTO? = null,
 )

@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class AlertTemplateDTO(
 
-    var id: Long?,
+    var id: Long? = null,
 
     var body: String = "",
 

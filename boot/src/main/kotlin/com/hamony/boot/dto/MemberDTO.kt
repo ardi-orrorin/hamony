@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 data class MemberDTO (
 
-    var id: Long?,
+    var id: Long? = null,
 
     var userId: String = "",
 
@@ -16,7 +16,7 @@ data class MemberDTO (
 
     var createAt: LocalDateTime = LocalDateTime.now(),
 
-    var deleteAt: LocalDateTime?,
+    var deleteAt: LocalDateTime? = null,
 
 ): UserDetails {
     override fun getUsername(): String = this.userId

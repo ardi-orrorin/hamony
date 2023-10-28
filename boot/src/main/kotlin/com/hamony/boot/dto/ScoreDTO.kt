@@ -2,11 +2,11 @@ package com.hamony.boot.dto
 
 data class ScoreDTO(
 
-    var id: Long?,
+    var id: Long? = null,
 
     var score: Int = 0,
 
-    var tag: TagDTO?,
+    var tag: TagDTO? = null,
 
-    var member: MemberDTO?
+    var member: MemberDTO? = null
 )

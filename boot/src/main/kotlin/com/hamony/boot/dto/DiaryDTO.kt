@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class DiaryDTO(
 
-    var id: Long?,
+    var id: Long? = null,
 
     var subject: String = "",
 
@@ -13,16 +13,18 @@ data class DiaryDTO(
 
     var createAt: LocalDateTime = LocalDateTime.now(),
 
-    var updateAt: LocalDateTime?,
+    var updateAt: LocalDateTime? = null,
 
-    var deleteAt: LocalDateTime?,
+    var deleteAt: LocalDateTime? = null,
 
-    var member: MemberDTO?,
+    var member: MemberDTO? = null,
 
     var diaryTag: MutableList<DiaryTagDTO> = ArrayList()
 
 
 ){
+
+
     override fun toString(): String {
         return "Diary(id=$id, subject='$subject', content='$content', createAt=$createAt, updateAt=$updateAt, deleteAt=$deleteAt, member=$member, diaryTag=$diaryTag)"
     }

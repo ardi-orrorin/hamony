@@ -142,5 +142,22 @@ class DiaryService(
         return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
     }
 
+    fun orderDiary(memberDTO: MemberDTO): List<DiaryDTO> {
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+
+        val diaryList: MutableList<Diary> = diaryRepository.findAll()
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryList", diaryList
+        )
+
+        return diaryList.map { modelMapper.map(it, DiaryDTO::class.java) }
+    }
+
 
 }

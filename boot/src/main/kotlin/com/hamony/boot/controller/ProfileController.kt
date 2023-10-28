@@ -59,4 +59,21 @@ class ProfileController(
             )
         )
     }
+
+    @GetMapping("order")
+    fun getOrderDiary(
+        @AuthenticationPrincipal memberDTO: MemberDTO,
+    ): ResponseEntity<ResponseDTO<List<DiaryDTO>>> {
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+        return ResponseEntity.ok(
+            ResponseDTO(
+                HttpStatus.OK.value(),
+                diaryService.orderDiary(memberDTO)
+            )
+        )
+    }
 }
