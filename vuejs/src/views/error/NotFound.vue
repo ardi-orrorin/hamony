@@ -1,14 +1,15 @@
 <script lang="ts" setup>
+import koText from "@/assets/lang/ko-kr.json"
+const text = koText;
 const props = defineProps(['pathMatch']);
 const path: string = props.pathMatch[props.pathMatch.length - 1];
-
 
 </script>
 
 <template>
   <div class="container">
-    <h1>404 NOT FOUND</h1>
-    <span>{{ path }} 페이지를 찾을 수 없습니다.</span>
+    <h1>{{ text.error404 }}</h1>
+    <span>{{ path }} {{ text.notFoundPage }}</span>
   </div>
 </template>
 

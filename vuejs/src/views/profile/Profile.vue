@@ -2,16 +2,19 @@
 
 import ProfileImg from "@/components/profile/ProfileImg.vue";
 import ProfileTab from "@/components/profile/ProfileTab.vue";
-
+import koText from "@/assets/lang/ko-kr.json"
 interface Tab {
   text: string;
   path: string;
 }
 
+const text = koText;
+
+
 const tabs: Tab[] = [
-  {text: 'List', path: '/profile/list' },
-  {text: 'Favorite', path: '/profile/favorite'},
-  {text: 'order', path: '/profile/order'},
+  {text: text.profileTabList, path: '/profile/list' },
+  {text: text.profileTabFav, path: '/profile/favorite'},
+  {text: text.profileTabOrder, path: '/profile/order'},
 ]
 </script>
 
@@ -21,10 +24,10 @@ const tabs: Tab[] = [
       <div class="">
         <div class="header">
           <ProfileImg src="/" />
-          <span>아이디</span>
+          <span class="profileId">{{ text.profileId}}</span>
           <div class="headerSub">
-            <button>프로필 수정</button>
-            <button>프로필 추가</button>
+            <button>{{ text.profileModifyProfile }}</button>
+            <button>{{ text.profileAddProfile }}</button>
           </div>
         </div>
         <div class="tabs">
@@ -65,6 +68,11 @@ const tabs: Tab[] = [
     span {
       width: 20%;
     }
+  }
+
+  .profileId {
+    color: gray;
+    font-size: 0.9rem;
   }
   .tabs {
     margin-top: 2vh;

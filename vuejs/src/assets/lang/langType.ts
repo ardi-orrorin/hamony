@@ -1,32 +1,40 @@
 export interface Lang {
-    "signinTitle": string
-    "loginTitle": string
-    "searchId": string
-    "enterUserId": string
-    "enterPwd1": string
-    "enterPwd2": string
-    "enterEmail": string
-    "enterNickname": string
-    "min4Id": string
+    "alertUrl4Max": string
     "alreadyId": string
     "availableId": string
-    "valiablePwd": string
-    "verify6Code" :string
-    "min8Pwd": string
-    "notMatchPwd": string
-    "notMatchEmail": string
-    "matchPwd": string
-    "matchEmail": string
-    "signSubmitError": string
     "enterBody": string
+    "enterEmail": string
+    "enterNickname": string
+    "enterPwd1": string
+    "enterPwd2": string
     "enterSubject": string
-    "tagIntro": string
     "enterUrl": string
-    "alertUrl4Max": string
-    "minTextUrl": string
-    "menuWrite": string
+    "enterUserId": string
+    "error404": string
+    "loginTitle": string
+    "matchEmail": string
+    "matchPwd": string
+    "menuProfile": string
     "menuRecent": string
     "menuRecommend": string
     "menuSearch": string
-    "menuProfile": string
+    "menuWrite": string
+    "min4Id": string
+    "min8Pwd": string
+    "minTextUrl": string
+    "notFoundPage": string
+    "notMatchEmail": string
+    "notMatchPwd": string
+    "profileAddProfile": string
+    "profileId": string
+    "profileModifyProfile": string
+    "profileTabFav": string
+    "profileTabList": string
+    "profileTabOrder": string
+    "searchId": string
+    "signinTitle": string
+    "signSubmitError": string
+    "tagIntro": string
+    "valiablePwd": string
+    "verify6Code" :string
 }
