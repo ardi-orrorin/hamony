@@ -2,23 +2,30 @@
 import RecentItem from "@/components/recent/RecentItem.vue";
 import {onMounted, reactive} from "vue";
 import {recentDiary} from "@/api/diaryApi";
+import router from "@/router";
 
 interface RecentItems {
+  id?: number | null;
   subject: string;
   content: string;
   like: boolean;
 }
 
+const list: RecentItems[] = reactive<RecentItems[]>([
+])
+
 onMounted(()=> {
   recentDiary().then(res => {
     res.data.forEach(it => {
-      list.push({subject: it.subject,  content: it.content, like: false})
+      list.push({id: it.id, subject: it.subject,  content: it.content, like: false})
     })
   })
 })
 
-const list: RecentItems[] = reactive<RecentItems[]>([
-])
+function moveDiary(id: number){
+  console.log(id)
+  router.push("/read/"+id)
+}
 
 </script>
 
@@ -26,7 +33,7 @@ const list: RecentItems[] = reactive<RecentItems[]>([
   <div class="container">
     <div class="subContainer">
       <template v-for="item in list">
-        <RecentItem :subject="item.subject" :content="item.content" :like="item.like" />
+        <RecentItem :subject="item.subject" :content="item.content" :like="item.like" @click="()=>moveDiary(item.id!!)"/>
       </template>
 
     </div>

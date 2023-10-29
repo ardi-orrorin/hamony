@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useDairy} from "@/store/diary";
+import {useDairys} from "@/store/diary";
 import ProfileDairyItem from "@/components/profile/ProfileDairyItem.vue";
 
-const itemList = useDairy()
+const itemList = useDairys()
 
 
 </script>

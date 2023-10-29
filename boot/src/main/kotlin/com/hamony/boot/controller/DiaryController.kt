@@ -21,6 +21,7 @@ class DiaryController(
     val diaryService: DiaryService,
 ) {
     val log = LoggerFactory.getLogger(this.javaClass)!!
+
     @PostMapping("write")
     fun write(@RequestBody diaryTagDTO: DiaryTagDTO,
               @AuthenticationPrincipal memberDTO: MemberDTO
@@ -109,6 +110,12 @@ class DiaryController(
             object{}.javaClass.enclosingMethod.name,
             "memberDTO", memberDTO
             )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "id", id
+        )
 
         return ResponseEntity.ok(
             ResponseDTO(

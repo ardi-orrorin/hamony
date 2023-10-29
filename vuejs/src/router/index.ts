@@ -8,8 +8,8 @@ import Root from "@/views/root/Root.vue";
 import Recent from "@/views/diary/Recent.vue";
 import {useToken} from "@/store/member";
 import Profile from "@/views/profile/Profile.vue";
-import ProfileList from "@/views/profile/ProfileList.vue";
-import {profileList} from "@/api/diaryApi";
+import {getDiary, profileList} from "@/api/diaryApi";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +39,15 @@ const router = createRouter({
           path: 'write',
           name: 'write',
           component: Write,
+        },
+        {
+          path: 'read/:id',
+          name: 'read',
+          props: true,
+          component: () => import("@/views/diary/Read.vue"),
+          beforeEnter: (to) => {
+            getDiary(to.params.id.toString())
+          }
         },
         {
           path: 'profile',

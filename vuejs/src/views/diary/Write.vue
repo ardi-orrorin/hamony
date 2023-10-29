@@ -136,12 +136,12 @@ function onSubmit(){
     justify-content: center;
     align-items: center;
   }
-
   .subContianer {
     width: 35vw;
     border-radius: 15px;
     box-shadow: 0 0 10px 5px rgba(230, 230, 230, 0.5);
   }
+
 
   .info {
     padding: 10px;
