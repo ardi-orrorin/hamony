@@ -8,9 +8,18 @@ import Menu from "@/components/menu/Menu.vue";
   <Menu />
   <br />
   <br />
-  <RouterView :meta="$route.meta" />
+<!--  <RouterView :meta="$route.meta"/>-->
+  <router-view v-slot="{Component}">
+    <Transition>
+      <component :is="Component" />
+    </Transition>
+  </router-view>
 </template>
 
 <style scoped lang="scss">
-
+.v-enter-from,
+.v-leave-to {
+  transition: opacity 0.25s;
+  opacity: 0;
+}
 </style>
