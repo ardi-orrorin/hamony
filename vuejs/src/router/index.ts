@@ -9,6 +9,7 @@ import Recent from "@/views/diary/Recent.vue";
 import {useToken} from "@/store/member";
 import Profile from "@/views/profile/Profile.vue";
 import {getDiary, profileList} from "@/api/diaryApi";
+import Test from "@/components/Test.vue";
 
 
 const router = createRouter({
@@ -39,6 +40,11 @@ const router = createRouter({
           path: 'write',
           name: 'write',
           component: Write,
+        },
+        {
+          path: 'upload',
+          name: 'upload',
+          component: Test,
         },
         {
           path: 'read/:id',

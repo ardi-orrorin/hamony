@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 
 @RestController
@@ -22,8 +23,19 @@ class DiaryController(
 ) {
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
+    @PostMapping("img")
+    fun img(@RequestPart img:MultipartFile) : Unit{
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "img", img
+        )
+
+    }
+
     @PostMapping("write")
     fun write(@RequestBody diaryTagDTO: DiaryTagDTO,
+              @RequestPart(name = "img") img: MultipartFile,
               @AuthenticationPrincipal memberDTO: MemberDTO
               ): ResponseEntity<ResponseDTO<Boolean>> {
 

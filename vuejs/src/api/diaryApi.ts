@@ -60,6 +60,17 @@ export async function profileList(option: string) {
     }
 
     return result;
+}
 
+export async function imgUpload(){
+
+
+    const result = await axios.post(import.meta.env.VITE_API_URL + '/dairy/img', null, {headers: {
+            Authorization: useToken().tokenType + ' ' + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
+
+    return result
 }
 
