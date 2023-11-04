@@ -47,7 +47,7 @@ class FileProvider {
             if (!File(pathName).isDirectory)
                 File(pathName).mkdirs()
 
-            File(pathName+ "/" + UUID.randomUUID() + "." + ext).createNewFile()
+            File(pathName+ "/" + UUID.randomUUID() + "." + ext).writeBytes(file)
         }
 
         if(FILE_IMAGES.contains(ext)) {

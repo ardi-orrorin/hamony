@@ -25,32 +25,6 @@ class DiaryController(
 ) {
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
-    @PostMapping("img")
-    fun img(
-        @RequestPart(required = false) img: MultipartFile,
-        @AuthenticationPrincipal memberDTO: MemberDTO
-    ) : ResponseEntity<ResponseDTO<String>>{
-
-        log.info("[{}]({}) : {}: {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "img", img
-        )
-
-        log.info("[{}]({}) : {}: {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "memberDTO", memberDTO
-        )
-
-        return ResponseEntity.ok(
-            ResponseDTO(
-                HttpStatus.OK.value(),
-                "ok"
-            )
-        )
-    }
-
     @PostMapping("write")
     fun write(@RequestBody diaryTagDTO: DiaryTagDTO,
               @AuthenticationPrincipal memberDTO: MemberDTO

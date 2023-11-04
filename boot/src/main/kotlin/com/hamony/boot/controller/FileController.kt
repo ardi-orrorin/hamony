@@ -3,8 +3,7 @@ package com.hamony.boot.controller
 import com.hamony.boot.dto.MemberDTO
 import com.hamony.boot.dto.response.ResponseDTO
 import com.hamony.boot.exception.InvalidFile
-import com.hamony.boot.file.FileProvider
-import com.hamony.boot.file.FileType
+import com.hamony.boot.file.*
 import com.hamony.boot.service.MemberService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -23,6 +22,7 @@ import java.io.File
 class FileController(
     val fileProvider: FileProvider,
     val memberService: MemberService,
+    val resizeImg: ResizeImage,
 ) {
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
@@ -83,14 +83,26 @@ class FileController(
         return ResponseEntity.ok(ResponseDTO(HttpStatus.OK.value(), "파일 업로드 성공"))
     }
 
-    @GetMapping("/media/image/{fileName}")
-    fun getMediaFile(@PathVariable fileName: String): ResponseEntity<ByteArray> {
+    @GetMapping("/media/image/{id}/{fileName}")
+    fun getMediaFile(
+        @PathVariable id: Int,
+        @PathVariable fileName: String,
+        @RequestParam(required = false) thumnail: Boolean?,
+        @RequestParam(required = false) size: Int?,
+    ): ResponseEntity<ByteArray> {
 
         val ext: String = fileName.substring(fileName.lastIndexOf(".") + 1)
 
         extValidation(ext, FileType.IMAGE)
 
-        val file = File(fileProvider.getOsDir() + fileName)
+        val file = File(fileProvider.getOsDir() + "/${id}/images/" + fileName)
+        var oFile = file.readBytes()
+
+        if(thumnail != null && thumnail) {
+            oFile = resizeImg.read(file)
+                .scale(size ?: 500, ResizeCriteria.HEIGHT)
+                .thumnail(file, ext)
+        }
 
         log.info("[{}]({}) {} : {}",
             object{}.javaClass.enclosingClass.name,
@@ -104,17 +116,20 @@ class FileController(
         headers.cacheControl = "public, max-age=31536000"
         headers.contentType = MediaType("image", ext)
 
-        return ResponseEntity(file.readBytes(), headers, HttpStatus.OK)
+        return ResponseEntity(oFile, headers, HttpStatus.OK)
     }
 
-    @GetMapping("/media/video/{fileName}")
-    fun getVideoFile(@PathVariable fileName: String): ResponseEntity<ByteArray> {
+    @GetMapping("/media/video/{id}/{fileName}")
+    fun getVideoFile(
+        @PathVariable id: Int,
+        @PathVariable fileName: String
+    ): ResponseEntity<ByteArray> {
 
         val ext: String = fileName.substring(fileName.lastIndexOf(".") + 1)
 
         extValidation(ext, FileType.VIDEO)
 
-        val file = File(fileProvider.getOsDir() + fileName)
+        val file = File(fileProvider.getOsDir() + "/${id}/video/" + fileName)
 
         log.info("[{}]({}) {} : {}",
             object{}.javaClass.enclosingClass.name,
