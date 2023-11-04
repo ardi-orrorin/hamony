@@ -18,18 +18,24 @@ class ApiExceptionAdvice {
 
     @ExceptionHandler(TokenException::class)
     fun exceptionHandler(e: TokenException): ResponseEntity<String>{
-        logError(e.message!!)
+        logError(e.message as String)
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message);
     }
 
     @ExceptionHandler(VerifyPasswordException::class)
     fun exceptionHandler(e: VerifyPasswordException): ResponseEntity<String>{
-        logError(e.message!!)
+        logError(e.message as String)
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message);
     }
     @ExceptionHandler(ExistUserException::class)
     fun exceptionHandler(e: ExistUserException): ResponseEntity<String>{
-        logError(e.message!!)
+        logError(e.message as String)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message);
+    }
+
+    @ExceptionHandler(InvalidFile::class)
+    fun exceptionHandler(e: InvalidFile): ResponseEntity<String>{
+        logError(e.message as String)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message);
     }
 }

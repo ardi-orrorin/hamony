@@ -1,6 +1,7 @@
 package com.hamony.boot.controller
 
 import com.hamony.boot.dto.response.ResponseDTO
+import com.hamony.boot.exception.InvalidFile
 import com.hamony.boot.file.FileProvider
 import org.apache.http.entity.ContentType
 import org.slf4j.Logger
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.web.header.Header
+import org.springframework.util.MimeType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import java.awt.Image
 import java.io.File
 import java.util.UUID
+import javax.imageio.ImageIO
 
 
 @RestController
@@ -61,6 +65,11 @@ class FileController(
     @GetMapping("/media/image/{fileName}")
     fun getMediaFile(@PathVariable fileName: String): ResponseEntity<ByteArray> {
 
+        val allowedExt = listOf("jpg", "jpeg", "png", "gif", "bmp")
+
+        if (!allowedExt.contains(fileName.substring(fileName.lastIndexOf(".") + 1)))
+            throw InvalidFile("허용되지 않은 요청입니다.")
+
         val file = File(fileProvider.getOsDir() + fileName)
 
         log.info("[{}]({}) {} : {}",
@@ -71,10 +80,10 @@ class FileController(
 
         val headers = HttpHeaders()
 
-        when (fileName.substring(fileName.lastIndexOf("."))) {
-            ".jpg" -> headers.contentType = MediaType.IMAGE_JPEG
-            ".png" -> headers.contentType = MediaType.IMAGE_PNG
-            ".gif" -> headers.contentType = MediaType.IMAGE_GIF
+        when (fileName.substring(fileName.lastIndexOf(".") + 1)) {
+            "jpg" -> headers.contentType = MediaType.IMAGE_JPEG
+            "png" -> headers.contentType = MediaType.IMAGE_PNG
+            "gif" -> headers.contentType = MediaType.IMAGE_GIF
         }
 
         return ResponseEntity(file.readBytes(), headers, HttpStatus.OK)
@@ -82,6 +91,11 @@ class FileController(
 
     @GetMapping("/media/video/{fileName}")
     fun getVideoFile(@PathVariable fileName: String): ResponseEntity<ByteArray> {
+
+        val allowedExt = listOf("mp4", "avi", "mov", "wmv", "flv", "mkv", "webm")
+
+        if (!allowedExt.contains(fileName.substring(fileName.lastIndexOf(".") + 1)))
+            throw InvalidFile("허용되지 않은 요청입니다.")
 
         val file = File(fileProvider.getOsDir() + fileName)
 
@@ -98,14 +112,14 @@ class FileController(
         headers["contentRange"] = "bytes 0-${file.length() - 1}/${file.length()}"
         headers.contentLength = file.length()
 
-        when (fileName.substring(fileName.lastIndexOf("."))) {
-            ".mp4" -> headers.contentType = MediaType("video","mp4")
-            ".avi" -> headers.contentType = MediaType("video","avi")
-            ".mov" -> headers.contentType = MediaType("video","mov")
-            ".wmv" -> headers.contentType = MediaType("video","wmv")
-            ".flv" -> headers.contentType = MediaType("video","flv")
-            ".mkv" -> headers.contentType = MediaType("video","mkv")
-            ".webm" -> headers.contentType = MediaType("video","webm")
+        when (fileName.substring(fileName.lastIndexOf(".") + 1)) {
+            "mp4" -> headers.contentType = MediaType("video","mp4")
+            "avi" -> headers.contentType = MediaType("video","avi")
+            "mov" -> headers.contentType = MediaType("video","mov")
+            "wmv" -> headers.contentType = MediaType("video","wmv")
+            "flv" -> headers.contentType = MediaType("video","flv")
+            "mkv" -> headers.contentType = MediaType("video","mkv")
+            "webm" -> headers.contentType = MediaType("video","webm")
         }
 
         return ResponseEntity(file.readBytes(), headers, HttpStatus.OK)
@@ -135,8 +149,6 @@ class FileController(
             object{}.javaClass.enclosingMethod.name,
             "test123", test123
         )
-
-
 
     }
 }
