@@ -121,4 +121,12 @@ class MemberService(
 
         return true
     }
+
+    fun loadByMemberId(userId: String): MemberDTO {
+        memberRepository.findByUserId(userId).orElseThrow {
+            NotFoundException("계정을 찾을 수 없습니다.")
+        }.let {
+            return modelMapper.map(it, MemberDTO::class.java)
+        }
+    }
 }
