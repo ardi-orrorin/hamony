@@ -6,6 +6,16 @@ export interface Login {
     userPwd: string,
 }
 
+export async function isLoginChk(tokenType: string, token: string) {
+    const result = await axios.get(import.meta.env.VITE_API_URL+"/user/islogin", { headers: {
+            Authorization: tokenType + ' ' + token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response);
+
+    return result;
+}
+
 export async function login(data: Login) {
 
     const result = await axios.post(import.meta.env.VITE_API_URL+"/user/login", data)

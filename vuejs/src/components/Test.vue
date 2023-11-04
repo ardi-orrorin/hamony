@@ -3,33 +3,60 @@
 import {ref} from "vue";
 import {imgUpload} from "@/api/diaryApi";
 
-const imgFile = ref('');
+const previewIMG = ref<string[]>([]);
+const multipart: FormData = new FormData()
+
 
 function print(el: any) {
-  const reader = new FileReader()
-  reader.readAsDataURL(el.target.files[0])
 
-  reader.onloadend = (ev) => {
-    imgFile.value = ev.target!!.result!!.toString()!!
+  previewIMG.value = []
+  multipart.delete('file')
+
+  for (const file of el.target.files) {
+    multipart.append('file', file)
+
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+
+    reader.onloadend = (ev) => {
+      previewIMG.value.push(ev.target!!.result!!.toString()!!)
+    }
   }
 }
 
 function submit() {
-  imgUpload(imgFile.value)
-
+  imgUpload(multipart!!)
 }
 
 </script>
 
 <template>
   <div>
-    <input type="file" accept="image/*" @change="print">
+    <input type="file" accept="image/*" @change="print" multiple>
     <button @click="submit">Test</button>
     <br/>
-    <img :src="imgFile" width="500" />
+    <div class="container">
+      <template v-for="img in previewIMG">
+          <div class="thumbnailContainer">
+            <img class="thumbnail" :src="img" />
+          </div>
+      </template>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .thumbnail {
+    height: 350px;
+    width: 350px;
+    object-fit: cover;
+  }
 
 </style>

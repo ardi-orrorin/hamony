@@ -42,16 +42,13 @@ class ResizeImage{
         }
         return this
     }
-    fun thumnail(ext: String): ByteArray {
+
+    private fun resize(): BufferedImage {
         if (bImage == null) {
             throw Exception("이미지를 먼저 읽어주세요.")
         } else if (scale == null) {
             throw Exception("비율을 먼저 입력하세요.")
         }
-
-//        if (scale >= 1.0) {
-//            return file.readBytes()
-//        }
 
         val oWidth: Int = (bImage!!.getWidth().toDouble() * this.scale as Double).toInt()
         val oHeight: Int = (bImage!!.getHeight().toDouble() * this.scale as Double).toInt()
@@ -65,10 +62,27 @@ class ResizeImage{
         graphic.drawImage(image, 0, 0, oWidth, oHeight, null)
         graphic.dispose()
 
+        return bufImage
+    }
+
+    fun readThumnail(ext: String): ByteArray {
+        val bufImage: BufferedImage = resize()
+
         val baos: ByteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(bufImage, ext, baos)
 
         return baos.toByteArray()
+    }
+
+    fun writeThumnail(file: File, ext: String): Boolean {
+        val bufImage: BufferedImage = resize()
+
+        if (!file.isDirectory)
+            file.mkdirs()
+
+        ImageIO.write(bufImage, ext, file)
+
+        return true
     }
 
 }

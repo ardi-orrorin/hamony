@@ -80,6 +80,7 @@ class FileController(
             fileProvider.writeFile(it.bytes, it.originalFilename!!, userKey)
         }
 
+
         return ResponseEntity.ok(ResponseDTO(HttpStatus.OK.value(), "파일 업로드 성공"))
     }
 
@@ -87,7 +88,7 @@ class FileController(
     fun getMediaFile(
         @PathVariable id: Int,
         @PathVariable fileName: String,
-        @RequestParam(required = true, defaultValue = "true") thumnail: Boolean?,
+        @RequestParam(required = true, defaultValue = "true") thumnail: Boolean,
         @RequestParam(required = false) size: Int?,
     ): ResponseEntity<ByteArray> {
 
@@ -98,18 +99,12 @@ class FileController(
         val file = File(fileProvider.getOsDir() + "/${id}/images/" + fileName)
         var oFile = file.readBytes()
 
-        if(thumnail != null && thumnail) {
+        if(thumnail) {
             oFile = resizeImg
                 .read(file)
                 .scale(size ?: 500, ResizeCriteria.HEIGHT)
-                .thumnail(ext)
+                .readThumnail(ext)
         }
-
-        log.info("[{}]({}) {} : {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "file", file
-        )
 
         val headers = HttpHeaders()
 

@@ -54,7 +54,6 @@ class FileProvider {
             write("images")
         }else if (FILE_VIDEOS.contains(ext)) {
             write("videos")
-
         } else if (FILE_APPS.contains(ext)) {
             write("apps")
         } else {

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,6 +25,19 @@ class MemberController(
 ) {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
+    @GetMapping("islogin")
+    fun isLogin(@AuthenticationPrincipal memberDTO: MemberDTO): ResponseEntity<ResponseDTO<Boolean>> {
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+
+        return ResponseEntity.ok(
+            ResponseDTO(HttpStatus.OK.value(), true)
+        )
+    }
 
     @PostMapping("idchk")
     fun idDuplicateChk(@RequestBody userId: String): ResponseEntity<ResponseDTO<Int>> {

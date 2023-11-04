@@ -1,4 +1,5 @@
 import {defineStore} from "pinia";
+import {isLoginChk} from "@/api/memberApi";
 export interface User {
     userId: string;
     userPwd: string;
@@ -42,13 +43,10 @@ export const useToken = defineStore('token', {
             this.tokenType = value.tokenType
             this.expireIn = value.expireIn
         },
-        isLogin(): boolean {
-            return !!(this.userId
-                && this.token
-                && this.expireIn
-                && (new Date().valueOf() <= this.expireIn)
-            );
+        async isLogin() {
+            return await isLoginChk(this.tokenType!!, this.token!!)
+                .then(res => res.status === 200 ? true : false)
+                .catch(err => false)
         }
     }
-
 })

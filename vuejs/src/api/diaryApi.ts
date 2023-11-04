@@ -12,7 +12,6 @@ export async function getDiary(id: string) {
         .catch(err => err.response)
 
     if(reuslt.status === 200) {
-        console.log(reuslt.data)
         const data = useDiary()
         data.$reset()
         data.add(reuslt.data)
@@ -46,8 +45,6 @@ export async function recentDiary() {
 
 export async function profileList(option: string) {
 
-    console.log(option);
-
     const result = await axios.get(import.meta.env.VITE_API_URL + '/profile/' + option, {headers: {
             Authorization: useToken().tokenType + ' ' + useToken().token
         }})
@@ -62,10 +59,9 @@ export async function profileList(option: string) {
     return result;
 }
 
-export async function imgUpload(data: string){
+export async function imgUpload(data: FormData){
 
-
-    const result = await axios.post(import.meta.env.VITE_API_URL + '/diary/img', data, {headers: {
+    const result = await axios.post(import.meta.env.VITE_API_URL + '/api/file/upload', data, {headers: {
             Authorization: useToken().tokenType + ' ' + useToken().token
         }})
         .then(res => res.data)

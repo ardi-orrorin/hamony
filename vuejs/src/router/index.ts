@@ -108,8 +108,11 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, from) => {
-  if(to.meta.requiresAuth && !useToken().isLogin()){
+router.beforeEach( async (to, from) => {
+
+  const isLogin = await useToken().isLogin().then(res=> res)
+
+  if(to.meta.requiresAuth && !isLogin){
     return {
       path: '/login',
       query: { redirect: to.fullPath} // 다시 올 수 있도록 방문한 위치 저장
