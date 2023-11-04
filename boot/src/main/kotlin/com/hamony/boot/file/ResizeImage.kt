@@ -11,9 +11,9 @@ import javax.imageio.ImageIO
 @Component
 class ResizeImage{
 
-    var scale: Double = 0.0
+    var scale: Double? = null
 
-    lateinit var bImage: BufferedImage
+    var bImage: BufferedImage? = null
 
     fun read(file: File): ResizeImage {
         this.bImage = ImageIO.read(file)
@@ -24,26 +24,43 @@ class ResizeImage{
         if(this.bImage == null) {
             throw Exception("이미지를 먼저 읽어주세요.")
         }
-        if(criteria == ResizeCriteria.HEIGHT) {
-            this.scale = size / bImage.getHeight().toDouble()
-        } else if(criteria == ResizeCriteria.WIDTH) {
-            this.scale = size / bImage.getWidth().toDouble()
-        } else {
-            throw Exception("잘못된 기준 입니다.")
+
+        fun validOverScale(tempScale: Double): Double {
+            if (tempScale >= 1.0) {
+                return 1.0
+            } else {
+                return tempScale
+            }
+        }
+
+        when (criteria) {
+            ResizeCriteria.HEIGHT ->
+                this.scale = validOverScale(size / bImage!!.getHeight().toDouble())
+            ResizeCriteria.WIDTH ->
+                this.scale = validOverScale(size / bImage!!.getWidth().toDouble())
+            else -> throw Exception("잘못된 기준 입니다.")
         }
         return this
     }
+    fun thumnail(ext: String): ByteArray {
+        if (bImage == null) {
+            throw Exception("이미지를 먼저 읽어주세요.")
+        } else if (scale == null) {
+            throw Exception("비율을 먼저 입력하세요.")
+        }
 
-    fun thumnail(file: File, ext: String): ByteArray{
+//        if (scale >= 1.0) {
+//            return file.readBytes()
+//        }
 
-        val oWidth: Int = (bImage.getWidth().toDouble() * this.scale).toInt()
-        val oHeight: Int = (bImage.getHeight().toDouble() * this.scale).toInt()
+        val oWidth: Int = (bImage!!.getWidth().toDouble() * this.scale as Double).toInt()
+        val oHeight: Int = (bImage!!.getHeight().toDouble() * this.scale as Double).toInt()
 
-        val bufImage: BufferedImage = BufferedImage(oWidth, oHeight, BufferedImage.TYPE_3BYTE_BGR)
+        val bufImage = BufferedImage(oWidth, oHeight, BufferedImage.TYPE_3BYTE_BGR)
 
         val grapic: Graphics2D = bufImage.createGraphics()
 
-        val image: Image = bImage.getScaledInstance(oWidth, oHeight, Image.SCALE_SMOOTH)
+        val image: Image = bImage!!.getScaledInstance(oWidth, oHeight, Image.SCALE_FAST)
 
         grapic.drawImage(image, 0, 0, oWidth, oHeight, null)
         grapic.dispose()
@@ -53,6 +70,5 @@ class ResizeImage{
 
         return baos.toByteArray()
     }
-
 
 }

@@ -99,9 +99,10 @@ class FileController(
         var oFile = file.readBytes()
 
         if(thumnail != null && thumnail) {
-            oFile = resizeImg.read(file)
+            oFile = resizeImg
+                .read(file)
                 .scale(size ?: 500, ResizeCriteria.HEIGHT)
-                .thumnail(file, ext)
+                .thumnail(ext)
         }
 
         log.info("[{}]({}) {} : {}",
