@@ -87,7 +87,7 @@ class FileController(
     fun getMediaFile(
         @PathVariable id: Int,
         @PathVariable fileName: String,
-        @RequestParam(required = false) thumnail: Boolean?,
+        @RequestParam(required = true, defaultValue = "true") thumnail: Boolean?,
         @RequestParam(required = false) size: Int?,
     ): ResponseEntity<ByteArray> {
 

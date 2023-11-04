@@ -58,12 +58,12 @@ class ResizeImage{
 
         val bufImage = BufferedImage(oWidth, oHeight, BufferedImage.TYPE_3BYTE_BGR)
 
-        val grapic: Graphics2D = bufImage.createGraphics()
+        val graphic: Graphics2D = bufImage.createGraphics()
 
         val image: Image = bImage!!.getScaledInstance(oWidth, oHeight, Image.SCALE_FAST)
 
-        grapic.drawImage(image, 0, 0, oWidth, oHeight, null)
-        grapic.dispose()
+        graphic.drawImage(image, 0, 0, oWidth, oHeight, null)
+        graphic.dispose()
 
         val baos: ByteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(bufImage, ext, baos)
