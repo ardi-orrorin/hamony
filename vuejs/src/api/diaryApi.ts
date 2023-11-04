@@ -62,10 +62,10 @@ export async function profileList(option: string) {
     return result;
 }
 
-export async function imgUpload(){
+export async function imgUpload(data: string){
 
 
-    const result = await axios.post(import.meta.env.VITE_API_URL + '/dairy/img', null, {headers: {
+    const result = await axios.post(import.meta.env.VITE_API_URL + '/diary/img', data, {headers: {
             Authorization: useToken().tokenType + ' ' + useToken().token
         }})
         .then(res => res.data)

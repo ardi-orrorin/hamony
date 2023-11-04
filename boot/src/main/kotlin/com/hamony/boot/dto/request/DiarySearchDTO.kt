@@ -1,4 +1,4 @@
-package com.hamony.boot.request
+package com.hamony.boot.dto.request
 
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

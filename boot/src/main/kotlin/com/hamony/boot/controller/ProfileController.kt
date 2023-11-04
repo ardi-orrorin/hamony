@@ -3,7 +3,7 @@ package com.hamony.boot.controller
 import com.hamony.boot.dto.DiaryDTO
 import com.hamony.boot.dto.FavDiaryDTO
 import com.hamony.boot.dto.MemberDTO
-import com.hamony.boot.response.ResponseDTO
+import com.hamony.boot.dto.response.ResponseDTO
 import com.hamony.boot.service.DiaryService
 import com.hamony.boot.service.FavoriteService
 import org.slf4j.Logger

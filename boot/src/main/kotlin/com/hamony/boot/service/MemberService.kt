@@ -9,7 +9,7 @@ import com.hamony.boot.exception.TokenException
 import com.hamony.boot.exception.VerifyPasswordException
 import com.hamony.boot.jwt.TokenProvider
 import com.hamony.boot.repository.MemberRepository
-import com.hamony.boot.response.LoginDTO
+import com.hamony.boot.dto.response.LoginDTO
 import jakarta.transaction.Transactional
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger

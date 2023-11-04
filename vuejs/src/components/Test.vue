@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
+import {imgUpload} from "@/api/diaryApi";
 
 const imgFile = ref('');
 
@@ -11,6 +12,10 @@ function print(el: any) {
   reader.onloadend = (ev) => {
     imgFile.value = ev.target!!.result!!.toString()!!
   }
+}
+
+function submit() {
+  imgUpload(imgFile.value)
 
 }
 
@@ -19,7 +24,7 @@ function print(el: any) {
 <template>
   <div>
     <input type="file" accept="image/*" @change="print">
-    <button @click="print">Test</button>
+    <button @click="submit">Test</button>
     <br/>
     <img :src="imgFile" width="500" />
   </div>

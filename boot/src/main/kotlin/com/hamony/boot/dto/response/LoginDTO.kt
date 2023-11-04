@@ -1,4 +1,4 @@
-package com.hamony.boot.response
+package com.hamony.boot.dto.response
 
 import lombok.AllArgsConstructor
 import lombok.NoArgsConstructor

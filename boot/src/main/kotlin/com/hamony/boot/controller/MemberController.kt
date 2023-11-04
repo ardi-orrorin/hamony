@@ -2,8 +2,8 @@ package com.hamony.boot.controller
 
 import com.hamony.boot.dto.MemberDTO
 import com.hamony.boot.dto.TokenDTO
-import com.hamony.boot.response.LoginDTO
-import com.hamony.boot.response.ResponseDTO
+import com.hamony.boot.dto.response.LoginDTO
+import com.hamony.boot.dto.response.ResponseDTO
 import com.hamony.boot.service.MemberService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

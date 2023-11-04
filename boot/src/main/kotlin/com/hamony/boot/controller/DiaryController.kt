@@ -3,8 +3,8 @@ package com.hamony.boot.controller
 import com.hamony.boot.dto.DiaryDTO
 import com.hamony.boot.dto.DiaryTagDTO
 import com.hamony.boot.dto.MemberDTO
-import com.hamony.boot.request.DiarySearchDTO
-import com.hamony.boot.response.ResponseDTO
+import com.hamony.boot.dto.request.DiarySearchDTO
+import com.hamony.boot.dto.response.ResponseDTO
 import com.hamony.boot.service.DiaryService
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import kotlin.io.path.Path
+import kotlin.io.path.writeBytes
 
 
 @RestController
@@ -24,18 +26,33 @@ class DiaryController(
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
     @PostMapping("img")
-    fun img(@RequestPart img:MultipartFile) : Unit{
+    fun img(
+        @RequestPart(required = false) img: MultipartFile,
+        @AuthenticationPrincipal memberDTO: MemberDTO
+    ) : ResponseEntity<ResponseDTO<String>>{
+
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
             object{}.javaClass.enclosingMethod.name,
             "img", img
         )
 
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+
+        return ResponseEntity.ok(
+            ResponseDTO(
+                HttpStatus.OK.value(),
+                "ok"
+            )
+        )
     }
 
     @PostMapping("write")
     fun write(@RequestBody diaryTagDTO: DiaryTagDTO,
-              @RequestPart(name = "img") img: MultipartFile,
               @AuthenticationPrincipal memberDTO: MemberDTO
               ): ResponseEntity<ResponseDTO<Boolean>> {
 

@@ -5,6 +5,7 @@ import com.hamony.boot.entity.Diary
 import com.hamony.boot.entity.DiaryTag
 import com.hamony.boot.entity.Member
 import com.hamony.boot.entity.Tag
+import com.hamony.boot.file.FileProvider
 import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.DiaryTagRepository
 import com.hamony.boot.repository.MemberRepository
@@ -82,4 +83,14 @@ class BootApplicationTests {
 //        println(modelMapper.map(member, MemberDTO::class.java))
 //
 //    }
+
+    @Autowired
+    lateinit var fileProvider: FileProvider
+    @Test
+    fun contextLoads() {
+        println(fileProvider.macosFileDir)
+        println(fileProvider.windowsFileDir)
+        println(fileProvider.linuxFileDir)
+        fileProvider.getOSDIR()
+    }
 }

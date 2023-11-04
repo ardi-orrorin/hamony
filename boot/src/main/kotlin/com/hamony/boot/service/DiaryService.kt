@@ -9,7 +9,7 @@ import com.hamony.boot.entity.Member
 import com.hamony.boot.exception.NotFoundException
 import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.MemberRepository
-import com.hamony.boot.request.DiarySearchDTO
+import com.hamony.boot.dto.request.DiarySearchDTO
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
