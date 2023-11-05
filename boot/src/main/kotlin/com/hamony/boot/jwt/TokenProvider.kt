@@ -34,10 +34,6 @@ class TokenProvider(
     @Value("\${jwt.grantType}")
     private val GRANT_TYPE: String = ""
 
-//    @Value(value = "\${jwt.secretKey}")
-//    private val secretKey: String = ""
-
-//    private val key: Key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey))
     private val key: SecretKey = Jwts.SIG.HS512.key().build()
 
     private final val EXPIRE_IN: Long = 1000 * 60 * 60 // 60분
