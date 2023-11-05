@@ -18,14 +18,8 @@ function print(el: any) {
   multipart.delete('file')
 
   for (const file of el.target.files) {
-    multipart.append('file', file)
-
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-
-    reader.onloadend = (ev) => {
-      previewIMG.value.push(ev.target!!.result!!.toString()!!)
-    }
+    multipart.append('file', file);
+    previewIMG.value.push(URL.createObjectURL(file));
   }
 }
 

@@ -3,7 +3,6 @@
 import SearchInput from "@/components/search/SearchInput.vue";
 import {useDairys} from "@/store/diary";
 import RecentItem from "@/components/recent/RecentItem.vue";
-import {onUpdated} from "vue";
 
 const dairylist = useDairys()
 

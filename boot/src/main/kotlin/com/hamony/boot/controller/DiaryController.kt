@@ -36,7 +36,7 @@ class DiaryController(
         diaryService.save(diaryTagDTO, memberDTO)
 
         return ResponseEntity.ok(
-            ResponseDTO(HttpStatus.OK.value(), true)
+            ResponseDTO(HttpStatus.CREATED.value(), true)
         )
     }
 

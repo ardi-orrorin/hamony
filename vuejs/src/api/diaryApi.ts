@@ -51,7 +51,7 @@ export async function writeDiary(data: DiaryTag) {
 }
 
 export async function recentDiary() {
-    const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/recent', {headers: {
+    const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/recent?sort=createAt,desc', {headers: {
         Authorization: useToken().tokenType + ' ' + useToken().token
         }})
         .then(res => res.data)

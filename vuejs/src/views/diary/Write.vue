@@ -8,6 +8,7 @@ import DiarySubject from "@/components/DiarySubject.vue";
 import DiaryItem from "@/components/DiaryItem.vue";
 import {writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
+import router from "@/router";
 
 interface Body {
   subject: string
@@ -40,11 +41,7 @@ function addImgHandler() {
 function addPreviewHandler(el: any) {
   previewRef.value = '';
   const file = el.target.files[0];
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = (ev) => {
-    previewRef.value = ev.target!!.result!!.toString()!!
-  }
+  previewRef.value = URL.createObjectURL(file);
 }
 
 function findTag() {
@@ -90,6 +87,11 @@ function onSubmit(){
     tag: [...value.tag.values()].map(it => ({tag: it}))
   }
   writeDiary(data)
+      .then(res => {
+        if(res.status === 201){
+          router.push("/")
+        }
+      })
 }
 </script>
 
@@ -238,33 +240,34 @@ function onSubmit(){
     position: absolute;
     left: 20px;
     bottom: 20px;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 100vw;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 100%;
     }
-    border: 5px solid rgba(230, 230, 230, 1);
+    border: 3px solid rgba(230, 230, 230, 1);
   }
 
   .imgPreview {
     position: absolute;
-    left: 0;
+    left: -25%;
     bottom: 0;
     width: 50vw;
     height: 50vh;
     box-shadow: 0 0 10px 5px rgba(230, 230, 230, 1);
     border-radius: 1vw;
-
     img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 1vw;
-      border: 3px solid rgba(200, 200, 200, 1);
+      //border: 1px solid rgba(200, 200, 200, 1);
+      background: white;
     }
   }
 

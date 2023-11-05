@@ -11,11 +11,7 @@ function addImgClickHandler() {
 }
 function addImgHandler(el: any) {
   const file = el.target.files[0]
-  const reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onloadend = (ev) => {
-    imagePreview.value = ev.target!!.result!!.toString()!!
-  }
+  imagePreview.value = URL.createObjectURL(file)
 }
 
 </script>
