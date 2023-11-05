@@ -37,3 +37,6 @@ out/
 .vscode/
 application.yml
 static/
+
+example.com+5.pem
+example.com+5-key.pem
