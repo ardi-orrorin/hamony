@@ -102,14 +102,7 @@ class DiaryService(
         return diaryList.map { DiaryDTO(it.id, it.subject, it.content, it.createAt, it.updateAt, it.deleteAt, null, mutableListOf()) }.toList()
     }
 
-    fun search(diarySearchDTO: DiarySearchDTO, pageable: Pageable): List<DiaryDTO> {
-
-        log.info("[{}]({}) : {}: {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "diarySearchDTO", diarySearchDTO
-        )
-
+    fun search(keyword: String, pageable: Pageable): List<DiaryDTO> {
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
             object{}.javaClass.enclosingMethod.name,
@@ -118,7 +111,7 @@ class DiaryService(
 
         // TODO: 검색 알고리즘 추가
 
-        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContains(diarySearchDTO.subject, diarySearchDTO.content, pageable)
+        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContains(keyword, keyword, pageable)
 
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,

@@ -68,17 +68,17 @@ class DiaryController(
         )
     }
 
-    @GetMapping("search")
+    @GetMapping("search/{keyword}")
     fun searchDiary(
         @AuthenticationPrincipal memberDTO: MemberDTO,
-        @RequestParam diarySearchDTO: DiarySearchDTO,
+        @PathVariable keyword: String,
         pageable: Pageable
     ): ResponseEntity<ResponseDTO<List<DiaryDTO>>> {
 
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
             object{}.javaClass.enclosingMethod.name,
-            "diarySearchDTO", diarySearchDTO
+            "keyword", keyword
         )
 
         var pageNumber: Int
@@ -97,7 +97,7 @@ class DiaryController(
         return ResponseEntity.ok(
             ResponseDTO(
                 HttpStatus.OK.value(),
-                diaryService.search(diarySearchDTO, pageableVar)
+                diaryService.search(keyword, pageableVar)
             )
         )
     }

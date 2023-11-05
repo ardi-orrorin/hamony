@@ -38,9 +38,10 @@ function addImgHandler() {
   }
 }
 function addPreviewHandler(el: any) {
-  const file = el.target.files[0]
-  const reader = new FileReader()
-  reader.readAsDataURL(file)
+  previewRef.value = '';
+  const file = el.target.files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
   reader.onloadend = (ev) => {
     previewRef.value = ev.target!!.result!!.toString()!!
   }
@@ -127,7 +128,7 @@ function onSubmit(){
           <img :src="previewRef" onerror="this.src='/imgerror.png'" />
         </div>
         <Transition>
-          <div v-if="previewImg" class="imgPreview" @click="addImgHandler">
+          <div v-if="previewImg && previewRef.length > 0" class="imgPreview" @click="addImgHandler">
             <img :src="previewRef" onerror="this.src='/imgerror.png'" @mouseleave="previewToggle"/>
           </div>
         </Transition>

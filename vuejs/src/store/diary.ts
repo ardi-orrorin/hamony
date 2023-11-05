@@ -32,12 +32,14 @@ export const useDiary = defineStore('diary', {
 })
 
 export const useDairys = defineStore('diarys', {
-    state(): Diary[] {
-        return []
+    state(): {store: Diary[]} {
+        return {
+            store: []
+        }
     },
     actions: {
         add(data: Diary[]): void {
-            this.$state = [...this.$state, ...data]
-        }
+            this.$state.store = [...this.$state.store, ...data]
+        },
     }
 })

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type {DiaryTag} from "@/store/diary";
+import type {Diary, DiaryTag} from "@/store/diary";
 import {useDairys, useDiary} from "@/store/diary";
 import {useToken} from "@/store/member";
 
@@ -18,6 +18,25 @@ export async function getDiary(id: string) {
     }
 
     return reuslt
+}
+
+//검색하는 api 함수
+export async function searchDiary(search: string) {
+    const data = useDairys()
+    data.$reset()
+
+
+    const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/search/' + search, {headers: {
+            Authorization: useToken().tokenType + " " + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
+
+    if(result.status === 200){
+        data.add(result.data)
+    }
+
+    return result
 }
 
 export async function writeDiary(data: DiaryTag) {

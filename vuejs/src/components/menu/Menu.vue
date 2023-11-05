@@ -15,7 +15,7 @@ const menuList: Menu[] = [
   {text: text.menuWrite, path: '/write'},
   {text: text.menuRecent, path: '/recent'},
   {text: text.menuRecommend, path: '/upload'},
-  {text: text.menuSearch},
+  {text: text.menuSearch, path: '/search'},
   {text: text.menuProfile, path: '/profile'},
 ]
 

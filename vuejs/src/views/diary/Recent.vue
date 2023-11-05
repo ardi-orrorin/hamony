@@ -33,7 +33,7 @@ function moveDiary(id: number){
   <div class="container">
     <div class="subContainer">
       <template v-for="item in list">
-        <RecentItem :subject="item.subject" :content="item.content" :like="item.like" @click="()=>moveDiary(item.id!!)"/>
+          <RecentItem :subject="item.subject" :content="item.content" :like="item.like" @click="()=>moveDiary(item.id!!)"/>
       </template>
 
     </div>
@@ -49,7 +49,6 @@ function moveDiary(id: number){
   .subContainer {
     min-width: 70%;
     max-width: 70%;
-    //padding: 20px;
     display: flex;
     flex-wrap: wrap;
     word-break: break-all;
