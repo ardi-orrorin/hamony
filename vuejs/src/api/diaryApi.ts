@@ -32,14 +32,11 @@ export async function writeDiary(data: DiaryTag) {
 }
 
 export async function recentDiary() {
-    console.log(useToken().getInfo)
     const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/recent', {headers: {
         Authorization: useToken().tokenType + ' ' + useToken().token
         }})
         .then(res => res.data)
         .catch(err => err.response)
-
-
     return result
 }
 

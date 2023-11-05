@@ -71,6 +71,7 @@ class FileController(
     @PostMapping("upload")
     fun uploadFile(
         @RequestPart("file") multipartFile: List<MultipartFile>,
+        @RequestPart("input") input: Map<String, String>,
         @AuthenticationPrincipal memberDTO: MemberDTO,
     ): ResponseEntity<ResponseDTO<String>> {
 
@@ -79,7 +80,6 @@ class FileController(
         multipartFile.forEach{
             fileProvider.writeFile(it.bytes, it.originalFilename!!, userKey)
         }
-
 
         return ResponseEntity.ok(ResponseDTO(HttpStatus.OK.value(), "파일 업로드 성공"))
     }
@@ -108,8 +108,7 @@ class FileController(
 
         val headers = HttpHeaders()
 
-        headers.accessControlMaxAge = 60 * 60 * 24
-        headers.cacheControl = "public, max-age=31536000"
+        headers.cacheControl = "public, max-age=" + 24 * 60 * 60
         headers.contentType = MediaType("image", ext)
 
         return ResponseEntity(oFile, headers, HttpStatus.OK)

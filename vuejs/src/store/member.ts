@@ -26,7 +26,15 @@ export const useSignIn = defineStore('signIn', {
 
 export const useToken = defineStore('token', {
     state: (): UserToken => {
-        return {}
+        return {
+            userId: '',
+            tokenType: '',
+            token: '',
+            expireIn: 0
+        }
+    },
+    persist: {
+        storage: sessionStorage,
     },
     getters: {
       getInfo: state => ({
@@ -45,8 +53,17 @@ export const useToken = defineStore('token', {
         },
         async isLogin() {
             return await isLoginChk(this.tokenType!!, this.token!!)
-                .then(res => res.status === 200 ? true : false)
-                .catch(err => false)
-        }
-    }
+                .then(res => {
+                    if (res.status === 200) {
+                        return true
+                    }
+                    this.$reset();
+                    return false;
+                })
+                .catch(err => {
+                    this.$reset()
+                    return false
+                })
+        },
+    },
 })

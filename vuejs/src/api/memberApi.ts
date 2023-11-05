@@ -17,14 +17,12 @@ export async function isLoginChk(tokenType: string, token: string) {
 }
 
 export async function login(data: Login) {
-
     const result = await axios.post(import.meta.env.VITE_API_URL+"/user/login", data)
         .then(res => res.data)
         .catch(err => err.response);
 
     if(result.status === 200)
         useToken().login(result.data)
-        localStorage.setItem('token',result.data)
     return result;
 }
 
