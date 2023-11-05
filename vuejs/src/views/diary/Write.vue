@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import DiaryBody from "@/components/DiaryBody.vue";
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import IconBtn from "@/components/IconBtn.vue";
 import koText from "@/assets/lang/ko-kr.json"
 import DiarySubject from "@/components/DiarySubject.vue";
@@ -23,6 +23,28 @@ const value = reactive<Body>({
   tag: new Set(),
   url: ['']
 })
+
+const imgRef = ref<HTMLInputElement | null>(null)
+const previewRef = ref<string>('')
+const previewImg = ref<boolean>(false)
+
+function previewToggle() {
+  previewImg.value = !previewImg.value
+}
+
+function addImgHandler() {
+  if (imgRef.value) {
+    imgRef.value.click()
+  }
+}
+function addPreviewHandler(el: any) {
+  const file = el.target.files[0]
+  const reader = new FileReader()
+  reader.readAsDataURL(file)
+  reader.onloadend = (ev) => {
+    previewRef.value = ev.target!!.result!!.toString()!!
+  }
+}
 
 function findTag() {
   value.tag.clear()
@@ -100,6 +122,15 @@ function onSubmit(){
             {{value.content.length}} 자
           </div>
         </Transition>
+        <div class="imgSticky" @click="addImgHandler" @mouseover="previewToggle" >
+          <input ref="imgRef" type="file" @change="addPreviewHandler" hidden/>
+          <img :src="previewRef" onerror="this.src='/imgerror.png'" />
+        </div>
+        <Transition>
+          <div v-if="previewImg" class="imgPreview" @click="addImgHandler">
+            <img :src="previewRef" onerror="this.src='/imgerror.png'" @mouseleave="previewToggle"/>
+          </div>
+        </Transition>
       </div>
       <div v-for="(url, index) in value.url">
         <div class="info">
@@ -137,9 +168,16 @@ function onSubmit(){
     align-items: center;
   }
   .subContianer {
+    min-width: 400px;
     width: 35vw;
     border-radius: 15px;
     box-shadow: 0 0 10px 5px rgba(230, 230, 230, 0.5);
+    @media (max-width: 1000px) {
+      width: 45vw;
+    }
+    @media (max-width: 800px) {
+      width: 60vw;
+    }
   }
 
 
@@ -193,7 +231,40 @@ function onSubmit(){
       font-size: 1.1rem;
       color: gray;
     }
+  }
 
+  .imgSticky {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 100vw;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 100%;
+    }
+    border: 5px solid rgba(230, 230, 230, 1);
+  }
+
+  .imgPreview {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50vw;
+    height: 50vh;
+    box-shadow: 0 0 10px 5px rgba(230, 230, 230, 1);
+    border-radius: 1vw;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 1vw;
+      border: 3px solid rgba(200, 200, 200, 1);
+    }
   }
 
   .v-enter-active,

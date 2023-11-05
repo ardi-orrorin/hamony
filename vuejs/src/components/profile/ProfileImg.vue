@@ -40,15 +40,4 @@ function addImgHandler(el: any) {
       object-fit: cover;
       border: 3px solid rgba(230, 230, 230, 1);
     }
-    .sticky {
-      border-radius: 100vw;
-      height: 10px;
-      width: 10px;
-      position: absolute;
-      bottom: 15px;
-      right: 10px;
-      color: gray;
-      font-size: 1.3rem;
-      font-weight: 500;
-    }
 </style>
