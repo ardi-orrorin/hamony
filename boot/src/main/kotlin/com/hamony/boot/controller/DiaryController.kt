@@ -26,14 +26,19 @@ class DiaryController(
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
     @PostMapping("write")
-    fun write(@RequestBody diaryTagDTO: DiaryTagDTO,
-              @AuthenticationPrincipal memberDTO: MemberDTO
-              ): ResponseEntity<ResponseDTO<Boolean>> {
+    fun write(
+//        @RequestBody diaryTagDTO: DiaryTagDTO,
+        @RequestPart(name = "diary") diaryTagDTO: DiaryTagDTO,
+        @RequestPart(name = "file", required = false) file: MultipartFile?,
+        @AuthenticationPrincipal memberDTO: MemberDTO
+    ): ResponseEntity<ResponseDTO<Boolean>> {
 
         log.info("[DiaryController](write) diaryTagDTO : {}", diaryTagDTO)
         log.info("[DiaryController](write) memberDTO : {}", memberDTO)
+        log.info("[DiaryController](write) file : {}", file)
 
-        diaryService.save(diaryTagDTO, memberDTO)
+
+        diaryService.save(diaryTagDTO, memberDTO, file!!)
 
         return ResponseEntity.ok(
             ResponseDTO(HttpStatus.CREATED.value(), true)

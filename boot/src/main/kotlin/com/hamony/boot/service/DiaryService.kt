@@ -10,6 +10,9 @@ import com.hamony.boot.exception.NotFoundException
 import com.hamony.boot.repository.DiaryRepository
 import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.dto.request.DiarySearchDTO
+import com.hamony.boot.entity.File
+import com.hamony.boot.file.FileProvider
+import com.hamony.boot.repository.FileRepository
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -17,13 +20,17 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.util.DigestUtils
+import org.springframework.web.multipart.MultipartFile
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class DiaryService(
     val modelMapper: ModelMapper,
     val diaryRepository: DiaryRepository,
     val memberRepository: MemberRepository,
+    val fileProvider: FileProvider,
+    val fileRepository: FileRepository,
 
 ) {
 
@@ -50,7 +57,7 @@ class DiaryService(
         return modelMapper.map(diary, DiaryDTO::class.java)
     }
 
-    fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO): Unit {
+    fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO, file: MultipartFile): Unit {
 
         val member: Member = memberRepository.findByUserId(memberDTO.userId).get()
 
@@ -78,6 +85,27 @@ class DiaryService(
 
         // tag 처리
         diaryRepository.save(diary)
+
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "save after diary", diary
+        )
+
+        file.originalFilename?.let {
+            val fileInfo: Map<String, String> = fileProvider.writeFile(file.bytes, it, member.id!!.toInt())
+            val fileEntity = File(
+                name = fileInfo["name"] as String,
+                path = fileInfo["path"] as String,
+                ext = it.substring(it.lastIndexOf(".") + 1),
+                createAt = LocalDateTime.now(),
+                avail = true,
+                diary = diary
+            )
+
+            fileRepository.save(fileEntity)
+        }
     }
 
     fun recent(memberDTO: MemberDTO, pageable: Pageable): List<DiaryDTO> {

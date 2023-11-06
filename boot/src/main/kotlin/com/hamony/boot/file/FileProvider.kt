@@ -34,20 +34,22 @@ class FileProvider {
             else -> linuxFileDir
         }
 
-    fun writeFile(file: ByteArray, originalFilename: String, userKey: Int) {
+    fun writeFile(file: ByteArray, originalFilename: String, userKey: Int): Map<String, String> {
 
         val ext: String = originalFilename.substring(originalFilename.lastIndexOf(".") + 1)
+        val fileName: String = UUID.randomUUID().toString()
+        var pathName: String = ""
 
         if(File(getOsDir() + "/" + userKey).isDirectory)
             File(getOsDir() + userKey).mkdirs()
 
         fun write(type: String) {
-            val pathName = getOsDir() + "/" + userKey + "/" + type
+            pathName = getOsDir() + "/" + userKey + "/" + type
 
             if (!File(pathName).isDirectory)
                 File(pathName).mkdirs()
 
-            File(pathName+ "/" + UUID.randomUUID() + "." + ext).writeBytes(file)
+            File("$pathName/$fileName.$ext").writeBytes(file)
         }
 
         if(FILE_IMAGES.contains(ext)) {
@@ -60,7 +62,7 @@ class FileProvider {
             throw InvalidFile("허용되지 않은 파일입니다.")
         }
 
-
+        return hashMapOf("name" to fileName, "path" to pathName)
     }
 
 }
