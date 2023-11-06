@@ -6,9 +6,8 @@ data class TagDTO(
 
     var tag: String = "",
 
-    var diaryList: MutableList<DiaryTagDTO> = mutableListOf()
 ){
     override fun toString(): String {
-        return "Tag(id=$id, tag='$tag', diaryList=${diaryList.forEach(::println)})"
+        return "Tag(id=$id, tag='$tag')"
     }
 }

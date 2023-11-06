@@ -39,7 +39,7 @@ export async function searchDiary(search: string) {
     return result
 }
 
-export async function writeDiary(data: DiaryTag) {
+export async function writeDiary(data: FormData) {
 
     const reuslt = await axios.post(import.meta.env.VITE_API_URL + '/diary/write', data, {headers: {
         Authorization: useToken().tokenType + " " + useToken().token

@@ -28,6 +28,7 @@ const value = reactive<Body>({
 const imgRef = ref<HTMLInputElement | null>(null)
 const previewRef = ref<string>('')
 const previewImg = ref<boolean>(false)
+const file = ref<File | null>(null);
 
 function previewToggle() {
   previewImg.value = !previewImg.value
@@ -40,8 +41,8 @@ function addImgHandler() {
 }
 function addPreviewHandler(el: any) {
   previewRef.value = '';
-  const file = el.target.files[0];
-  previewRef.value = URL.createObjectURL(file);
+  file.value = el.target.files[0];
+  previewRef.value = URL.createObjectURL(file.value!!);
 }
 
 function findTag() {
@@ -86,7 +87,15 @@ function onSubmit(){
     },
     tag: [...value.tag.values()].map(it => ({tag: it}))
   }
-  writeDiary(data)
+
+  const formData = new FormData()
+  formData.append('diary', new Blob([JSON.stringify(data)], {type: "application/json"}))
+
+  if(file.value){
+    formData.append('file', file.value)
+  }
+
+  writeDiary(formData)
       .then(res => {
         if(res.status === 201){
           router.push("/")

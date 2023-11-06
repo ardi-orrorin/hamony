@@ -3,16 +3,11 @@ package com.hamony.boot.service
 import com.hamony.boot.dto.DiaryDTO
 import com.hamony.boot.dto.DiaryTagDTO
 import com.hamony.boot.dto.MemberDTO
-import com.hamony.boot.entity.Diary
-import com.hamony.boot.entity.DiaryTag
-import com.hamony.boot.entity.Member
 import com.hamony.boot.exception.NotFoundException
-import com.hamony.boot.repository.DiaryRepository
-import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.dto.request.DiarySearchDTO
-import com.hamony.boot.entity.File
+import com.hamony.boot.entity.*
 import com.hamony.boot.file.FileProvider
-import com.hamony.boot.repository.FileRepository
+import com.hamony.boot.repository.*
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,12 +21,15 @@ import java.util.UUID
 
 @Service
 class DiaryService(
-    val modelMapper: ModelMapper,
     val diaryRepository: DiaryRepository,
     val memberRepository: MemberRepository,
-    val fileProvider: FileProvider,
+    val diaryTagRepository: DiaryTagRepository,
     val fileRepository: FileRepository,
+    val tagRepository: TagRepository,
+    val tagService: TagService,
 
+    val fileProvider: FileProvider,
+    val modelMapper: ModelMapper,
 ) {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -57,7 +55,7 @@ class DiaryService(
         return modelMapper.map(diary, DiaryDTO::class.java)
     }
 
-    fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO, file: MultipartFile): Unit {
+    fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO, file: MultipartFile?): Unit {
 
         val member: Member = memberRepository.findByUserId(memberDTO.userId).get()
 
@@ -93,18 +91,47 @@ class DiaryService(
             "save after diary", diary
         )
 
-        file.originalFilename?.let {
-            val fileInfo: Map<String, String> = fileProvider.writeFile(file.bytes, it, member.id!!.toInt())
-            val fileEntity = File(
-                name = fileInfo["name"] as String,
-                path = fileInfo["path"] as String,
-                ext = it.substring(it.lastIndexOf(".") + 1),
-                createAt = LocalDateTime.now(),
-                avail = true,
-                diary = diary
+        if(file != null) {
+            file.originalFilename?.let {
+                val fileInfo: Map<String, String> = fileProvider.writeFile(file.bytes, it, member.id!!.toInt())
+                val fileEntity = File(
+                    name = fileInfo["name"] as String,
+                    path = fileInfo["path"] as String,
+                    ext = it.substring(it.lastIndexOf(".") + 1),
+                    createAt = LocalDateTime.now(),
+                    avail = true,
+                    diary = diary
+                )
+                fileRepository.save(fileEntity)
+            }
+        }
+
+        if(!diaryTagDTO.tag.isNullOrEmpty()){
+            log.info("[{}]({}) : {}: {}",
+                object{}.javaClass.enclosingClass.name,
+                object{}.javaClass.enclosingMethod.name,
+                "tag", "null or empty"
             )
 
-            fileRepository.save(fileEntity)
+
+            diaryTagDTO.tag?.map {
+                tagRepository.existsByTagEqualsIgnoreCase(it.tag).let { exist ->
+                    if(!exist) {
+                        modelMapper.map(it, Tag::class.java).let {
+                            tagRepository.save(it)
+                        }
+                    }
+                }
+            }
+
+            diaryTagDTO.tag?.forEach {
+                val diaryTag = DiaryTag(
+                    diary = diary,
+                    tag = tagRepository.findByTagEqualsIgnoreCase(it.tag)
+                )
+
+                diaryTagRepository.save(diaryTag)
+            }
         }
     }
 

@@ -20,11 +20,11 @@ data class Tag(
     var tag: String = "",
 
 ){
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
-    lateinit var diaryList: DiaryTag
+//    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
+//    lateinit var diaryList: DiaryTag
 
     override fun toString(): String {
-        return "Tag(id=$id, tag='$tag', diaryList=$diaryList)"
+        return "Tag(id=$id, tag='$tag'"
     }
 
 }
