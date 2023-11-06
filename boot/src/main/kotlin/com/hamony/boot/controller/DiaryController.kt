@@ -128,7 +128,7 @@ class DiaryController(
         return ResponseEntity.ok(
             ResponseDTO(
                 HttpStatus.OK.value(),
-                diaryService.findById(id.toLong())
+                diaryService.findByIdDTO(id.toLong())
                 )
         )
     }

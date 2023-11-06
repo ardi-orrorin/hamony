@@ -16,6 +16,11 @@ class TagService(
 ) {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
+
+    fun findByTag(tag: String): Tag? {
+        return tagRepository.findByTagEqualsIgnoreCase(tag)
+    }
+
     @Transactional
     fun save(tagDTO: TagDTO): Unit {
         log.info("[{}]({}) : {}: {}",
@@ -39,9 +44,14 @@ class TagService(
             "tagDTOs", tagDTOs
         )
 
-        val tags: List<Tag> = tagDTOs.filter { !tagRepository.existsByTagEqualsIgnoreCase(it.tag) }
-            .map { modelMapper.map(it, Tag::class.java) }
-
-        tagRepository.saveAll(tags)
+        tagDTOs.forEach {
+            tagRepository.existsByTagEqualsIgnoreCase(it.tag).let {
+                if(!it) {
+                    modelMapper.map(it, Tag::class.java).let {
+                        tagRepository.save(it)
+                    }
+                }
+            }
+        }
     }
 }

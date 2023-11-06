@@ -23,10 +23,9 @@ import java.util.UUID
 class DiaryService(
     val diaryRepository: DiaryRepository,
     val memberRepository: MemberRepository,
-    val diaryTagRepository: DiaryTagRepository,
     val fileRepository: FileRepository,
-    val tagRepository: TagRepository,
     val tagService: TagService,
+    val diaryTagService: DiaryTagService,
 
     val fileProvider: FileProvider,
     val modelMapper: ModelMapper,
@@ -34,8 +33,7 @@ class DiaryService(
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
-    fun findById(diaryId: Long): DiaryDTO{
-
+    fun findByIdEntity(diaryId: Long): Diary {
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
             object{}.javaClass.enclosingMethod.name,
@@ -46,13 +44,13 @@ class DiaryService(
             NotFoundException("데이터를 찾을 수 업습니다.")
         }
 
-        log.info("[{}]({}) : {}: {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "diary", diary
-        )
+        return diary
+    }
 
-        return modelMapper.map(diary, DiaryDTO::class.java)
+    fun findByIdDTO(diaryId: Long): DiaryDTO{
+        return findByIdEntity(diaryId).let {
+            modelMapper.map(it, DiaryDTO::class.java)
+        }
     }
 
     fun save(diaryTagDTO: DiaryTagDTO, memberDTO: MemberDTO, file: MultipartFile?): Unit {
@@ -91,7 +89,7 @@ class DiaryService(
             "save after diary", diary
         )
 
-        if(file != null) {
+        if(file != null){
             file.originalFilename?.let {
                 val fileInfo: Map<String, String> = fileProvider.writeFile(file.bytes, it, member.id!!.toInt())
                 val fileEntity = File(
@@ -113,25 +111,9 @@ class DiaryService(
                 "tag", "null or empty"
             )
 
+            tagService.saveAll(diaryTagDTO.tag!!)
 
-            diaryTagDTO.tag?.map {
-                tagRepository.existsByTagEqualsIgnoreCase(it.tag).let { exist ->
-                    if(!exist) {
-                        modelMapper.map(it, Tag::class.java).let {
-                            tagRepository.save(it)
-                        }
-                    }
-                }
-            }
-
-            diaryTagDTO.tag?.forEach {
-                val diaryTag = DiaryTag(
-                    diary = diary,
-                    tag = tagRepository.findByTagEqualsIgnoreCase(it.tag)
-                )
-
-                diaryTagRepository.save(diaryTag)
-            }
+            diaryTagService.saveAll(diary, diaryTagDTO.tag!!)
         }
     }
 
