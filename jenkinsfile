@@ -1,0 +1,16 @@
+pipeline {
+    stages {
+        stage 'echo' {
+            echo 'build start'
+        }
+        stage 'vue build' {
+            cd boot
+            npm run build
+        }
+
+        stage 'boot build' {
+            cd boot
+            cd ./gradlew build
+        }
+    }    
+}

@@ -1,6 +1,6 @@
 import type {Tag} from "@/store/tag";
 import {defineStore} from "pinia";
-import type {Url} from '@/store/url';
+import type {Url} from "@/store/url";
 
 export interface Diary {
     id?: number | null;
