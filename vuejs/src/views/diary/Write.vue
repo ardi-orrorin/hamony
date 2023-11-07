@@ -62,7 +62,7 @@ function removeTagHandler(tag: string){
   value.content = value.content.replaceAll(tag, tag.slice(1))
 }
 
-function btnUrlHandler(index: number) {
+function btnUrlHandler(index: number, isAlert: boolean){
   if(index + 1 < value.url.length){
     value.url.splice(index, 1)
   } else{
@@ -70,10 +70,10 @@ function btnUrlHandler(index: number) {
       if(value.url.length < 4){
         value.url.push('')
       } else {
-        alert(text.alertUrl4Max)
+        isAlert && alert(text.alertUrl4Max)
       }
     } else{
-      alert(text.minTextUrl)
+      isAlert && alert(text.minTextUrl)
     }
   }
 }
@@ -85,8 +85,10 @@ function onSubmit(){
       subject: value.subject,
       content: value.content,
     },
-    tag: [...value.tag.values()].map(it => ({tag: it}))
+    tags: [...value.tag.values()].map(it => ({tag: it})),
+    urls: value.url.map(it => ({url: it})).filter(it => it.url.length > 5)
   }
+
 
   const formData = new FormData()
   formData.append('diary', new Blob([JSON.stringify(data)], {type: "application/json"}))
@@ -150,10 +152,11 @@ function onSubmit(){
               style="border-radius: 10px"
               :placeholder="text.enterUrl"
               v-model:value="value.url[index]"
+              @change="btnUrlHandler(index, false)"
           />
           <Transition>
           <div class="urlSticky">
-            <button @click="btnUrlHandler(index)">
+            <button @click="btnUrlHandler(index, true)">
             {{ index + 1 < value.url.length ? '-' : '+' }}
             </button>
           </div>

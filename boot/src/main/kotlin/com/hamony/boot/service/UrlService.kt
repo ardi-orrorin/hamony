@@ -58,5 +58,18 @@ class UrlService(
         urlRepository.save(url)
     }
 
+    fun saveAll(diary: Diary, urls: MutableList<UrlDTO>) {
+        val urlsEntity: MutableList<Url> = urls.map { urlDTO ->
+            modelMapper.map(urlDTO, Url::class.java)
+                .let {
+                    it.url = it.url.replace("http://", "").replace("https://", "").replace("www.", "")
+                    it.diary = diary
+                    it
+                }
+            }.toMutableList()
+
+        urlRepository.saveAll(urlsEntity)
+    }
+
 
 }

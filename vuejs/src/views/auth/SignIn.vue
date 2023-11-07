@@ -63,9 +63,9 @@ function validateId(){
     }
   }
   function validatePwd(): boolean | undefined {
-    if(user.userPwd.length > 0 && user.userPwd.length > 0){
-      if((user.userPwd.length === user.userPwd.length)
-          && (user.userPwd === user.userPwd)) {
+    if(user.userPwd.length > 0 && user.userPwd2.length > 0){
+      if((user.userPwd.length === user.userPwd2.length)
+          && (user.userPwd === user.userPwd2)) {
         return true
       } else {
         return false

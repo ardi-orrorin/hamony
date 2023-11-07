@@ -3,7 +3,7 @@ package com.hamony.boot.controller
 import com.hamony.boot.dto.DiaryDTO
 import com.hamony.boot.dto.DiaryTagDTO
 import com.hamony.boot.dto.MemberDTO
-import com.hamony.boot.dto.request.DiarySearchDTO
+import com.hamony.boot.dto.request.ReqDiaryDTO
 import com.hamony.boot.dto.response.ResponseDTO
 import com.hamony.boot.service.DiaryService
 import org.slf4j.LoggerFactory
@@ -14,8 +14,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import kotlin.io.path.Path
-import kotlin.io.path.writeBytes
 
 
 @RestController
@@ -27,18 +25,17 @@ class DiaryController(
 
     @PostMapping("write")
     fun write(
-//        @RequestBody diaryTagDTO: DiaryTagDTO,
-        @RequestPart(name = "diary") diaryTagDTO: DiaryTagDTO,
+        @RequestPart(name = "diary") reqDiaryDTO: ReqDiaryDTO,
         @RequestPart(name = "file", required = false) file: MultipartFile?,
         @AuthenticationPrincipal memberDTO: MemberDTO
     ): ResponseEntity<ResponseDTO<Boolean>> {
 
-        log.info("[DiaryController](write) diaryTagDTO : {}", diaryTagDTO)
+        log.info("[DiaryController](write) diaryTagDTO : {}", reqDiaryDTO)
         log.info("[DiaryController](write) memberDTO : {}", memberDTO)
         log.info("[DiaryController](write) file : {}", file)
 
 
-        diaryService.save(diaryTagDTO, memberDTO, file)
+        diaryService.save(reqDiaryDTO, memberDTO, file)
 
         return ResponseEntity.ok(
             ResponseDTO(HttpStatus.CREATED.value(), true)
@@ -129,7 +126,7 @@ class DiaryController(
             ResponseDTO(
                 HttpStatus.OK.value(),
                 diaryService.findByIdDTO(id.toLong())
-                )
+            )
         )
     }
 }

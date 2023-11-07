@@ -45,8 +45,8 @@ class TagService(
         )
 
         tagDTOs.forEach {
-            tagRepository.existsByTagEqualsIgnoreCase(it.tag).let {
-                if(!it) {
+            tagRepository.existsByTagEqualsIgnoreCase(it.tag).let { exist ->
+                if(!exist) {
                     modelMapper.map(it, Tag::class.java).let {
                         tagRepository.save(it)
                     }

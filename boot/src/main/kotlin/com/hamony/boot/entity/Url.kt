@@ -23,14 +23,14 @@ data class Url(
     var createAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name = "DELETEAT")
-    var deleteAt: LocalDateTime?,
+    var deleteAt: LocalDateTime? = null,
 
     @Column(name = "AVAIL")
     var avail: Boolean = true,
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "REF_DIARY_ID")
-    var diary: Diary?
+    var diary: Diary
 ){
     override fun toString(): String {
         return "Url(id=$id, url='$url', createAt=$createAt, deleteAt=$deleteAt, avail=$avail, diary=$diary)"

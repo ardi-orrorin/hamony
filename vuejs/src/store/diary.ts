@@ -1,5 +1,6 @@
 import type {Tag} from "@/store/tag";
 import {defineStore} from "pinia";
+import type {Url} from '@/store/url';
 
 export interface Diary {
     id?: number | null;
@@ -12,7 +13,8 @@ export interface Diary {
 export interface DiaryTag {
     id?: number | null | undefined
     diary: Diary
-    tag?: Tag[]
+    tags?: Tag[]
+    urls?: Url[]
 }
 
 export const useDiary = defineStore('diary', {

@@ -23,7 +23,6 @@ onMounted(()=> {
 })
 
 function moveDiary(id: number){
-  console.log(id)
   router.push("/read/"+id)
 }
 
