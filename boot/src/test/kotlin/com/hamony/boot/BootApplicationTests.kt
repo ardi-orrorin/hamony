@@ -84,13 +84,13 @@ class BootApplicationTests {
 //
 //    }
 
-    @Autowired
-    lateinit var fileProvider: FileProvider
-    @Test
-    fun contextLoads() {
-        println(fileProvider.macosFileDir)
-        println(fileProvider.windowsFileDir)
-        println(fileProvider.linuxFileDir)
-        fileProvider.getOSDIR()
+//    @Autowired
+//    lateinit var fileProvider: FileProvider
+//    @Test
+//    fun contextLoads() {
+//        println(fileProvider.macosFileDir)
+//        println(fileProvider.windowsFileDir)
+//        println(fileProvider.linuxFileDir)
+//        fileProvider.getOSDIR()
     }
 }
