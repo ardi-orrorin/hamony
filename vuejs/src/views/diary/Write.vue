@@ -48,7 +48,9 @@ function addPreviewHandler(el: any) {
 function findTag() {
   value.tag.clear()
   value.content
-      .split(' ')
+      .split('\n')
+      .join(' ')
+      .split(" ")
       .filter(it => (
           (/^#[a-zA-Zㄱ-ㅎ가-핳]{2}/).test(it)
       )).forEach(it => {
