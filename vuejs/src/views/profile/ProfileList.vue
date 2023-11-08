@@ -9,7 +9,7 @@ const itemList = useDairys()
 
 <template>
   <div class="container">
-    <template v-for="item in itemList.$state">
+    <template v-for="item in itemList.$state.store">
       <ProfileDairyItem :subject="item.subject" :content="item.content" />
     </template>
   </div>

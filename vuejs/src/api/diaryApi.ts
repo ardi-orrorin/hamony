@@ -1,5 +1,5 @@
-import axios from "axios";
-import type {Diary, DiaryTag} from "@/store/diary";
+import axios, {type AxiosResponse} from "axios";
+import type {Diary} from "@/store/diary";
 import {useDairys, useDiary} from "@/store/diary";
 import {useToken} from "@/store/member";
 
@@ -50,7 +50,7 @@ export async function writeDiary(data: FormData) {
     return reuslt
 }
 
-export async function recentDiary() {
+export async function recentDiary(): Promise<AxiosResponse<Diary[]>> {
     const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/recent?sort=createAt,desc', {headers: {
         Authorization: useToken().tokenType + ' ' + useToken().token
         }})
