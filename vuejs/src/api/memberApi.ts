@@ -1,5 +1,6 @@
 import axios from "axios";
 import {type User, useToken} from "@/store/member";
+import router from "@/router";
 
 export interface Login {
     userId: string,
@@ -40,4 +41,13 @@ export async function idDuplicateChk(userId: string){
         .catch(err => err.response);
 
     return result;
+}
+
+export function isLogout(status: number) {
+
+    if(status === 401){
+        useToken().$reset()
+        router.push("/login")
+    }
+
 }

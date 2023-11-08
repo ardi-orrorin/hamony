@@ -1,23 +1,29 @@
 import axios, {type AxiosResponse} from "axios";
 import type {Diary} from "@/store/diary";
-import {useDairys, useDiary} from "@/store/diary";
+import {useDairys, useDiaryBody} from "@/store/diary";
 import {useToken} from "@/store/member";
+import {isLogout} from "@/api/memberApi";
+
 
 
 export async function getDiary(id: string) {
-    const reuslt = await axios.get(import.meta.env.VITE_API_URL + '/diary/'+id, {headers: {
+    const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/'+id, {headers: {
             Authorization: useToken().tokenType + " " + useToken().token
         }})
         .then(res => res.data)
         .catch(err => err.response)
 
-    if(reuslt.status === 200) {
-        const data = useDiary()
+
+    isLogout(result.status)
+
+    if(result.status === 200) {
+        console.log(result.data)
+        const data = useDiaryBody()
         data.$reset()
-        data.add(reuslt.data)
+        data.addApiData(result.data)
     }
 
-    return reuslt
+    return result
 }
 
 //검색하는 api 함수
@@ -32,6 +38,8 @@ export async function searchDiary(search: string) {
         .then(res => res.data)
         .catch(err => err.response)
 
+    isLogout(result.status)
+
     if(result.status === 200){
         data.add(result.data)
     }
@@ -41,13 +49,15 @@ export async function searchDiary(search: string) {
 
 export async function writeDiary(data: FormData) {
 
-    const reuslt = await axios.post(import.meta.env.VITE_API_URL + '/diary/write', data, {headers: {
+    const result = await axios.post(import.meta.env.VITE_API_URL + '/diary/write', data, {headers: {
         Authorization: useToken().tokenType + " " + useToken().token
         }})
         .then(res => res.data)
         .catch(err => err.response)
 
-    return reuslt
+    isLogout(result.status)
+
+    return result
 }
 
 export async function recentDiary(): Promise<AxiosResponse<Diary[]>> {
@@ -56,6 +66,9 @@ export async function recentDiary(): Promise<AxiosResponse<Diary[]>> {
         }})
         .then(res => res.data)
         .catch(err => err.response)
+
+    isLogout(result.status)
+
     return result
 }
 
@@ -66,6 +79,8 @@ export async function profileList(option: string) {
         }})
         .then(res => res.data)
         .catch(err => err.response)
+
+    isLogout(result.status)
 
     if(result.status === 200){
         const data = useDairys()
@@ -83,6 +98,10 @@ export async function imgUpload(data: FormData){
         .then(res => res.data)
         .catch(err => err.response)
 
+    isLogout(result.status)
+
     return result
 }
+
+
 

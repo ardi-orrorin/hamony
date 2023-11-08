@@ -3,13 +3,13 @@ import NotFound from "@/views/error/NotFound.vue";
 import Login from "@/views/auth/Login.vue";
 import SignIn from "@/views/auth/SignIn.vue";
 import SearchId from "@/views/auth/SearchId.vue";
-import Write from "@/views/diary/Write.vue";
 import Root from "@/views/root/Root.vue";
 import Recent from "@/views/diary/Recent.vue";
-import {useToken} from "@/store/member";
 import Profile from "@/views/profile/Profile.vue";
 import {getDiary, profileList} from "@/api/diaryApi";
 import Test from "@/components/Test.vue";
+import {useToken} from "@/store/member";
+import type {AxiosHeaders} from "axios";
 
 
 const router = createRouter({
@@ -39,7 +39,8 @@ const router = createRouter({
         {
           path: 'write',
           name: 'write',
-          component: Write,
+          component:() => import("@/views/diary/Write.vue"),
+          meta: {isRead: false},
         },
         {
           path: 'upload',
@@ -50,7 +51,8 @@ const router = createRouter({
           path: 'read/:id',
           name: 'read',
           props: true,
-          component: () => import("@/views/diary/Read.vue"),
+          component: () => import("@/views/diary/Write.vue"),
+          meta: {isRead: true},
           beforeEnter: (to) => {
             getDiary(to.params.id.toString())
           }
@@ -115,15 +117,17 @@ const router = createRouter({
 
 router.beforeEach( async (to, from) => {
 
-  const isLogin = await useToken().isLogin().then(res=> res)
-
-  if(to.meta.requiresAuth && !isLogin){
-    return {
-      path: '/login',
-      query: { redirect: to.fullPath} // 다시 올 수 있도록 방문한 위치 저장
-    }
-  }
+  // const isLogin = await useToken().isLogin().then(res=> res)
+  //
+  // if(to.meta.requiresAuth && !isLogin){
+  //   return {
+  //     path: '/login',
+  //     query: { redirect: to.fullPath} // 다시 올 수 있도록 방문한 위치 저장
+  //   }
+  // }
 })
+
+
 
 
 export default router

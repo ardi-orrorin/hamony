@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
+import {computed} from "vue";
 
-const props = defineProps(['value'])
+const props = defineProps(['value', 'disabled'])
 const emits = defineEmits(['update:value'])
 
 const value = computed({
@@ -17,7 +17,7 @@ const value = computed({
 </script>
 
 <template>
-  <input class="diarySubject" v-model="value" />
+  <input class="diarySubject" v-model="value" :disabled="props.disabled" />
 </template>
 
 <style scoped lang="scss">

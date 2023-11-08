@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {computed, ref} from "vue";
 
-const props = defineProps(['value']);
+const props = defineProps(['value', 'disabled']);
 const emits = defineEmits(['update:value']);
 const textareaRef = ref(null);
 
@@ -17,7 +17,7 @@ const value = computed({
 </script>
 
 <template>
-  <textarea class="context" v-model="value" ref="textareaRef" ></textarea>
+  <textarea class="context" v-model="value" ref="textareaRef" :disabled="props.disabled"></textarea>
 </template>
 
 <style lang="scss" scoped>

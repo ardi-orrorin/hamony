@@ -51,19 +51,19 @@ export const useToken = defineStore('token', {
             this.tokenType = value.tokenType
             this.expireIn = value.expireIn
         },
-        async isLogin() {
-            return await isLoginChk(this.tokenType!!, this.token!!)
-                .then(res => {
-                    if (res.status === 200) {
-                        return true
-                    }
-                    this.$reset();
-                    return false;
-                })
-                .catch(err => {
-                    this.$reset()
-                    return false
-                })
-        },
+        // async isLogin() {
+        //     return await isLoginChk(this.tokenType!!, this.token!!)
+        //         .then(res => {
+        //             if (res.status === 200) {
+        //                 return true
+        //             }
+        //             this.$reset();
+        //             return false;
+        //         })
+        //         .catch(err => {
+        //             this.$reset()
+        //             return false
+        //         })
+        // },
     },
 })

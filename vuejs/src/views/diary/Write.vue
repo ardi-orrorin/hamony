@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import DiaryBody from "@/components/DiaryBody.vue";
-import {reactive, ref} from "vue";
+import {onMounted, onRenderTracked, onRenderTriggered, reactive, ref, watchEffect} from "vue";
 import IconBtn from "@/components/IconBtn.vue";
 import koText from "@/assets/lang/ko-kr.json"
 import DiarySubject from "@/components/DiarySubject.vue";
@@ -9,26 +9,25 @@ import DiaryItem from "@/components/DiaryItem.vue";
 import {writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
 import router from "@/router";
+import {useDiary, useDiaryBody} from "@/store/diary";
 
-interface Body {
-  subject: string
-  content: string
-  tag: Set<string>
-  url: string[]
-}
 
+const isRead = ref<boolean>(false)
+const diary = useDiary()
 const text = koText
-const value = reactive<Body>({
-  subject: '',
-  content: '',
-  tag: new Set(),
-  url: ['']
-})
+const value = useDiaryBody()
 
 const imgRef = ref<HTMLInputElement | null>(null)
 const previewRef = ref<string>('')
 const previewImg = ref<boolean>(false)
 const file = ref<File | null>(null);
+
+watchEffect(()=>{
+  isRead.value = router.currentRoute.value.meta.isRead  as boolean
+
+  if(!isRead.value)
+    value.$reset()
+})
 
 function previewToggle() {
   previewImg.value = !previewImg.value
@@ -116,6 +115,7 @@ function onSubmit(){
             v-model:value="value.subject"
             style="border-radius: 10px"
             :placeholder="text.enterSubject"
+            :disabled="isRead"
         />
       </div>
       <div class="contentBody">
@@ -124,13 +124,14 @@ function onSubmit(){
             :placeholder="text.enterBody"
             style="border-radius: 12px"
             @keyup="findTag"
+            :disabled="isRead"
         />
         <Transition>
           <div
               class="sticky"
               v-if="value.content.length > 10 && value.subject.length > 2"
           >
-            <IconBtn text="edit" @click="onSubmit"/>
+            <IconBtn text="edit" @click="onSubmit" :hidden="isRead"/>
           </div>
         </Transition>
         <Transition>
@@ -155,10 +156,11 @@ function onSubmit(){
               :placeholder="text.enterUrl"
               v-model:value="value.url[index]"
               @change="btnUrlHandler(index, false)"
+              :disabled="isRead"
           />
           <Transition>
           <div class="urlSticky">
-            <button @click="btnUrlHandler(index, true)">
+            <button @click="btnUrlHandler(index, true)" :hidden="isRead">
             {{ index + 1 < value.url.length ? '-' : '+' }}
             </button>
           </div>
@@ -167,7 +169,7 @@ function onSubmit(){
       </div>
       <div v-if="value.tag.size > 0" class="footer">
         <template v-for="tag in value.tag" >
-          <DiaryItem :text="tag" @click="removeTagHandler(tag)" />
+          <DiaryItem :text="tag" @click="removeTagHandler(tag)" :diabled="isRead"/>
         </template>
       </div>
       <div v-else class="footer tagIntro">

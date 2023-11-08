@@ -19,7 +19,7 @@ class ApiExceptionAdvice {
     @ExceptionHandler(TokenException::class)
     fun exceptionHandler(e: TokenException): ResponseEntity<String>{
         logError(e.message as String)
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.message);
     }
 
     @ExceptionHandler(VerifyPasswordException::class)

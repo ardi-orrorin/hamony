@@ -10,9 +10,7 @@ import Menu from "@/components/menu/Menu.vue";
   <br />
 <!--  <RouterView :meta="$route.meta"/>-->
   <router-view v-slot="{Component}">
-    <Transition>
       <component :is="Component" />
-    </Transition>
   </router-view>
 </template>
 
