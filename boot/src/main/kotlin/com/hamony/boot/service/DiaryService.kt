@@ -110,6 +110,7 @@ class DiaryService(
                     diary = diary
                 )
                 fileRepository.save(fileEntity)
+
             }
         }
 
