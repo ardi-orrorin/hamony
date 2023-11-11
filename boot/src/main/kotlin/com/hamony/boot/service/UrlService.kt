@@ -80,8 +80,9 @@ class UrlService(
                     it
                 }
             }.toMutableList()
-
         urlRepository.saveAll(urlsEntity)
+
+
     }
 
 

@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface DiaryRepository: JpaRepository<Diary, Long> {
 
-    fun findAllByMember(member: Member): MutableList<Diary>
-
-
     fun findAllBySubjectContainsOrContentContains(subject: String?, content: String?, pageable: Pageable): MutableList<Diary>
     fun findAllByMemberId(id: Long): MutableList<Diary>
 }
