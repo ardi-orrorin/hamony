@@ -91,7 +91,6 @@ class DiaryService(
         // tag 처리
         diaryRepository.save(diary)
 
-
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
             object{}.javaClass.enclosingMethod.name,
@@ -110,7 +109,6 @@ class DiaryService(
                     diary = diary
                 )
                 fileRepository.save(fileEntity)
-
             }
         }
 
