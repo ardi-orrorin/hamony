@@ -10,6 +10,7 @@ import {writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
 import {useDiary, useDiaryBody} from "@/store/diary";
 import router from "@/router";
+import {fileLoad} from "@/api/fileApi";
 
 
 const isRead = ref<boolean>(false)
@@ -22,16 +23,18 @@ const previewRef = ref<string>('')
 const previewImg = ref<boolean>(false)
 const file = ref<File | null>(null);
 
-watchEffect(()=>{
+watchEffect( async ()=>{
   isRead.value = router.currentRoute.value.meta.isRead  as boolean
 
   if(!isRead.value)
     value.$reset()
 
   if (value.file){
+
     previewRef.value = import.meta.env.VITE_API_URL + value.file
   }
 })
+
 
 function previewToggle() {
   previewImg.value = !previewImg.value

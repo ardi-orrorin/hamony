@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.util.Base64
 
 
 @RestController
@@ -112,6 +113,7 @@ class FileController(
         headers.contentType = MediaType("image", ext)
 
         return ResponseEntity(oFile, headers, HttpStatus.OK)
+
     }
 
     @GetMapping("/media/video/{id}/{fileName}")
@@ -141,7 +143,9 @@ class FileController(
 
         headers.contentType = MediaType("video",ext)
 
+
         return ResponseEntity(file.readBytes(), headers, HttpStatus.OK)
+
     }
 
 }
