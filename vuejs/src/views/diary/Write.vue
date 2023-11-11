@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 
 import DiaryBody from "@/components/DiaryBody.vue";
-import {onMounted, onRenderTracked, onRenderTriggered, reactive, ref, watchEffect} from "vue";
+import {ref, watchEffect} from "vue";
 import IconBtn from "@/components/IconBtn.vue";
 import koText from "@/assets/lang/ko-kr.json"
 import DiarySubject from "@/components/DiarySubject.vue";
 import DiaryItem from "@/components/DiaryItem.vue";
 import {writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
-import router from "@/router";
 import {useDiary, useDiaryBody} from "@/store/diary";
-import {fileLoad} from "@/api/fileApi";
+import router from "@/router";
 
 
 const isRead = ref<boolean>(false)
@@ -30,9 +29,7 @@ watchEffect(()=>{
     value.$reset()
 
   if (value.file){
-    fileLoad(value.file).then(res => {
-    })
-
+    previewRef.value = import.meta.env.VITE_API_URL + value.file
   }
 })
 
