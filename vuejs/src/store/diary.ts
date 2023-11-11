@@ -10,7 +10,6 @@ export interface Diary {
     updateAt?: string | Date | null;
     deleteAt?: string | Date | null;
     diaryTag?: Tag[]
-
 }
 export interface DiaryTag {
     id?: number | null | undefined
@@ -24,6 +23,14 @@ interface Body {
     content: string
     tag: Set<string>
     url: string[]
+    file: string
+}
+
+interface responseDiaryDTO {
+    diary: Diary
+    tag?: Tag[]
+    url?: Url[]
+    file: string
 }
 
 export const useDiary = defineStore('diary', {
@@ -57,7 +64,7 @@ export const useDairys = defineStore('diarys', {
 
 export const useDiaryBody = defineStore('diaryBody', {
     state(): Body {
-        return {subject: '', content: '', tag: new Set(), url: []}
+        return {subject: '', content: '', tag: new Set(), url: [''], file: "" }
     },
     actions: {
         add(data: Body): void {
@@ -66,11 +73,12 @@ export const useDiaryBody = defineStore('diaryBody', {
             this.tag = data.tag;
             this.url = data.url;
         },
-        addApiData(data: Diary): void {
-            this.subject = data.subject;
-            this.content = data.content;
-            this.tag = new Set(data.diaryTag?.map(tag => tag.tag));
-            this.url = [];
+        addApiData(data: responseDiaryDTO): void {
+                this.subject = data.diary.subject;
+                this.content = data.diary.content;
+                this.tag = data.tag ? new Set(data.tag.map(tag => tag.tag)) : new Set();
+                this.url = data.url ? data.url.map(url => url.url) : [];
+                this.file = data.file;
         }
     },
 })

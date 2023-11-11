@@ -62,6 +62,15 @@ class ResizeImage{
 
         return baos.toByteArray()
     }
+    fun readThumnail(fileName: String, ext: String): File {
+        val bufImage: BufferedImage = resize()
+
+        val file: File = File.createTempFile(fileName, ".$ext")
+
+        ImageIO.write(bufImage, ext, file)
+
+        return file
+    }
 
     fun writeThumnail(file: File, ext: String): Boolean {
         val bufImage: BufferedImage = resize()

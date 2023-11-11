@@ -40,11 +40,11 @@ class FileProvider {
         val fileName: String = UUID.randomUUID().toString()
         var pathName: String = ""
 
-        if(File(getOsDir() + "/" + userKey).isDirectory)
+        if(File(getOsDir() + userKey).isDirectory)
             File(getOsDir() + userKey).mkdirs()
 
         fun write(type: String) {
-            pathName = getOsDir() + "/" + userKey + "/" + type
+            pathName = getOsDir() + userKey + "/" + type
 
             if (!File(pathName).isDirectory)
                 File(pathName).mkdirs()

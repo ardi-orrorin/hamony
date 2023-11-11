@@ -17,10 +17,9 @@ export async function getDiary(id: string) {
     isLogout(result.status)
 
     if(result.status === 200) {
-        console.log(result.data)
         const data = useDiaryBody()
         data.$reset()
-        data.addApiData(result.data)
+        data.addApiData(result)
     }
 
     return result

@@ -10,6 +10,7 @@ import {writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
 import router from "@/router";
 import {useDiary, useDiaryBody} from "@/store/diary";
+import {fileLoad} from "@/api/fileApi";
 
 
 const isRead = ref<boolean>(false)
@@ -27,6 +28,12 @@ watchEffect(()=>{
 
   if(!isRead.value)
     value.$reset()
+
+  if (value.file){
+    fileLoad(value.file).then(res => {
+    })
+
+  }
 })
 
 function previewToggle() {
@@ -34,7 +41,7 @@ function previewToggle() {
 }
 
 function addImgHandler() {
-  if (imgRef.value) {
+  if (imgRef.value && !isRead.value) {
     imgRef.value.click()
   }
 }
@@ -101,7 +108,7 @@ function onSubmit(){
   writeDiary(formData)
       .then(res => {
         if(res.status === 201){
-          router.push("/")
+          router.push("/read/"+ res.data)
         }
       })
 }

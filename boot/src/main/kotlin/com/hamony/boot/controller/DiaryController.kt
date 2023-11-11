@@ -1,11 +1,10 @@
 package com.hamony.boot.controller
 
-import com.hamony.boot.dto.DiaryDTO
-import com.hamony.boot.dto.DiaryTagDTO
-import com.hamony.boot.dto.MemberDTO
+import com.hamony.boot.dto.*
 import com.hamony.boot.dto.request.ReqDiaryDTO
 import com.hamony.boot.dto.response.ResponseDTO
-import com.hamony.boot.service.DiaryService
+import com.hamony.boot.dto.response.ResponseDairyDTO
+import com.hamony.boot.service.*
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -14,12 +13,16 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import java.io.File
 
 
 @RestController
 @RequestMapping("/diary")
 class DiaryController(
     val diaryService: DiaryService,
+    val urlService: UrlService,
+    val tagService: TagService,
+    val fileService: FileService,
 ) {
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
@@ -28,17 +31,16 @@ class DiaryController(
         @RequestPart(name = "diary") reqDiaryDTO: ReqDiaryDTO,
         @RequestPart(name = "file", required = false) file: MultipartFile?,
         @AuthenticationPrincipal memberDTO: MemberDTO
-    ): ResponseEntity<ResponseDTO<Boolean>> {
+    ): ResponseEntity<ResponseDTO<Long>> {
 
         log.info("[DiaryController](write) diaryTagDTO : {}", reqDiaryDTO)
         log.info("[DiaryController](write) memberDTO : {}", memberDTO)
         log.info("[DiaryController](write) file : {}", file)
 
-
-        diaryService.save(reqDiaryDTO, memberDTO, file)
-
         return ResponseEntity.ok(
-            ResponseDTO(HttpStatus.CREATED.value(), true)
+            ResponseDTO(HttpStatus.CREATED.value(),
+                diaryService.save(reqDiaryDTO, memberDTO, file)
+            )
         )
     }
 
@@ -108,7 +110,7 @@ class DiaryController(
     fun findById(
         @PathVariable id:Int,
         @AuthenticationPrincipal memberDTO: MemberDTO
-    ): ResponseEntity<ResponseDTO<DiaryDTO>> {
+    ): ResponseEntity<ResponseDairyDTO> {
 
         log.info("[{}]({}) : {}: {}",
             object{}.javaClass.enclosingClass.name,
@@ -122,11 +124,40 @@ class DiaryController(
             "id", id
         )
 
+        val diaryDTO: DiaryDTO = diaryService.findByIdDTO(id.toLong())
+
+        val urlDTO: MutableList<UrlDTO> = urlService.findByDiaryId(id.toLong())
+
+        val tagDTO: MutableList<TagDTO> = tagService.findByDairyId(id.toLong())
+
+        val file: String = fileService.findByDiaryId(id.toLong())
+
+
+
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "diaryDTO", diaryDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "urlDTO", urlDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "tagDTO", tagDTO
+        )
+
         return ResponseEntity.ok(
-            ResponseDTO(
-                HttpStatus.OK.value(),
-                diaryService.findByIdDTO(id.toLong())
-            )
+                ResponseDairyDTO(
+                    HttpStatus.OK.value(),
+                    diaryDTO, urlDTO, tagDTO, file
+                )
         )
     }
 }

@@ -24,6 +24,16 @@ class UrlService(
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
+
+    fun findByDiaryId(id: Long): MutableList<UrlDTO> {
+        return urlRepository.findByDiaryId(id).map {
+            modelMapper.map(it, UrlDTO::class.java).let {urlDTO ->
+                urlDTO.diary = null
+                urlDTO
+            }
+        }.toMutableList()
+    }
+
     @Transactional
     fun save(diaryDTO: DiaryDTO, urlDTO: UrlDTO): Unit {
 

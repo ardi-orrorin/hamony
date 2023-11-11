@@ -62,7 +62,7 @@ class DiaryService(
         }
     }
 
-    fun save(reqDiaryDTO: ReqDiaryDTO, memberDTO: MemberDTO, file: MultipartFile?): Unit {
+    fun save(reqDiaryDTO: ReqDiaryDTO, memberDTO: MemberDTO, file: MultipartFile?): Long {
 
         val member: Member = memberRepository.findByUserId(memberDTO.userId).get()
 
@@ -128,6 +128,7 @@ class DiaryService(
         if(!reqDiaryDTO.urls.isNullOrEmpty()) {
             urlService.saveAll(diary, reqDiaryDTO.urls!!)
         }
+        return diary.id!!
     }
 
     fun recent(memberDTO: MemberDTO, pageable: Pageable): List<DiaryDTO> {
