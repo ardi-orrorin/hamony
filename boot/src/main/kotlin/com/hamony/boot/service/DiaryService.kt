@@ -167,7 +167,8 @@ class DiaryService(
 
         // TODO: 검색 알고리즘 추가
 
-        val diaryList: List<Diary> = diaryRepository.findSearch(keyword, keyword, pageable)
+        val diaryList: List<Diary> =
+            diaryRepository.findSearch(keyword, keyword, pageable)
 
         return diaryList.map {
             modelMapper.map(it, DiaryDTO::class.java)

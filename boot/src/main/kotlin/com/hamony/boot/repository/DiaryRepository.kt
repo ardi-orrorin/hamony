@@ -12,14 +12,12 @@ interface DiaryRepository: JpaRepository<Diary, Long> {
     fun findByIdAndDeleteAtIsNull(id: Long): Diary?
 
     @Query(value = "SELECT d FROM Diary d " +
-            "WHERE d.deleteAt IS NULL " +
-            "AND d.id IN (SELECT d1.id " +
-                            "FROM Diary d1 " +
-                           "WHERE d1.subject LIKE concat('%' ,:subject, '%') " +
-                              "OR d1.content LIKE concat('%' ,:content, '%') " +
-            ")"
+            "WHERE d.deleteAt IS NULL AND d.subject LIKE concat('%' ,:subject, '%') " +
+            "Or d.deleteAt IS NULL AND d.content LIKE concat('%' ,:content, '%')"
     )
     fun findSearch(subject: String, content: String, pageable: Pageable): List<Diary>
+
+    fun findAllByDeleteAtIsNullAndAndSubjectContainsIgnoreCaseOrDeleteAtIsNullAndContentContainsIgnoreCase(subject: String, content: String, pageable: Pageable): List<Diary>
     fun findAllByMemberId(id: Long): MutableList<Diary>
 
     fun findAllByDeleteAtIsNull(pageable: Pageable): Page<Diary>
