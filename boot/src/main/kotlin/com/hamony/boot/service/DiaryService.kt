@@ -167,16 +167,22 @@ class DiaryService(
 
         // TODO: 검색 알고리즘 추가
 
-        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContainsAndDeleteAtIsNull(keyword, keyword, pageable)
+        val diaryList: List<Diary> = diaryRepository.findSearch(keyword, keyword, pageable)
 
         return diaryList.map {
-            modelMapper.map(it, DiaryDTO::class.java).let {
-                it.diaryTag = mutableListOf()
-                it.member = null
-                it
-            }
+            modelMapper.map(it, DiaryDTO::class.java)
+                .let {
+                    it.diaryTag = mutableListOf()
+                    it.member = null
+                    it
+                }
+        }.run {
+            log.info("[{}]({}) : {}: {}",
+                object{}.javaClass.enclosingClass.name,
+                object{}.javaClass.enclosingMethod.name,
+                "diaryDTO", this)
+            this
         }
-
     }
 
     fun findByMemberId(id: Long): List<DiaryDTO> {
