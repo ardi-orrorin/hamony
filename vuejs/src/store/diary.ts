@@ -19,11 +19,13 @@ export interface DiaryTag {
 }
 
 interface Body {
+    id: number
     subject: string
     content: string
     tag: Set<string>
     url: string[]
     file: string
+    isModify: boolean
 }
 
 interface responseDiaryDTO {
@@ -31,6 +33,7 @@ interface responseDiaryDTO {
     tag?: Tag[]
     url?: Url[]
     file: string
+    isModify: boolean
 }
 
 export const useDiary = defineStore('diary', {
@@ -64,7 +67,7 @@ export const useDairys = defineStore('diarys', {
 
 export const useDiaryBody = defineStore('diaryBody', {
     state(): Body {
-        return {subject: '', content: '', tag: new Set(), url: [''], file: "" }
+        return {id: 0, subject: '', content: '', tag: new Set(), url: [''], file: "", isModify: true }
     },
     actions: {
         add(data: Body): void {
@@ -74,11 +77,13 @@ export const useDiaryBody = defineStore('diaryBody', {
             this.url = data.url;
         },
         addApiData(data: responseDiaryDTO): void {
+                this.id = data.diary.id!!;
                 this.subject = data.diary.subject;
                 this.content = data.diary.content;
                 this.tag = data.tag ? new Set(data.tag.map(tag => tag.tag)) : new Set();
                 this.url = data.url ? data.url.map(url => url.url) : [];
                 this.file = data.file;
+                this.isModify = data.isModify;
         }
     },
 })

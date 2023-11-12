@@ -132,7 +132,7 @@ class DiaryController(
 
         val file: String = fileService.findByDiaryId(id.toLong())
 
-
+        val isModify: Boolean = diaryService.isModify(id.toLong(), memberDTO)
 
 
         log.info("[{}]({}) : {}: {}",
@@ -156,8 +156,31 @@ class DiaryController(
         return ResponseEntity.ok(
                 ResponseDairyDTO(
                     HttpStatus.OK.value(),
-                    diaryDTO, urlDTO, tagDTO, file
+                    diaryDTO, urlDTO, tagDTO, file, isModify
                 )
+        )
+    }
+
+    @DeleteMapping("{id}")
+    fun deleteById(
+        @PathVariable id: Long,
+        @AuthenticationPrincipal memberDTO: MemberDTO
+    ): ResponseEntity<ResponseDTO<Long>> {
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "memberDTO", memberDTO
+        )
+
+        log.info("[{}]({}) : {}: {}",
+            object{}.javaClass.enclosingClass.name,
+            object{}.javaClass.enclosingMethod.name,
+            "id", id
+        )
+
+        return ResponseEntity.ok(
+            ResponseDTO(HttpStatus.OK.value(), diaryService.deleteById(id, memberDTO))
         )
     }
 }

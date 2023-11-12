@@ -32,7 +32,7 @@ function likeClickHandler() {
       </div>
       <div class="sticky">
         <!--  todo 좋아요 아이콘 -->
-        <IconBtn :class="isLike && 'red'" :text="isLike? 'favorite' : 'favorite'" style="border: none" @click="likeClickHandler"/>
+        <IconBtn :class="isLike && 'red'" :text="isLike? 'heart_minus' : 'heart_plus'" style="border: none" @click="likeClickHandler"/>
       </div>
     </div>
   </div>

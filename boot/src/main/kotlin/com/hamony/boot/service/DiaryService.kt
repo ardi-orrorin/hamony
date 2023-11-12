@@ -44,8 +44,12 @@ class DiaryService(
             "diaryId", diaryId
         )
 
-        val diary: Diary = diaryRepository.findById(diaryId).orElseThrow{
-            NotFoundException("데이터를 찾을 수 업습니다.")
+        val diary: Diary = diaryRepository.findByIdAndDeleteAtIsNull(diaryId).let{
+            if (it != null) {
+                it
+            } else {
+                throw NotFoundException("데이터를 찾을 수 업습니다.")
+            }
         }
 
         return diary
@@ -147,7 +151,7 @@ class DiaryService(
         // TODO: 최근 그 표시 알고리즘 구현
 
         // 임시
-        val diaryList: Page<Diary> = diaryRepository.findAll(pageable)
+        val diaryList: Page<Diary> = diaryRepository.findAllByDeleteAtIsNull(pageable)
 
         return diaryList.map {
             DiaryDTO(it.id, it.subject, it.content, it.createAt, it.updateAt, it.deleteAt, null, mutableListOf())
@@ -163,13 +167,7 @@ class DiaryService(
 
         // TODO: 검색 알고리즘 추가
 
-        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContains(keyword, keyword, pageable)
-
-        log.info("[{}]({}) : {}: {}",
-            object{}.javaClass.enclosingClass.name,
-            object{}.javaClass.enclosingMethod.name,
-            "diaryList", diaryList
-        )
+        val diaryList: MutableList<Diary> = diaryRepository.findAllBySubjectContainsOrContentContainsAndDeleteAtIsNull(keyword, keyword, pageable)
 
         return diaryList.map {
             modelMapper.map(it, DiaryDTO::class.java).let {
@@ -211,6 +209,38 @@ class DiaryService(
 
         return diaryList.map {
             modelMapper.map(it, DiaryDTO::class.java)
+        }
+    }
+
+    fun isModify(diaryId: Long, memberDTO: MemberDTO): Boolean {
+        val member = memberRepository.findByUserId(memberDTO.userId).orElseThrow {
+            NotFoundException("회원을 찾을 수 없습니다.")
+        }
+
+        diaryRepository.findById(diaryId).let {
+            if(it.isPresent){
+                if(it.get().member!!.id == member.id){
+                    return true
+                }
+            }
+            return false
+        }
+    }
+
+    fun deleteById(id: Long, memberDTO: MemberDTO): Long {
+        val member = memberRepository.findByUserId(memberDTO.userId).orElseThrow {
+            NotFoundException("회원을 찾을 수 없습니다.")
+        }
+
+        diaryRepository.findById(id).let {
+            if(it.isPresent){
+                if(it.get().member!!.id == member.id){
+                    it.get().deleteAt = LocalDateTime.now()
+                    diaryRepository.save(it.get())
+                    return it.get().id!!
+                }
+            }
+            return 0
         }
     }
 

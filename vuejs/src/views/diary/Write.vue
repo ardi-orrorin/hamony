@@ -6,11 +6,10 @@ import IconBtn from "@/components/IconBtn.vue";
 import koText from "@/assets/lang/ko-kr.json"
 import DiarySubject from "@/components/DiarySubject.vue";
 import DiaryItem from "@/components/DiaryItem.vue";
-import {writeDiary} from "@/api/diaryApi";
+import {deleteDiary, writeDiary} from "@/api/diaryApi";
 import type {DiaryTag} from "@/store/diary";
 import {useDiary, useDiaryBody} from "@/store/diary";
 import router from "@/router";
-import {fileLoad} from "@/api/fileApi";
 
 
 const isRead = ref<boolean>(false)
@@ -114,6 +113,20 @@ function onSubmit(){
         }
       })
 }
+
+function deleteHandler(){
+  if(confirm("삭제하시겠습니까?")){
+    deleteDiary(value.id!!)
+        .then(res => {
+          if(res.status === 200){
+            router.push("/")
+          }
+        })
+  }
+}
+
+console.log(isRead.value)
+console.log(value.isModify)
 </script>
 
 <template>
@@ -140,7 +153,15 @@ function onSubmit(){
               class="sticky"
               v-if="value.content.length > 10 && value.subject.length > 2"
           >
-            <IconBtn text="edit" @click="onSubmit" :hidden="isRead"/>
+            <IconBtn text="edit" @click="onSubmit" :hidden="isRead && !value.isModify"/>
+          </div>
+        </Transition>
+        <Transition>
+          <div
+              class="stickyEdit"
+              v-if="isRead && value.isModify"
+          >
+            <IconBtn text="delete" @click="deleteHandler" :hidden="isRead && !value.isModify"/>
           </div>
         </Transition>
         <Transition>
@@ -243,6 +264,12 @@ function onSubmit(){
     position: absolute;
     bottom: 5vh;
     right: 1.5vw;
+  }
+
+  .stickyEdit {
+    position: absolute;
+    bottom: 5vh;
+    right: 4.5vw;
   }
 
   .footer {

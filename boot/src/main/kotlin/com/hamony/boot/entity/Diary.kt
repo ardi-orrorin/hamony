@@ -33,10 +33,7 @@ data class Diary(
     var member: Member?,
 
     @OneToMany(mappedBy = "diary", cascade = [CascadeType.ALL], targetEntity = DiaryTag::class)
-//    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-//    @JoinColumn(name = "id")
     var diaryTag: MutableList<DiaryTag> = ArrayList()
-
 
 ){
     override fun toString(): String {

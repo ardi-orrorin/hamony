@@ -3,12 +3,18 @@
 import ProfileImg from "@/components/profile/ProfileImg.vue";
 import ProfileTab from "@/components/profile/ProfileTab.vue";
 import koText from "@/assets/lang/ko-kr.json"
+import {useToken} from "@/store/member";
+
 interface Tab {
   text: string;
   path: string;
 }
 
+const token = useToken()
+const userId = token.$state.userId
+
 const text = koText;
+
 
 
 const tabs: Tab[] = [
@@ -24,7 +30,7 @@ const tabs: Tab[] = [
       <div class="">
         <div class="header">
           <ProfileImg src="/" />
-          <span class="profileId">{{ text.profileId}}</span>
+          <span class="profileId">{{userId || text.profileId}}</span>
           <div class="headerSub">
             <button>{{ text.profileModifyProfile }}</button>
             <button>{{ text.profileAddProfile }}</button>

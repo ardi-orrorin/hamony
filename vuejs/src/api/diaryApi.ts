@@ -3,8 +3,7 @@ import type {Diary} from "@/store/diary";
 import {useDairys, useDiaryBody} from "@/store/diary";
 import {useToken} from "@/store/member";
 import {isLogout} from "@/api/memberApi";
-
-
+import router from "@/router";
 
 export async function getDiary(id: string) {
     const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/'+id, {headers: {
@@ -15,6 +14,14 @@ export async function getDiary(id: string) {
 
 
     isLogout(result.status)
+
+    if(result.status === 404) {
+        router.push({name: 'NotFound',
+            params: {
+                pathMatch: ['read', id]
+            }
+        })
+    }
 
     if(result.status === 200) {
         const data = useDiaryBody()
@@ -118,6 +125,18 @@ export async function getLike(id: string) {
 
 export async function likeDiaryToggle(id: string) {
     const result = await axios.post(import.meta.env.VITE_API_URL + '/like/' + id,{}, {headers: {
+            Authorization: useToken().tokenType + ' ' + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
+
+    isLogout(result.status)
+
+    return result
+}
+
+export async function deleteDiary(id: string) {
+    const result = await axios.delete(import.meta.env.VITE_API_URL + '/diary/' + id, {headers: {
             Authorization: useToken().tokenType + ' ' + useToken().token
         }})
         .then(res => res.data)

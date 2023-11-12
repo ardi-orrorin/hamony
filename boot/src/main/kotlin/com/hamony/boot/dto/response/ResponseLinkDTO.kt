@@ -19,6 +19,8 @@ data class ResponseDairyDTO(
 
     val file: String,
 
+    val isModify: Boolean = false,
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     val responseTime: LocalDateTime = LocalDateTime.now()
 )

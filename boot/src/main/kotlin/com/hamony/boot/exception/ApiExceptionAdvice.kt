@@ -38,4 +38,9 @@ class ApiExceptionAdvice {
         logError(e.message as String)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.message);
     }
+    @ExceptionHandler(NotFoundException::class)
+    fun exceptionHandler(e: NotFoundException): ResponseEntity<String>{
+        logError(e.message as String)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.message);
+    }
 }

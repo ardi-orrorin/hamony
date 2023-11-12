@@ -21,7 +21,6 @@ data class DiaryDTO(
 
     var diaryTag: MutableList<DiaryTagDTO> = ArrayList()
 
-
 ){
 
 
