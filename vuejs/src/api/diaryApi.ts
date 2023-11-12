@@ -135,7 +135,7 @@ export async function likeDiaryToggle(id: string) {
     return result
 }
 
-export async function deleteDiary(id: string) {
+export async function deleteDiary(id: number) {
     const result = await axios.delete(import.meta.env.VITE_API_URL + '/diary/' + id, {headers: {
             Authorization: useToken().tokenType + ' ' + useToken().token
         }})
