@@ -103,4 +103,27 @@ export async function imgUpload(data: FormData){
 }
 
 
+export async function getLike(id: string) {
+    const result = await axios.get(import.meta.env.VITE_API_URL + '/like/' + id, {headers: {
+            Authorization: useToken().tokenType + ' ' + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
 
+    isLogout(result.status)
+
+    return result
+}
+
+
+export async function likeDiaryToggle(id: string) {
+    const result = await axios.post(import.meta.env.VITE_API_URL + '/like/' + id,{}, {headers: {
+            Authorization: useToken().tokenType + ' ' + useToken().token
+        }})
+        .then(res => res.data)
+        .catch(err => err.response)
+
+    isLogout(result.status)
+
+    return result
+}

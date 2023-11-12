@@ -1,7 +1,23 @@
 <script setup lang="ts">
 import IconBtn from "@/components/IconBtn.vue";
+import {getLike, likeDiaryToggle} from "@/api/diaryApi";
+import {onMounted, ref} from "vue";
 
-const props = defineProps(['subject', 'content', 'like'])
+const props = defineProps(['subject', 'content', 'like', 'id'])
+
+const isLike = ref(false)
+
+onMounted(()=>{
+  getLike(props.id).then(res => {
+    isLike.value = res
+  })
+})
+
+function likeClickHandler() {
+  likeDiaryToggle(props.id).then(res => {
+    isLike.value = res
+  })
+}
 
 </script>
 
@@ -16,7 +32,7 @@ const props = defineProps(['subject', 'content', 'like'])
       </div>
       <div class="sticky">
         <!--  todo 좋아요 아이콘 -->
-        <IconBtn :text="props.like? 'favorite' : 'favorite'" style="border: none"/>
+        <IconBtn :class="isLike && 'red'" :text="isLike? 'favorite' : 'favorite'" style="border: none" @click="likeClickHandler"/>
       </div>
     </div>
   </div>
@@ -33,6 +49,10 @@ const props = defineProps(['subject', 'content', 'like'])
     text-overflow: ellipsis;
     box-shadow: 0 0 5px 5px rgba(240, 240, 240, 0.5);
     position: relative;
+  }
+
+  .red {
+    color: red;
   }
 
   .subContainer {

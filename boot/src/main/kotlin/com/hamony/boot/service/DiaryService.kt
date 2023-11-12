@@ -172,7 +172,11 @@ class DiaryService(
         )
 
         return diaryList.map {
-            modelMapper.map(it, DiaryDTO::class.java)
+            modelMapper.map(it, DiaryDTO::class.java).let {
+                it.diaryTag = mutableListOf()
+                it.member = null
+                it
+            }
         }
 
     }

@@ -17,7 +17,7 @@ const value = computed({
 </script>
 
 <template>
-  <input class="diarySubject" v-model="value" :disabled="props.disabled" />
+  <input class="diarySubject" v-model="value" :disabled="props.disabled"/>
 </template>
 
 <style scoped lang="scss">

@@ -24,14 +24,14 @@ const previewImg = ref<boolean>(false)
 const file = ref<File | null>(null);
 
 watchEffect( async ()=>{
-  isRead.value = router.currentRoute.value.meta.isRead  as boolean
+  isRead.value = router.currentRoute.value.meta.isRead  as boolean;
 
   if(!isRead.value)
     value.$reset()
+    previewRef.value = '';
 
   if (value.file){
-
-    previewRef.value = import.meta.env.VITE_API_URL + value.file
+    previewRef.value = import.meta.env.VITE_API_URL + value.file;
   }
 })
 
@@ -66,8 +66,10 @@ function findTag() {
 }
 
 function removeTagHandler(tag: string){
-  value.tag.delete(tag)
-  value.content = value.content.replaceAll(tag, tag.slice(1))
+  if (!isRead.value){
+    value.tag.delete(tag)
+    value.content = value.content.replaceAll(tag, tag.slice(1))
+  }
 }
 
 function btnUrlHandler(index: number, isAlert: boolean){
@@ -158,13 +160,19 @@ function onSubmit(){
       </div>
       <div v-for="(url, index) in value.url">
         <div class="info">
-          <DiarySubject
-              style="border-radius: 10px"
-              :placeholder="text.enterUrl"
-              v-model:value="value.url[index]"
-              @change="btnUrlHandler(index, false)"
-              :disabled="isRead"
-          />
+            <template v-if="isRead">
+              <a class="url" :href="`https://${url}`" target="_blank">https://{{url}}</a>
+            </template>
+            <template v-else>
+              <DiarySubject
+                  style="border-radius: 10px"
+                  :placeholder="text.enterUrl"
+                  v-model:value="value.url[index]"
+                  @change="btnUrlHandler(index, false)"
+                  :disabled="isRead"
+                  :link="isRead"
+              />
+            </template>
           <Transition>
           <div class="urlSticky">
             <button @click="btnUrlHandler(index, true)" :hidden="isRead">
@@ -193,6 +201,7 @@ function onSubmit(){
     justify-content: center;
     align-items: center;
   }
+
   .subContianer {
     min-width: 400px;
     width: 35vw;
@@ -292,6 +301,18 @@ function onSubmit(){
       //border: 1px solid rgba(200, 200, 200, 1);
       background: white;
     }
+  }
+
+  .url {
+    color: #3f51b5;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    width: 100%;
+    word-break: break-all;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .v-enter-active,

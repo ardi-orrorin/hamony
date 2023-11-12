@@ -32,9 +32,6 @@ class UrlService(
                 urlDTO
             }
         }.toMutableList()
-
-
-
     }
 
     @Transactional
@@ -67,7 +64,6 @@ class UrlService(
             object{}.javaClass.enclosingMethod.name,
             "url", url
         )
-
         urlRepository.save(url)
     }
 
@@ -81,9 +77,5 @@ class UrlService(
                 }
             }.toMutableList()
         urlRepository.saveAll(urlsEntity)
-
-
     }
-
-
 }

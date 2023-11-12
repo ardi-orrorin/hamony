@@ -3,9 +3,13 @@
 import SearchInput from "@/components/search/SearchInput.vue";
 import {useDairys} from "@/store/diary";
 import RecentItem from "@/components/recent/RecentItem.vue";
+import router from "@/router";
 
 const dairylist = useDairys()
 
+function clickHandler(id: number) {
+  router.push("/read/"+id)
+}
 
 </script>
 
@@ -20,7 +24,7 @@ const dairylist = useDairys()
     <div class="body">
       <template v-for="dairy in dairylist.$state.store">
         <div class="listContainer">
-          <RecentItem :subject="dairy.subject" :content="dairy.content" />
+          <RecentItem :subject="dairy.subject" :content="dairy.content" :id="dairy.id" @click="clickHandler(dairy.id!!)" />
         </div>
       </template>
     </div>
