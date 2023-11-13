@@ -1,0 +1,81 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include flexCenter($isHeight: false);
+  @include fullAbsoluteBox($isHeight: true);
+  text-align: center;
+}
+
+.subContainer {
+  transition: $defaultTransition;
+  margin-top: 5vh;
+  width: 50%;
+  justify-content: center;
+  row-gap: 1rem;
+
+  div {
+    padding: 1.8vh;
+
+    span {
+      font-size: 0.8rem;
+      color: red;
+    }
+  }
+
+  @media (max-width: $lapTop) {
+    transition: 0.5s;
+    width: 70%;
+  }
+
+  @media (max-width: $mobile) {
+    transition: 0.5s;
+    width: 80%;
+  }
+}
+
+h1 {
+  padding: 5vh;
+}
+
+
+.email{
+  position: relative;
+}
+
+.list {
+  @include sticky($top: 2rem, $left: 0);
+
+  button {
+    width: 100%;
+    border: $mainFontColor solid 1px;
+    background-color: $hoverFontColor;
+    height: 4vh;
+    color: $mainFontColor;
+    span {
+      font-weight: $FontWeight-L;
+      color: $mainFontColor;
+    }
+
+    &:focus {
+      background-color: $mainBackground-color;
+      color: $hoverFontColor;
+      outline-style: none;
+      span{
+        color: $hoverFontColor;
+      }
+    }
+  }
+
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}

@@ -220,15 +220,6 @@ function onSubmitHandler(){
         </Transition>
       </div>
 
-<!--      <div>-->
-<!--        <Input-->
-<!--            ref="nickNameRef"-->
-<!--            :placeholder="text.enterNickname"-->
-<!--            v-model:value="user.nickName"-->
-<!--            required-->
-<!--        />-->
-<!--        <span>{{}}</span>-->
-<!--      </div>-->
       <div>
         <IconBtn text="undo" @click="formInitHandler" />
         <transition>
@@ -245,86 +236,5 @@ function onSubmitHandler(){
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    display: flex;
-    height: 100vh;
-    text-align: center;
-    justify-content: center;
-  }
-
-  .subContainer {
-    transition: 0.5s;
-    margin-top: 5vh;
-    width: 50%;
-    justify-content: center;
-    row-gap: 1rem;
-
-    div {
-      padding: 1.8vh;
-
-      span {
-        font-size: 0.8rem;
-        color: red;
-      }
-    }
-
-    @media (max-width: 900px) {
-      transition: 0.5s;
-      width: 70%;
-    }
-
-    @media (max-width: 600px) {
-      transition: 0.5s;
-      width: 80%;
-    }
-  }
-
-  h1 {
-    padding: 5vh;
-  }
-
-
-  .email{
-    position: relative;
-  }
-
-  .list {
-    position: absolute;
-    z-index: 100;
-    width: 100%;
-    left: 0;
-    top: 2rem;
-    button {
-      width: 100%;
-      border: gray solid 1px;
-      background-color: white;
-      height: 4vh;
-      color: gray;
-      span {
-        font-weight: 600;
-        color: gray;
-      }
-
-      &:focus {
-        background-color: rgba(180, 180, 180, 1);
-        color: white;
-        outline-style: none;
-        span{
-          color: white;
-        }
-      }
-    }
-
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: opacity 0.35s ease;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-  }
-
+  @import "@/assets/scss/pages/auth/signIn";
 </style>

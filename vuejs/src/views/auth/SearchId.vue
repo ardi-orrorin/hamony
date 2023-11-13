@@ -86,50 +86,5 @@ function initSearchIdHandler() {
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-
-
-    div {
-      width: 40%;
-      text-align: center;
-      transition: 0.5s;
-
-
-      @media (max-width: 900px) {
-        transition: 0.5s;
-        width: 60%;
-      }
-
-      @media (max-width: 600px) {
-        transition: 0.5s;
-        width: 80%;
-      }
-    }
-    h1{
-      margin-bottom: 5vh;
-    }
-  }
-
-  .menu {
-    margin-top: 1vh;
-  }
-
-  .verityCode {
-    margin-top: 2vh;
-  }
-  .v-enter-active,
-  .v-leave-active {
-    transition: opacity 0.35s ease;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-  }
+  @import "@/assets/scss/pages/auth/searchId";
 </style>

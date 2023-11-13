@@ -1,0 +1,33 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+input {
+  color: $mainFontColor;
+  border: $mainFontColor solid 1px;
+  transition: $defaultTransition;
+
+  width: 35%;
+  height: 2rem;
+  padding: 0 0.7rem;
+  outline-style: none;
+  text-align: center;
+  align-self: center;
+
+  &:focus{
+    background-color: $mainBackground-color;
+    transition: $defaultTransition;
+    color: $focusFontColor;
+  }
+}
+.up {
+  border-radius: 0.7vw 0.7vw 0 0;
+
+}
+.bottom {
+  border-top: none;
+  border-radius: 0 0 0.7vw 0.7vw;
+}
+.all {
+  border-radius: 0.7vw;
+}

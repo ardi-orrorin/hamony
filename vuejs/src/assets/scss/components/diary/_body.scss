@@ -1,0 +1,22 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.context {
+  @include fullRatioBox($isWidth: true, $isHeight: true);
+  @include inSideText($whiteSpace: pre-line);
+
+  line-height: $lineHeight-M;
+  transition: $defaultTransition;
+  color: $mainFontColor;
+
+  padding: 1rem;
+  resize: none;
+  overflow: auto;
+  border: none;
+  outline: none;
+  &:focus {
+    background-color: $mainBackground-color;
+    color: $focusFontColor;
+  }
+}

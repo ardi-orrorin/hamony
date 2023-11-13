@@ -1,0 +1,17 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.btn {
+  width: 30%;
+  height: 3vh;
+  font-size: $FontSize-M;
+  color: $mainFontColor;
+  border-radius: 100px;
+  transition: $defaultTransition;
+
+  &:hover {
+    color: $focusFontColor;
+    background-color: $mainBackground-color;
+  }
+}

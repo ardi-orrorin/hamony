@@ -10,6 +10,8 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "@/assets/scss/components/iconBtn";
+
   @font-face {
     font-family: 'Material Symbols Outlined';
     font-style: normal;
@@ -22,22 +24,4 @@
     font-family: 'Material Symbols Outlined';
   }
 
-  .btn {
-    border-radius: 10vw;
-    border: gray solid 1px;
-    font-size: 1rem;
-    text-align: right;
-    height: 2rem;
-    width: 2rem;
-    color: gray;
-    margin: 0.5rem;
-    background-color: white;
-
-
-    &:hover{
-      background: gray;
-      color: white;
-      transition: 0.35s;
-    }
-  }
 </style>

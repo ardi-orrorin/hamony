@@ -1,0 +1,67 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include flexCenter($isHeight: true);
+  @include fullRatioBox($isWidth: true);
+}
+
+.subContainer {
+  @include boxShadow(0, 0, 10px, 5px);
+  width: 40%;
+  justify-content: center;
+  padding: 1vw;
+  border-radius: 1vw;
+}
+
+.header {
+  @include flexCenter($isHeight: true);
+  @include fullRatioBox($isHeight: true);
+  padding: 1vh 1vw;
+  gap: 2vw;
+  span {
+    width: 20%;
+  }
+}
+
+.profileId {
+  color: $mainFontColor;
+  font-size: $FontSize-M;
+}
+.tabs {
+  margin-top: 2vh;
+  display: flex;
+  justify-content: space-between;
+  gap: 1vw;
+}
+
+.body {
+  margin-top: 2vh;
+  height: 40vh;
+  @include wrapBox();
+  //flex-wrap: wrap;
+  //word-break: break-all;
+}
+
+.headerSub {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 1vh;
+
+  button {
+    transition: $defaultTransition;
+    color: $mainFontColor;
+
+    border-radius: 100vw;
+    padding: 0.5vh 1.5vw;
+
+    &:hover {
+      color: $focusFontColor;
+      background-color: $mainBackground-color;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+
+.container {
+  @include flexCenter($isHeight: false, $flexDirection: column);
+  @include fullAbsoluteBox($isHeight: true);
+
+  h1 {
+    margin-bottom: 5vh;
+  }
+  div {
+    text-align: center;
+  }
+}
+
+.error {
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  color: $errorFontColor;
+}
+
+.menu{
+  margin-top: 1vh;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}

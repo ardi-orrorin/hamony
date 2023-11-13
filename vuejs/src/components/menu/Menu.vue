@@ -32,23 +32,6 @@ const menuList: Menu[] = [
 </template>
 
 <style scoped lang="scss">
-  .container {
-    margin-top: 4vh;
-    min-height: 40px;
-    height: 3.5vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .subContainer {
-    padding: 0 1.5vw;
-    height: 100%;
-    border-radius: 100px;
-    box-shadow: 0 0 10px 5px rgba(230, 230, 230, 0.5);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
+  @import "@/assets/scss/components/menu/menu";
 
 </style>

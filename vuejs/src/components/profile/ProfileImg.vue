@@ -24,16 +24,5 @@ function addImgHandler(el: any) {
 </template>
 
 <style scoped lang="scss">
-    .profileImg {
-      height: 70px;
-      width: 70px;
-      position: relative;
-    }
-    .img {
-      width: 100%;
-      height: 100%;
-      border-radius: 100vw;
-      object-fit: cover;
-      border: 3px solid rgba(230, 230, 230, 1);
-    }
+  @import "@/assets/scss/components/profile/img";
 </style>

@@ -40,28 +40,6 @@ function moveDiary(id: number){
 </template>
 
 <style scoped lang="scss">
-  .container {
-     display: flex;
-     justify-content: center;
-  }
-
-  .subContainer {
-    min-width: 70%;
-    max-width: 70%;
-    display: flex;
-    flex-wrap: wrap;
-    word-break: break-all;
-    justify-content: center;
-    border-radius: 20px;
-    gap: 20px;
-    transition: 0.35s;
-    
-    @media (max-width: 1000px) {
-      max-width: 80%;
-    }
-    @media (max-width: 650px) {
-      max-width: 100%;
-    }
-  }
+  @import "@/assets/scss/pages/diary/recent";
 
 </style>

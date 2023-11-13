@@ -21,24 +21,6 @@ const value = computed({
 </template>
 
 <style lang="scss" scoped>
-  .context {
-    padding: 1rem;
-    resize: none;
-    height: 100%;
-    width: 100%;
-    white-space: pre-line;
-    line-height: 1.5rem;
-    word-break: break-all;
-    overflow: auto;
-    border: none;
-    outline: none;
-    transition: 0.35s;
-    color: gray;
+  @import "@/assets/scss/components/diary/body";
 
-    &:focus {
-      transition: 0.35s;
-      background-color: rgba(245, 245, 245, 1);
-      color: black;
-    }
-  }
 </style>

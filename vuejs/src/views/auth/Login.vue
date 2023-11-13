@@ -132,40 +132,6 @@ function moveIdInputHandler() {
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    height: 98vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-collapse: separate;
-
-    h1 {
-      margin-bottom: 5vh;
-    }
-
-    div {
-      text-align: center;
-    }
-  }
-
-  .error {
-    padding: 0.5rem;
-    font-size: 0.7rem;
-    color: red;
-  }
-
-  .menu{
-    margin-top: 1vh;
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: opacity 0.35s ease;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-  }
+  @import "@/assets/scss/pages/auth/login";
 
 </style>

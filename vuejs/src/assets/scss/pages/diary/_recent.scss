@@ -1,0 +1,25 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include flexCenter($isHeight: false);
+}
+
+.subContainer {
+  @include flexCenter($isHeight: false);
+  @include wrapBox();
+  transition: $defaultTransition;
+
+  min-width: 70%;
+  max-width: 70%;
+  border-radius: 20px;
+  gap: 20px;
+
+  @media (max-width: $lapTop) {
+    max-width: 80%;
+  }
+  @media (max-width: $mobile) {
+    max-width: 100%;
+  }
+}

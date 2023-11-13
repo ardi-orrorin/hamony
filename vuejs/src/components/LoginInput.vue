@@ -32,32 +32,6 @@ import {computed, ref} from "vue";
 </template>
 
 <style lang="scss" scoped>
-  input {
-    width: 35%;
-    height: 2rem;
-    padding: 0 0.7rem;
-    color: gray;
-    outline-style: none;
-    border: gray solid 1px;
-    text-align: center;
-    align-self: center;
-    transition: 0.35s;
+  @import "@/assets/scss/components/login/input";
 
-    &:focus{
-      background-color: rgba(245, 245, 245, 1);
-      transition: 0.35s;
-      color: black;
-    }
-  }
-  .up {
-    border-radius: 0.7vw 0.7vw 0 0;
-
-  }
-  .bottom {
-    border-top: none;
-    border-radius: 0 0 0.7vw 0.7vw;
-  }
-  .all {
-    border-radius: 0.7vw;
-  }
 </style>

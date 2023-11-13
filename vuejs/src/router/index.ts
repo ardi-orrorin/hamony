@@ -32,11 +32,6 @@ const router = createRouter({
           component: Recent,
         },
         {
-          path: 'searchid',
-          name: 'searchId',
-          component: SearchId,
-        },
-        {
           path: 'write',
           name: 'write',
           component:() => import("@/views/diary/Write.vue"),
@@ -102,6 +97,12 @@ const router = createRouter({
       path: '/signin',
       name: 'signIn',
       component: SignIn,
+      meta: { requiresAuth : false}
+    },
+    {
+      path: '/searchid',
+      name: 'searchId',
+      component: SearchId,
       meta: { requiresAuth : false}
     },
     {

@@ -1,0 +1,16 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.profileImg {
+  height: 70px;
+  width: 70px;
+  position: relative;
+}
+
+.img {
+  @include fullRatioBox(true, true);
+  border-radius: 100vw;
+  object-fit: cover;
+  border: 3px solid rgba(230, 230, 230, 1);
+}

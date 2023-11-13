@@ -1,0 +1,18 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.diarySubject {
+  @include fullRatioBox($isWidth: true, $isHeight: true);
+  transition: $defaultTransition;
+  color: $mainFontColor;
+
+  padding: 0.5rem 1rem;
+  outline-style: none;
+  border: none;
+
+  &:focus {
+    background-color: $mainBackground-color;
+    color: $focusFontColor;
+  }
+}

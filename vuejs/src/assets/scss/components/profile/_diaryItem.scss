@@ -1,0 +1,30 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include fullRatioBox(true, true);
+  @include flexCenter( column);
+  display: flex;
+  border-radius: 10px;
+  flex-direction: column;
+  padding: 10px;
+  font-size: $FontSize-S;
+  transition: $defaultTransition;
+  color: $mainFontColor;
+
+  &:hover {
+    color: $focusFontColor;
+    background-color: $mainBackground-color;
+  }
+}
+
+.subject {
+  justify-content: center;
+  padding: 5px;
+}
+
+.body {
+  height: 100%;
+  padding: 5px;
+}

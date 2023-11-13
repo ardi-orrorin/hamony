@@ -1,0 +1,43 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include fullRatioBox(true, true);
+  @include boxShadow(0, 0, 10px, 5px);
+
+  padding: 0.5rem;
+  border-radius: 100vw;
+  font-size: $FontSize-S;
+  position: relative;
+}
+.searchInput {
+  @include fullRatioBox(true, true);
+  color: $mainFontColor;
+  transition: $defaultTransition;
+
+  border-radius: 100vw;
+  border: none;
+  outline: none;
+  font-size: $FontSize-XS;
+  padding: 0.35rem 0.75rem;
+  &:focus {
+    color: $focusFontColor;
+    background-color: $mainBackground-color;
+  }
+}
+
+.btn {
+  @include sticky($top: 0.5rem, $right: 0.5rem);
+
+  font-size: $FontSize-XS;
+  border-radius: 100vw;
+  outline: none;
+  padding: 0.3rem 0.5rem;
+  color: gray;
+  transition: 0.35s;
+  &:hover {
+    color: black;
+    background-color: rgba(245, 245, 245, 1);
+  }
+}

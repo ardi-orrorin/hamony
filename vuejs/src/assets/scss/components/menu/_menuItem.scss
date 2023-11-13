@@ -1,0 +1,18 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.menuItem {
+  font-size: $FontSize-XS;
+  margin: 0.4rem 0;
+  padding: 0.4rem 1.2rem;
+  border-radius: 100vw;
+  text-align: center;
+  transition: $defaultTransition;
+  color: $mainFontColor;
+
+  &:hover {
+    color: $focusFontColor;
+    background-color: $mainBackground-color
+  }
+}

@@ -1,0 +1,57 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include boxShadow(0, 0, 5px, 5px);
+  color: $mainFontColor;
+
+  border-radius: 10px;
+  width: 200px;
+  height: 150px;
+  padding: 10px;
+  flex-direction: column;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.red {
+  color: $likeFontColor;
+}
+
+.subContainer {
+  @include fullRatioBox(true, true);
+  padding: 10px;
+  border-radius: 10px;
+  transition: $defaultTransition;
+
+  &:hover {
+    color: $focusFontColor;
+    background-color: $mainBackground-color;
+  };
+}
+
+.subject {
+  font-size: $FontSize-L;
+  height: 20%;
+
+  //@include wrapBox();
+  //text-overflow: ellipsis;
+  //white-space: nowrap;
+  //overflow: hidden;
+  //word-break: break-all;
+}
+.content {
+  font-size: $FontSize-S;
+  margin-top: 10px;
+  height: 80%;
+
+  //overflow: hidden;
+  //word-break: break-all;
+  //text-overflow: ellipsis;
+  //white-space: pre-line;
+}
+
+.sticky {
+  @include sticky($bottom: 5px, $right: 5px);
+}

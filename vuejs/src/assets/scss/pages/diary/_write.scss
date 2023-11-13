@@ -1,0 +1,131 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+
+.container {
+  @include flexCenter();
+}
+
+.subContianer {
+  @include boxShadow($blur: 10px);
+
+  min-width: 400px;
+  width: 35vw;
+  border-radius: 15px;
+
+  @media (max-width: $lapTop) {
+    width: 45vw;
+  }
+  @media (max-width: $mobile){
+    width: 60vw;
+  }
+}
+
+
+.info {
+  @include flexCenter();
+  padding: 10px;
+  height: 10%;
+  position: relative;
+}
+
+.contentBody {
+  padding: 10px;
+  min-height: 300px;
+  height: 50vh;
+  position: relative;
+}
+
+.textSizeSticky {
+  position: absolute;
+  bottom: 2vh;
+  right: 2.3vw;
+  color: $mainFontColor;
+  font-size: $FontSize-S;
+}
+.sticky {
+  position: absolute;
+  bottom: 5vh;
+  right: 1.5vw;
+}
+
+.stickyEdit {
+  position: absolute;
+  bottom: 5vh;
+  right: 4.5vw;
+}
+
+.footer {
+  height: 10%;
+  width: 100%;
+  padding: 5px;
+}
+
+.tagIntro {
+  color: $mainFontColor;
+  font-size: $FontSize-XS;
+  padding: 10px 20px;
+}
+
+.urlSticky {
+  position: absolute;
+  right: 1.2vw;
+
+  button {
+    font-size: $FontSize-XXL;
+    color: $mainFontColor;
+  }
+}
+
+.imgSticky {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100vw;
+
+  img {
+    @include fullRatioBox(true, true);
+    object-fit: cover;
+    border-radius: 100%;
+  }
+  border: 3px solid $previewBorderColor;
+}
+
+.imgPreview {
+  position: absolute;
+  left: -25%;
+  bottom: 0;
+  width: 50vw;
+  height: 50vh;
+  box-shadow: 0 0 10px 5px $previewBorderColor;
+  border-radius: 1vw;
+  img {
+    @include fullRatioBox(true, true);
+    object-fit: contain;
+    border-radius: 1vw;
+    background: white;
+  }
+}
+
+.url {
+  font-size: $FontSize-M;
+  @include inSideText();
+  color: #3f51b5;
+  text-decoration: none;
+  font-weight: 600;
+  width: 100%;
+
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.35s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}

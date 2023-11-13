@@ -1,0 +1,20 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.container {
+  @include flexCenter();
+  margin-top: 4vh;
+  min-height: 40px;
+  height: 3.5vh;
+}
+
+.subContainer {
+  @include boxShadow($x:0, $y:0, $blur: 10px, $spread: 5px);
+  @include flexCenter($isHeight: false);
+  @include fullRatioBox($isHeight: true);
+
+  padding: 0 1.5vw;
+  border-radius: 100px;
+  gap: 1rem;
+}

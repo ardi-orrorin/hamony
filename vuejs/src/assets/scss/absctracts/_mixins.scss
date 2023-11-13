@@ -1,0 +1,72 @@
+@import "variables";
+
+@mixin fullRatioBox($isWidth: false, $isHeight: false) {
+  @if($isWidth) {
+    width: 100%;
+  }
+
+  @if($isHeight) {
+    height: 100%;
+  }
+}
+
+@mixin fullAbsoluteBox($isWidth: false, $isHeight: false) {
+  @if($isWidth) {
+    width: 100vw;
+  }
+  @if($isHeight) {
+    height: 100vh;
+  }
+}
+
+@mixin flexCenter($isHeight: true, $isWidth: true, $flexDirection: row) {
+  display: flex;
+  flex-direction: $flexDirection;
+
+  @if($isWidth) {
+    justify-content: center;
+  }
+  @if($isHeight) {
+    align-items: center;
+  }
+}
+
+@mixin omitText() {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+@mixin inSideText($whiteSpace: pre-wrap) {
+  text-overflow: ellipsis;
+  white-space: $whiteSpace;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+@mixin wrapBox(){
+  flex-wrap: wrap;
+  word-break: break-all;
+}
+
+@mixin boxShadow($x: 0, $y: 0, $blur: 5px, $spread: 5px) {
+  box-shadow: $x $y $blur $spread $boxShadow-color;
+}
+
+@mixin sticky($top: 0, $left: 0, $bottom: 0, $right: 0) {
+  z-index: 100;
+  position: absolute;
+  @if($top > 0){
+    top: $top;
+  }
+  @if($left > 0){
+    left: $left;
+  }
+  @if($bottom > 0){
+    bottom: $bottom;
+  }
+  @if($right > 0){
+      right: $right;
+  }
+}

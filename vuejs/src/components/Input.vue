@@ -21,26 +21,10 @@ const props = defineProps(['value'])
 </script>
 
 <template>
-    <input v-model="value" ref="inputRef" />
+    <input class="input" v-model="value" ref="inputRef" />
 </template>
 
 <style lang="scss" scoped>
-input {
-  width: 100%;
-  height: 2rem;
-  padding: 0 0.7rem;
-  color: gray;
-  outline-style: none;
-  border: gray solid 1px;
-  text-align: center;
-  align-self: center;
-  border-radius: 0.7vw;
-  transition: 0.5s;
-  &:focus{
-    background-color: rgba(245, 245, 245, 1);
-    transition: 0.35s;
-    color: black;
-  }
-}
+  @import "@/assets/scss/components/input";
 
 </style>

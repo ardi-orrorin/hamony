@@ -17,29 +17,5 @@ const path: string = props.pathMatch.join('/');
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    display: grid;
-    width: 100vw;
-    height: 98.5vh;
-    align-content: center;
-
-    h1 {
-      display: flex;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 2.5rem;
-      margin: 1rem 0;
-      //color: rgba(200, 200, 200, 1)
-    }
-
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 1rem 0;
-    }
-  }
-
-
-
+  @import "@/assets/scss/pages/error/notFound";
 </style>

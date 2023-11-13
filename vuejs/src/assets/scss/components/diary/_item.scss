@@ -1,0 +1,17 @@
+@import "@/assets/scss/absctracts/variables";
+@import "@/assets/scss/absctracts/mixins";
+@import "@/assets/scss/absctracts/animation";
+
+.tagItem {
+  margin:5px 5px 10px 5px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 15px;
+
+  @include boxShadow($x:0, $y:0, $blur:3px, $spread:3px);
+  color: $linkFontColor;
+  transition: $defaultTransition;
+
+  &:hover {
+    background-color: $mainBackground-color;
+  }
+}
