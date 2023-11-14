@@ -10,6 +10,7 @@ import com.hamony.boot.exception.VerifyPasswordException
 import com.hamony.boot.jwt.TokenProvider
 import com.hamony.boot.repository.MemberRepository
 import com.hamony.boot.dto.response.LoginDTO
+import com.hamony.boot.repository.DiaryRepository
 import jakarta.transaction.Transactional
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
@@ -25,6 +26,7 @@ class MemberService(
     val bCryptPasswordEncoder: BCryptPasswordEncoder,
     val tokenProvider: TokenProvider,
     val modelMapper: ModelMapper,
+    val diaryRepository: DiaryRepository,
 ) {
 
     val log: Logger = LoggerFactory.getLogger(this.javaClass)
@@ -37,7 +39,7 @@ class MemberService(
             "userId", userId
         )
 
-        if (memberRepository.findByUserId(userId).isPresent)
+        if (memberRepository.findByUserIdAndDeleteAtIsNull(userId).isPresent)
             return 2
         return 3
     }
@@ -76,7 +78,7 @@ class MemberService(
             "loginDTO", loginDTO
         )
 
-        val member: Member = memberRepository.findByUserId(loginDTO.userId).orElseThrow {
+        val member: Member = memberRepository.findByUserIdAndDeleteAtIsNull(loginDTO.userId).orElseThrow {
             TokenException("계정을 찾을 수 없습니다.")
         }
 
@@ -128,5 +130,24 @@ class MemberService(
         }.let {
             return modelMapper.map(it, MemberDTO::class.java)
         }
+    }
+
+    fun deleteMember(memberDTO: MemberDTO): Boolean {
+        memberRepository.findByUserId(memberDTO.userId).orElseThrow {
+            NotFoundException("계정을 찾을 수 없습니다.")
+        }.let {
+            it.deleteAt = LocalDateTime.now()
+            memberRepository.save(it)
+            it
+        }.let {
+            diaryRepository.findAllByMemberId(it.id!!).map {
+                it.deleteAt = LocalDateTime.now()
+                it
+            }.let {
+                diaryRepository.saveAll(it)
+            }
+        }
+
+        return true
     }
 }

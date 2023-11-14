@@ -34,22 +34,13 @@
 .subject {
   font-size: $FontSize-L;
   height: 20%;
-
-  //@include wrapBox();
-  //text-overflow: ellipsis;
-  //white-space: nowrap;
-  //overflow: hidden;
-  //word-break: break-all;
 }
 .content {
   font-size: $FontSize-S;
   margin-top: 10px;
   height: 80%;
 
-  //overflow: hidden;
-  //word-break: break-all;
-  //text-overflow: ellipsis;
-  //white-space: pre-line;
+  @include inSideText();
 }
 
 .sticky {

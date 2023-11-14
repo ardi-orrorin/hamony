@@ -6,6 +6,8 @@ import java.util.Optional
 
 interface MemberRepository: JpaRepository<Member, Long> {
 
+    fun findByUserIdAndDeleteAtIsNull(userId: String): Optional<Member>
     fun findByUserId(userId: String): Optional<Member>
+
 
 }

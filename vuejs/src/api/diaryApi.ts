@@ -70,8 +70,14 @@ export async function recentDiary(): Promise<AxiosResponse<Diary[]>> {
     const result = await axios.get(import.meta.env.VITE_API_URL + '/diary/recent?sort=createAt,desc', {headers: {
         Authorization: useToken().tokenType + ' ' + useToken().token
         }})
-        .then(res => res.data)
-        .catch(err => err.response)
+        .then(res => {
+            console.log(res)
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+            return err.response
+        })
 
     isLogout(result.status)
 
@@ -103,6 +109,7 @@ export async function imgUpload(data: FormData){
         }})
         .then(res => res.data)
         .catch(err => err.response)
+
 
     isLogout(result.status)
 

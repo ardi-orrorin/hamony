@@ -9,22 +9,20 @@ import router from "@/router";
 import {idDuplicateChk, signIn} from "@/api/memberApi";
 
 const text: Lang = koJson;
+const user = useSignIn();
+const idCheck = ref<number>(0);
+const idRef = ref<any>(null);
+const pwd1Ref = ref<any>(null);
+const pwd2Ref = ref<any>(null);
+const nickNameRef = ref<any>(null);
+const emailAutoList = ref<any>(false);
+const emailRef = ref<any>(null);
+const emailListREf = ref<any>([])
 
-
-  const user = useSignIn();
-  const idCheck = ref<number>(0);
-  const idRef = ref<any>(null);
-  const pwd1Ref = ref<any>(null);
-  const pwd2Ref = ref<any>(null);
-  const nickNameRef = ref<any>(null);
-  const emailAutoList = ref<any>(false);
-  const emailRef = ref<any>(null);
-  const emailListREf = ref<any>([])
-
-  const mailList = [
-      '@gmail.com', '@daum.com', '@naver.com',
-      '@yahoo.com', '@live.com', '@kakao.com'
-  ]
+const mailList = [
+  '@gmail.com', '@daum.com', '@naver.com',
+  '@yahoo.com', '@live.com', '@kakao.com'
+]
 
 watchEffect(()=>{
   if(idRef.value) idRef.value['inputRef'].focus()
@@ -84,7 +82,6 @@ function emailAutoCompleteHandler(toggle: boolean): void {
 function emailClickHandler(it: string) {
   user.email = user.email.split('@')[0]+it;
   emailAutoCompleteHandler(false);
-  // nickNameRef.value['inputRef'].focus();
 }
 
 function formInitHandler() {
@@ -149,9 +146,11 @@ function onSubmitHandler(){
                                  ? 'blue' : 'red'}"
           >
             {{
-              pwdMinLengthValidate() ? text.valiablePwd
-              : !pwdMinLengthValidate()
-              && pwdMinLengthValidate() !== undefined ? text.min8Pwd : ''
+              pwdMinLengthValidate()
+                  ? text.valiablePwd
+                  : !pwdMinLengthValidate()
+                  && pwdMinLengthValidate() !== undefined
+                      ? text.min8Pwd : ''
             }}
           </span>
         </Transition>

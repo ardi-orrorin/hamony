@@ -28,6 +28,7 @@ export interface Lang {
     "profileAddProfile": string
     "profileId": string
     "profileModifyProfile": string
+    "profileDeleteProfile": string
     "profileTabFav": string
     "profileTabList": string
     "profileTabOrder": string

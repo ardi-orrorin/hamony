@@ -19,13 +19,13 @@ export interface DiaryTag {
 }
 
 interface Body {
-    id: number
+    id?: number
     subject: string
     content: string
-    tag: Set<string>
+    tag?: Set<string>
     url: string[]
-    file: string
-    isModify: boolean
+    file?: string
+    isModify?: boolean
 }
 
 interface responseDiaryDTO {

@@ -1,8 +1,12 @@
 package com.hamony.boot.jwt
 
+import com.hamony.boot.exception.NotFoundException
+import com.hamony.boot.exception.TokenException
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Lazy
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -18,6 +22,8 @@ class JwtFilter(
 
 ): OncePerRequestFilter() {
 
+    val log: Logger = LoggerFactory.getLogger(JwtFilter::class.java)
+
     private val AUTHORIZATION_HEADER: String = "Authorization"
 
     @Value("\${jwt.grantType}")
@@ -28,13 +34,18 @@ class JwtFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val jwt: String? = resolveToken(request)
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt.toString())){
-            val authentication: Authentication = tokenProvider.getAuthentication(jwt.toString())
-            SecurityContextHolder.getContext().authentication = authentication
-        }
+        try {
+            val jwt: String? = resolveToken(request)
+            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt.toString())){
+                val authentication: Authentication = tokenProvider.getAuthentication(jwt.toString())
+                SecurityContextHolder.getContext().authentication = authentication
+            }
+        } catch (e: TokenException) {
+            request.setAttribute("exception", e.message)
+        } finally {
 
-        filterChain.doFilter(request, response)
+            filterChain.doFilter(request, response)
+        }
     }
 
     private fun resolveToken(request: HttpServletRequest?): String?{

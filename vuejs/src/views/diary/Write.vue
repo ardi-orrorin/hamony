@@ -51,7 +51,7 @@ function addPreviewHandler(el: any) {
 }
 
 function findTag() {
-  value.tag.clear()
+  value.tag?.clear()
   value.content
       .split('\n')
       .join(' ')
@@ -60,20 +60,22 @@ function findTag() {
           (/^#[a-zA-Zㄱ-ㅎ가-핳]{2}/).test(it)
       )).forEach(it => {
         if(it.length > 10) return
-        value.tag.add(it)
+        value.tag?.add(it)
       })
 }
 
 function removeTagHandler(tag: string){
   if (!isRead.value){
-    value.tag.delete(tag)
+    value.tag?.delete(tag)
     value.content = value.content.replaceAll(tag, tag.slice(1))
   }
 }
 
-function btnUrlHandler(index: number, isAlert: boolean){
+function addUrlHandler(index: number, isAlert: boolean){
+  if (value.url === undefined) return
+
   if(index + 1 < value.url.length){
-    value.url.splice(index, 1)
+    value.url?.splice(index, 1)
   } else{
     if(value.url[index].length > 5) {
       if(value.url.length < 4){
@@ -85,9 +87,11 @@ function btnUrlHandler(index: number, isAlert: boolean){
       isAlert && alert(text.minTextUrl)
     }
   }
+
 }
 
 function onSubmit(){
+  if(value.tag === undefined || value.url === undefined) return
 
   const data: DiaryTag = {
     diary: {
@@ -102,14 +106,14 @@ function onSubmit(){
   const formData = new FormData()
   formData.append('diary', new Blob([JSON.stringify(data)], {type: "application/json"}))
 
-  if(file.value){
+  if (file.value) {
     formData.append('file', file.value)
   }
 
   writeDiary(formData)
       .then(res => {
-        if(res.status === 201){
-          router.push("/read/"+ res.data)
+        if (res.status === 201) {
+          router.push("/read/" + res.data)
         }
       })
 }
@@ -187,21 +191,21 @@ function deleteHandler(){
                   style="border-radius: 10px"
                   :placeholder="text.enterUrl"
                   v-model:value="value.url[index]"
-                  @change="btnUrlHandler(index, false)"
+                  @change="addUrlHandler(index, false)"
                   :disabled="isRead"
                   :link="isRead"
               />
             </template>
           <Transition>
           <div class="urlSticky">
-            <button @click="btnUrlHandler(index, true)" :hidden="isRead">
-            {{ index + 1 < value.url.length ? '-' : '+' }}
+            <button @click="addUrlHandler(index, true)" :hidden="isRead">
+            {{ index + 1 < value.url!!.length ? '-' : '+' }}
             </button>
           </div>
           </Transition>
         </div>
       </div>
-      <div v-if="value.tag.size > 0" class="footer">
+      <div v-if="value.tag && value.tag?.size > 0" class="footer">
         <template v-for="tag in value.tag" >
           <DiaryItem :text="tag" @click="removeTagHandler(tag)" :diabled="isRead"/>
         </template>

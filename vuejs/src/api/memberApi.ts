@@ -7,12 +7,17 @@ export interface Login {
     userPwd: string,
 }
 
-export async function isLoginChk(tokenType: string, token: string) {
-    const result = await axios.get(import.meta.env.VITE_API_URL+"/user/islogin", { headers: {
-            Authorization: tokenType + ' ' + token
+export async function deleteMember () {
+    const result = await axios.delete(import.meta.env.VITE_API_URL+"/user/delete", { headers: {
+            Authorization: useToken().tokenType + " " + useToken().token
         }})
-        .then(res => res.data)
+        .then(res => res)
         .catch(err => err.response);
+
+    if(result.status === 200) {
+        useToken().$reset()
+        router.push("/")
+    }
 
     return result;
 }
@@ -44,7 +49,6 @@ export async function idDuplicateChk(userId: string){
 }
 
 export function isLogout(status: number) {
-
     if(status === 401){
         useToken().$reset()
         router.push("/login")

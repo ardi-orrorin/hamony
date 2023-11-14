@@ -28,6 +28,7 @@
   "profileAddProfile"            : "프로필 추가",
   "profileId"                    : "아이디",
   "profileModifyProfile"         : "프로필 수정",
+  "profileDeleteProfile"         : "회원 탈퇴",
   "profileTabFav"                : "좋아요",
   "profileTabList"               : "리스트",
   "profileTabOrder"              : "순위",
