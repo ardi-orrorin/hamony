@@ -1,5 +1,6 @@
 package com.hamony.boot.dto
 
+import com.hamony.boot.entity.Diary
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
@@ -18,7 +19,9 @@ data class MemberDTO (
 
     var deleteAt: LocalDateTime? = null,
 
-): UserDetails {
+    var diaryList: MutableList<Diary> = mutableListOf(),
+
+    ): UserDetails {
     override fun getUsername(): String = this.userId
     override fun isAccountNonExpired(): Boolean = false
 

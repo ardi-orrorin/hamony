@@ -19,12 +19,13 @@ data class Tag(
     @Column(name = "TAG")
     var tag: String = "",
 
+    @JoinColumn(name = "REF_TAG_ID")
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var diaryTagList: MutableList<DiaryTag> = mutableListOf(),
+
 ){
-//    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tag")
-//    lateinit var diaryList: DiaryTag
 
     override fun toString(): String {
-        return "Tag(id=$id, tag='$tag'"
+        return "Tag(id=$id, tag='$tag', diaryTagList=$diaryTagList)"
     }
-
 }

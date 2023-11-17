@@ -32,7 +32,11 @@ data class Member(
     @Column(name = "DELETEAT")
     var deleteAt: LocalDateTime? = null,
 
-){
+    @JoinColumn(name = "REF_MEMBER_ID")
+    @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var diaryList: MutableList<Diary> = mutableListOf(),
+
+    ){
     fun update(memberDTO: MemberDTO) {
         this.userId = memberDTO.userId
         this.email = memberDTO.email
@@ -42,8 +46,6 @@ data class Member(
     fun delete(){
         this.deleteAt = LocalDateTime.now()
     }
-
-
     override fun toString(): String {
         return "Member(id=$id, userId='$userId', userPwd='$userPwd', email='$email', createAt=$createAt, deleteAt=$deleteAt)"
     }

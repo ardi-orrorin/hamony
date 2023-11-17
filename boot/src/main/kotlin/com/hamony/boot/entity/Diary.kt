@@ -30,10 +30,10 @@ data class Diary(
 
     @JoinColumn(name = "REF_MEMBER_ID")
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var member: Member?,
+    var member: Member? = null,
 
-    @OneToMany(mappedBy = "diary", cascade = [CascadeType.ALL], targetEntity = DiaryTag::class)
-    var diaryTag: MutableList<DiaryTag> = ArrayList()
+    @OneToMany(mappedBy = "diary", cascade = [CascadeType.ALL])
+    var diaryTag: MutableList<DiaryTag> = mutableListOf()
 
 ){
     override fun toString(): String {

@@ -1,5 +1,8 @@
 package com.hamony.boot.dto
 
+import com.hamony.boot.entity.DiaryTag
+import com.hamony.boot.entity.Member
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 
@@ -17,14 +20,12 @@ data class DiaryDTO(
 
     var deleteAt: LocalDateTime? = null,
 
-    var member: MemberDTO? = null,
+    var member: Member? = null,
 
-    var diaryTag: MutableList<DiaryTagDTO> = ArrayList()
+    var diaryTag: MutableList<DiaryTag> = mutableListOf()
 
 ){
-
-
     override fun toString(): String {
-        return "Diary(id=$id, subject='$subject', content='$content', createAt=$createAt, updateAt=$updateAt, deleteAt=$deleteAt, member=$member, diaryTag=$diaryTag)"
+        return "DiaryDTO(id=$id, subject='$subject', content='$content', createAt=$createAt, updateAt=$updateAt, deleteAt=$deleteAt, member=$member, diaryTag=$diaryTag)"
     }
 }

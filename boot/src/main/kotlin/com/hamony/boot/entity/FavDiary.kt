@@ -17,11 +17,11 @@ data class FavDiary(
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "REF_DIARY_ID")
-    var diary: Diary?,
+    var diary: Diary? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "REF_MEMBER_ID")
-    var member: Member?
+    var member: Member? = null
 ){
     override fun toString(): String {
         return "FavDiary(id=$id, diary=$diary, member=$member)"

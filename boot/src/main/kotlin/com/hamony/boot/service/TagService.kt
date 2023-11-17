@@ -40,6 +40,27 @@ class TagService(
         return tagRepository.findByTagEqualsIgnoreCase(tag)
     }
 
+    fun findAllByTag(tag: String): TagDTO {
+        val addTagChar = "#$tag"
+
+//        val diaryTag: Tag = tagRepository.findByTagEqualsIgnoreCase(addTagChar) ?: return mutableListOf();
+//        val diaryTags = diaryTagRepository.findAllByTag(diaryTag)
+
+        val tag: Tag = tagRepository.findByTagEqualsIgnoreCase(addTagChar)!!;
+
+        val tagDTO = modelMapper.map(tag, TagDTO::class.java)
+
+        return tagDTO.diaryTagList.map {
+            it.diary!!.diaryTag = mutableListOf()
+            it.diary!!.member = null
+            it.tag = null
+            it
+        }.let {
+            tagDTO.diaryTagList = it.toMutableList()
+            tagDTO
+        }
+    }
+
     @Transactional
     fun save(tagDTO: TagDTO): Unit {
         log.info("[{}]({}) : {}: {}",

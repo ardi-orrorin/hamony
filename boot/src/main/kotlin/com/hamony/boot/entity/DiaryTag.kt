@@ -16,11 +16,10 @@ data class DiaryTag(
     var id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-//    @ManyToOne
     @JoinColumn(name = "REF_DIARY_ID")
-    var diary: Diary?,
+    var diary: Diary? = null,
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], targetEntity = Tag::class)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "REF_TAG_ID")
     var tag: Tag? = null
 
@@ -28,4 +27,5 @@ data class DiaryTag(
     override fun toString(): String {
         return "DiaryTag(id=$id, diary=$diary, tag=$tag)"
     }
+
 }

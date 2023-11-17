@@ -22,6 +22,7 @@ class DiaryController(
     val urlService: UrlService,
     val tagService: TagService,
     val fileService: FileService,
+    val diaryTagService: DiaryTagService,
 ) {
     val log = LoggerFactory.getLogger(this.javaClass)!!
 
