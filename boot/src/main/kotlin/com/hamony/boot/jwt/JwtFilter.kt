@@ -43,7 +43,6 @@ class JwtFilter(
         } catch (e: TokenException) {
             request.setAttribute("exception", e.message)
         } finally {
-
             filterChain.doFilter(request, response)
         }
     }

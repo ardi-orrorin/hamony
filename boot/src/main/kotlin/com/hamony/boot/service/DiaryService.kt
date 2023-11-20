@@ -60,6 +60,7 @@ class DiaryService(
             modelMapper.map(it, DiaryDTO::class.java).let {
                 it.diaryTag.map {
                     it.diary = null
+                    it.tag= null
                 }
                 it
             }

@@ -46,12 +46,12 @@ class SecurityConfig(
             .accessDeniedHandler(jwtAccessDeniedHandler)
 
 
-//        http.authorizeHttpRequests()
-//            .requestMatchers("/user/**").permitAll()
-//            .requestMatchers("/diary/**").permitAll()
-//            .requestMatchers("/files/**").permitAll()
-//            .requestMatchers("/api/**").permitAll()
-//            .anyRequest().authenticated()
+        http.authorizeHttpRequests()
+            .requestMatchers("/user/**").permitAll()
+            .requestMatchers("/diary/**").permitAll()
+            .requestMatchers("/files/**").permitAll()
+            .requestMatchers("/api/**").permitAll()
+            .anyRequest().authenticated()
 
 
         http.apply(JwtSecurityConfig(tokenProvider))

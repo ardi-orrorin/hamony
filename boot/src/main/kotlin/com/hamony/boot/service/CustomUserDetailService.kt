@@ -19,8 +19,6 @@ class CustomUserDetailService(
         val member: Member = memberRepository.findByUserId(username!!).orElseThrow {
             NotFoundException("계정을 찾을 수 없습니다.")
         }
-
-
         return modelMapper.map(member, MemberDTO::class.java)
     }
 }

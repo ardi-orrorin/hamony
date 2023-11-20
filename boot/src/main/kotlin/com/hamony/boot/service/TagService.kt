@@ -30,9 +30,12 @@ class TagService(
         }
 
         val diaryTags: MutableList<DiaryTag> = diaryTagRepository.findAllByDiary(diary)
-
+        log.info("diaryTags: {}", diaryTags)
         return diaryTags.map {
-            modelMapper.map(it.tag, TagDTO::class.java)
+            modelMapper.map(it.tag, TagDTO::class.java).let {
+                it.diaryTagList = mutableListOf()
+                it
+            }
         }.toMutableList()
     }
 

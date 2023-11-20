@@ -3,6 +3,7 @@ package com.hamony.boot.entity
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.NoArgsConstructor
+import org.hibernate.proxy.HibernateProxy
 
 @Entity
 @Table(name = "TBL_DIARY_TAG")
@@ -27,5 +28,4 @@ data class DiaryTag(
     override fun toString(): String {
         return "DiaryTag(id=$id, diary=$diary, tag=$tag)"
     }
-
 }

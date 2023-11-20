@@ -19,7 +19,7 @@ data class MemberDTO (
 
     var deleteAt: LocalDateTime? = null,
 
-    var diaryList: MutableList<Diary> = mutableListOf(),
+//    var diaryList: MutableList<Diary> = mutableListOf(),
 
     ): UserDetails {
     override fun getUsername(): String = this.userId
